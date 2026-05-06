@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SearchResult } from "@/lib/types";
+import { createClient } from "@/lib/supabase/server";
 import OpenAI from "openai";
 
 const SYSTEM_PROMPT = `You are NGen Connect, an expert matchmaking advisor for the Canadian advanced manufacturing ecosystem (Industry 4.0).
@@ -150,7 +151,7 @@ async function callAnthropic(prompt: string, apiKey: string, model: string): Pro
 
 export async function POST(request: NextRequest) {
   try {
-    const { query, companies, filters } = await request.json();
+    const { query, companies, filters, embeddingTokens, embeddingCostUsd } = await request.json();
 
     const llm = getBestLLM();
     if (!llm) {
@@ -219,6 +220,27 @@ Do not invent any company names, capabilities, certifications, or other details 
     const pricing = MODEL_PRICING[llm.config.model] ?? { input: 0, output: 0 };
     const costUsd =
       (result.inputTokens * pricing.input + result.outputTokens * pricing.output) / 1_000_000;
+
+    // Persist conversation (non-blocking — never fail the response over this)
+    try {
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase.from("conversations").insert({
+          user_id: user.id,
+          query,
+          response: result.text,
+          companies_matched: companies,
+          filters,
+          model_used: llm.config.model,
+          input_tokens: result.inputTokens,
+          output_tokens: result.outputTokens,
+          embedding_tokens: embeddingTokens ?? 0,
+          llm_cost_usd: costUsd,
+          embedding_cost_usd: embeddingCostUsd ?? 0,
+        });
+      }
+    } catch { /* non-critical */ }
 
     return NextResponse.json({
       summary: result.text,

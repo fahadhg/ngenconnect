@@ -66,7 +66,7 @@ export default function Home() {
   const [statsHydrated, setStatsHydrated] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Rehydrate from localStorage on mount
+  // Rehydrate from localStorage on mount + fetch current user
   useEffect(() => {
     try {
       const stored = localStorage.getItem("ngen_usage_stats");
@@ -166,7 +166,13 @@ export default function Home() {
       const chatRes = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: searchQuery, companies: searchData.results, filters }),
+        body: JSON.stringify({
+          query: searchQuery,
+          companies: searchData.results,
+          filters,
+          embeddingTokens: searchData.embeddingTokens,
+          embeddingCostUsd: searchData.embeddingCostUsd,
+        }),
       });
       const chatData = await chatRes.json();
 
@@ -228,7 +234,7 @@ export default function Home() {
   );
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex flex-1 overflow-hidden min-h-0">
       {/* Left: Filter Sidebar */}
       <aside
         className={`${
@@ -309,19 +315,7 @@ export default function Home() {
             </svg>
           </button>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-ngen-red rounded-md flex items-center justify-center flex-shrink-0">
-              <span className="text-white font-black text-xs">N</span>
-            </div>
-            <div>
-              <h1 className="text-sm font-bold text-gray-900 leading-tight tracking-tight">
-                NGen Connect
-              </h1>
-              <p className="text-[11px] text-gray-400 leading-tight">
-                Canadian Manufacturing Matchmaker — Industry 4.0
-              </p>
-            </div>
-          </div>
+          <span className="text-sm font-semibold text-gray-700">Search</span>
 
           {activeFilterCount > 0 && (
             <span className="text-[11px] font-semibold text-ngen-red bg-red-50 border border-red-100 px-2.5 py-1 rounded-full">
@@ -329,7 +323,7 @@ export default function Home() {
             </span>
           )}
 
-          {/* Stats toggle — right side */}
+          {/* Usage stats toggle */}
           <button
             onClick={() => setStatsOpen(!statsOpen)}
             className={`ml-auto flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
