@@ -4,8 +4,10 @@ import { searchCompanies, getFilterOptions } from "@/lib/search";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
 const GEMINI_EMBEDDING_MODEL = "gemini-embedding-001";
 const EMBEDDING_DIMS = 768;
+// Gemini Embedding 001 pricing: $0.025 per 1M tokens
+const EMBEDDING_PRICE_PER_M = 0.025;
 
-async function embedQuery(query: string): Promise<number[]> {
+async function embedQuery(query: string): Promise<{ embedding: number[]; tokens: number }> {
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_EMBEDDING_MODEL}:embedContent?key=${GEMINI_API_KEY}`,
     {
@@ -24,7 +26,10 @@ async function embedQuery(query: string): Promise<number[]> {
   }
 
   const data = await response.json();
-  return data.embedding.values;
+  return {
+    embedding: data.embedding.values,
+    tokens: data.usageMetadata?.promptTokenCount || 0,
+  };
 }
 
 export async function POST(request: NextRequest) {
@@ -35,10 +40,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Query is required" }, { status: 400 });
     }
 
-    const queryEmbedding = await embedQuery(query);
-    const results = searchCompanies(queryEmbedding, filters || {}, 5);
+    const { embedding, tokens: embeddingTokens } = await embedQuery(query);
+    const results = searchCompanies(embedding, filters || {}, 5);
+    const embeddingCostUsd = (embeddingTokens * EMBEDDING_PRICE_PER_M) / 1_000_000;
 
-    return NextResponse.json({ results, total: results.length });
+    return NextResponse.json({
+      results,
+      total: results.length,
+      embeddingTokens,
+      embeddingCostUsd,
+      embeddingModel: GEMINI_EMBEDDING_MODEL,
+    });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Search failed";
     return NextResponse.json({ error: message }, { status: 500 });

@@ -33,6 +33,27 @@ interface Message {
   model?: string;
 }
 
+interface UsageStat {
+  id: number;
+  query: string;
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+  embeddingTokens: number;
+  llmCostUsd: number;
+  embeddingCostUsd: number;
+}
+
+// Approximate list prices per 1M tokens for display in the panel
+const PRICING_TABLE = [
+  { model: "Claude Sonnet 4.6", input: "$3.00", output: "$15.00" },
+  { model: "GPT-4.1",           input: "$2.00", output: "$8.00"  },
+  { model: "GPT-4.1 Mini",      input: "$0.40", output: "$1.60"  },
+  { model: "DeepSeek V3",       input: "$0.27", output: "$1.10"  },
+  { model: "Gemini 2.5 Flash",  input: "$0.075",output: "$0.30"  },
+  { model: "Gemini Embedding",  input: "$0.025",output: "—"      },
+];
+
 export default function Home() {
   const [filters, setFilters] = useState<Record<string, string[]>>({});
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
@@ -40,6 +61,8 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [statsOpen, setStatsOpen] = useState(false);
+  const [usageStats, setUsageStats] = useState<UsageStat[]>([]);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Derived filter options based on current sector + capability selections
@@ -125,11 +148,7 @@ export default function Home() {
       const chatRes = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: searchQuery,
-          companies: searchData.results,
-          filters,
-        }),
+        body: JSON.stringify({ query: searchQuery, companies: searchData.results, filters }),
       });
       const chatData = await chatRes.json();
 
@@ -140,6 +159,21 @@ export default function Home() {
         model: chatData.model,
       };
       setMessages((prev) => [...prev, assistantMsg]);
+
+      // Record usage for the stats panel
+      setUsageStats((prev) => [
+        {
+          id: Date.now(),
+          query: searchQuery,
+          model: chatData.model || "Unknown",
+          inputTokens: chatData.inputTokens || 0,
+          outputTokens: chatData.outputTokens || 0,
+          embeddingTokens: searchData.embeddingTokens || 0,
+          llmCostUsd: chatData.costUsd || 0,
+          embeddingCostUsd: searchData.embeddingCostUsd || 0,
+        },
+        ...prev,
+      ]);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : "Something went wrong";
       setMessages((prev) => [
@@ -165,9 +199,19 @@ export default function Home() {
     0
   );
 
+  const sessionTotals = usageStats.reduce(
+    (acc, s) => ({
+      inputTokens: acc.inputTokens + s.inputTokens,
+      outputTokens: acc.outputTokens + s.outputTokens,
+      embeddingTokens: acc.embeddingTokens + s.embeddingTokens,
+      costUsd: acc.costUsd + s.llmCostUsd + s.embeddingCostUsd,
+    }),
+    { inputTokens: 0, outputTokens: 0, embeddingTokens: 0, costUsd: 0 }
+  );
+
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
-      {/* Sidebar */}
+      {/* Left: Filter Sidebar */}
       <aside
         className={`${
           sidebarOpen ? "w-72" : "w-0"
@@ -242,18 +286,8 @@ export default function Home() {
             className="p-2 hover:bg-gray-100 rounded-lg transition flex-shrink-0"
             title="Toggle filters"
           >
-            <svg
-              className="w-4 h-4 text-gray-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 4h18M7 12h10M10 20h4"
-              />
+            <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M7 12h10M10 20h4" />
             </svg>
           </button>
 
@@ -272,129 +306,265 @@ export default function Home() {
           </div>
 
           {activeFilterCount > 0 && (
-            <div className="ml-auto flex items-center gap-2">
-              <span className="text-[11px] font-semibold text-ngen-red bg-red-50 border border-red-100 px-2.5 py-1 rounded-full">
-                {activeFilterCount} filter{activeFilterCount > 1 ? "s" : ""} active
-              </span>
-            </div>
+            <span className="text-[11px] font-semibold text-ngen-red bg-red-50 border border-red-100 px-2.5 py-1 rounded-full">
+              {activeFilterCount} filter{activeFilterCount > 1 ? "s" : ""} active
+            </span>
           )}
+
+          {/* Stats toggle — right side */}
+          <button
+            onClick={() => setStatsOpen(!statsOpen)}
+            className={`ml-auto flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+              statsOpen
+                ? "bg-gray-900 text-white border-gray-900"
+                : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+            }`}
+            title="Toggle usage stats"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            Usage
+            {usageStats.length > 0 && (
+              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${statsOpen ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"}`}>
+                ${sessionTotals.costUsd.toFixed(4)}
+              </span>
+            )}
+          </button>
         </header>
 
-        {/* Chat area */}
-        <div className="flex-1 overflow-y-auto px-5 py-6">
-          {messages.length === 0 ? (
-            <div className="max-w-2xl mx-auto pt-12">
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 tracking-tight mb-2">
-                  Find your next manufacturing partner
-                </h2>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  Search 1,000+ Canadian manufacturers, suppliers, and technology
-                  providers. Describe what you need in plain language.
-                </p>
-              </div>
+        {/* Body row: chat + optional stats panel */}
+        <div className="flex-1 flex min-h-0">
+          {/* Chat area */}
+          <div className="flex-1 overflow-y-auto px-5 py-6 min-w-0">
+            {messages.length === 0 ? (
+              <div className="max-w-2xl mx-auto pt-12">
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 tracking-tight mb-2">
+                    Find your next manufacturing partner
+                  </h2>
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    Search 1,000+ Canadian manufacturers, suppliers, and technology
+                    providers. Describe what you need in plain language.
+                  </p>
+                </div>
 
-              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">
-                Example searches
-              </p>
-              <div className="grid grid-cols-2 gap-2">
-                {suggestions.map((s, i) => (
-                  <button
-                    key={s}
-                    onClick={() => handleSearch(s)}
-                    className="text-left px-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-ngen-red/30 hover:bg-red-50/20 hover:shadow-sm transition-all group"
-                  >
-                    <span className="text-[11px] font-bold text-gray-300 block mb-0.5 group-hover:text-ngen-red/40 transition-colors">
-                      0{i + 1}
-                    </span>
-                    {s}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-10 p-4 bg-white border border-gray-200 rounded-xl">
-                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                  How it works
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">
+                  Example searches
                 </p>
-                <div className="grid grid-cols-3 gap-4">
-                  {[
-                    ["Semantic Search", "Your query is embedded and matched against 1,000+ companies using vector similarity."],
-                    ["Top 3–5 Matches", "Only the strongest matches are returned — no noise, no long lists."],
-                    ["AI Analysis", "A detailed breakdown explains exactly why each company fits your requirements."],
-                  ].map(([title, desc]) => (
-                    <div key={title}>
-                      <p className="text-xs font-semibold text-gray-700 mb-1">{title}</p>
-                      <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
-                    </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {suggestions.map((s, i) => (
+                    <button
+                      key={s}
+                      onClick={() => handleSearch(s)}
+                      className="text-left px-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-ngen-red/30 hover:bg-red-50/20 hover:shadow-sm transition-all group"
+                    >
+                      <span className="text-[11px] font-bold text-gray-300 block mb-0.5 group-hover:text-ngen-red/40 transition-colors">
+                        0{i + 1}
+                      </span>
+                      {s}
+                    </button>
                   ))}
                 </div>
-              </div>
-            </div>
-          ) : (
-            <div className="max-w-3xl mx-auto space-y-5">
-              {messages.map((msg, i) => (
-                <div key={i} className="animate-fade-up">
-                  {msg.role === "user" ? (
-                    <div className="flex justify-end">
-                      <div className="bg-ngen-red text-white px-4 py-2.5 rounded-2xl rounded-br-sm max-w-md text-sm font-medium">
-                        {msg.content}
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {/* AI Analysis Card */}
-                      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                        <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
-                          <div className="w-4 h-4 bg-ngen-red rounded flex items-center justify-center flex-shrink-0">
-                            <span className="text-white text-[9px] font-black">N</span>
-                          </div>
-                          <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
-                            Matchmaking Analysis
-                          </span>
-                          {msg.model && (
-                            <span className="ml-auto text-[10px] text-gray-300 font-medium">
-                              {msg.model}
-                            </span>
-                          )}
-                        </div>
-                        <div className="px-5 py-4 text-sm text-gray-700 leading-relaxed">
-                          <FormattedText text={msg.content} />
-                        </div>
-                      </div>
 
-                      {/* Company Cards */}
-                      {msg.companies && msg.companies.length > 0 && (
-                        <div>
-                          <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2 px-1">
-                            {msg.companies.length} Matched{" "}
-                            {msg.companies.length === 1 ? "Company" : "Companies"}
-                          </p>
-                          <div className="space-y-2.5">
-                            {msg.companies.map((c, j) => (
-                              <CompanyCard key={j} company={c} rank={j + 1} />
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {loading && (
-                <div className="animate-fade-up">
-                  <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3">
-                    <LoadingDots />
-                    <span className="text-sm text-gray-400">
-                      Searching database and analyzing matches...
-                    </span>
+                <div className="mt-10 p-4 bg-white border border-gray-200 rounded-xl">
+                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    How it works
+                  </p>
+                  <div className="grid grid-cols-3 gap-4">
+                    {[
+                      ["Semantic Search", "Your query is embedded and matched against 1,000+ companies using vector similarity."],
+                      ["Top 3–5 Matches", "Only the strongest matches are returned — no noise, no long lists."],
+                      ["AI Analysis", "A detailed breakdown explains exactly why each company fits your requirements."],
+                    ].map(([title, desc]) => (
+                      <div key={title}>
+                        <p className="text-xs font-semibold text-gray-700 mb-1">{title}</p>
+                        <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              )}
+              </div>
+            ) : (
+              <div className="max-w-3xl mx-auto space-y-5">
+                {messages.map((msg, i) => (
+                  <div key={i} className="animate-fade-up">
+                    {msg.role === "user" ? (
+                      <div className="flex justify-end">
+                        <div className="bg-ngen-red text-white px-4 py-2.5 rounded-2xl rounded-br-sm max-w-md text-sm font-medium">
+                          {msg.content}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                          <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
+                            <div className="w-4 h-4 bg-ngen-red rounded flex items-center justify-center flex-shrink-0">
+                              <span className="text-white text-[9px] font-black">N</span>
+                            </div>
+                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                              Matchmaking Analysis
+                            </span>
+                            {msg.model && (
+                              <span className="ml-auto text-[10px] text-gray-300 font-medium">
+                                {msg.model}
+                              </span>
+                            )}
+                          </div>
+                          <div className="px-5 py-4 text-sm text-gray-700 leading-relaxed">
+                            <FormattedText text={msg.content} />
+                          </div>
+                        </div>
 
-              <div ref={chatEndRef} />
+                        {msg.companies && msg.companies.length > 0 && (
+                          <div>
+                            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2 px-1">
+                              {msg.companies.length} Matched{" "}
+                              {msg.companies.length === 1 ? "Company" : "Companies"}
+                            </p>
+                            <div className="space-y-2.5">
+                              {msg.companies.map((c, j) => (
+                                <CompanyCard key={j} company={c} rank={j + 1} />
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+
+                {loading && (
+                  <div className="animate-fade-up">
+                    <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3">
+                      <LoadingDots />
+                      <span className="text-sm text-gray-400">
+                        Searching database and analyzing matches...
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                <div ref={chatEndRef} />
+              </div>
+            )}
+          </div>
+
+          {/* Right: Stats Panel */}
+          <aside
+            className={`${
+              statsOpen ? "w-72" : "w-0"
+            } transition-all duration-300 bg-white border-l border-gray-200 flex-shrink-0 overflow-hidden`}
+          >
+            <div className="w-72 h-full flex flex-col">
+              <div className="px-5 py-4 border-b border-gray-100">
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                  API Usage
+                </p>
+              </div>
+
+              <div className="flex-1 overflow-y-auto">
+                {/* Session totals widget */}
+                <div className="p-4 border-b border-gray-100">
+                  <div className="bg-gray-900 rounded-xl p-4 text-white">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                      Session Total
+                    </p>
+                    <p className="text-3xl font-black tracking-tight">
+                      ${sessionTotals.costUsd.toFixed(4)}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      {usageStats.length} search{usageStats.length !== 1 ? "es" : ""}
+                    </p>
+                    <div className="mt-3 pt-3 border-t border-gray-800 grid grid-cols-3 gap-2 text-center">
+                      <div>
+                        <p className="text-[10px] text-gray-500 mb-0.5">Input</p>
+                        <p className="text-xs font-bold text-gray-200">
+                          {fmtTokens(sessionTotals.inputTokens)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-500 mb-0.5">Output</p>
+                        <p className="text-xs font-bold text-gray-200">
+                          {fmtTokens(sessionTotals.outputTokens)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-500 mb-0.5">Embed</p>
+                        <p className="text-xs font-bold text-gray-200">
+                          {fmtTokens(sessionTotals.embeddingTokens)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Per-request history */}
+                {usageStats.length === 0 ? (
+                  <div className="px-5 py-8 text-center">
+                    <p className="text-xs text-gray-400">
+                      No searches yet. Usage will appear here after your first query.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="divide-y divide-gray-100">
+                    {usageStats.map((stat, i) => (
+                      <div key={stat.id} className="px-4 py-3">
+                        <div className="flex items-start justify-between gap-2 mb-1.5">
+                          <p className="text-xs font-semibold text-gray-700 leading-tight line-clamp-1 flex-1">
+                            {stat.query}
+                          </p>
+                          <span className="text-[10px] font-bold text-gray-400 flex-shrink-0">
+                            #{usageStats.length - i}
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-gray-400 mb-2">{stat.model}</p>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                          <StatRow label="Input" value={fmtTokens(stat.inputTokens) + " tok"} />
+                          <StatRow label="Output" value={fmtTokens(stat.outputTokens) + " tok"} />
+                          <StatRow label="Embed" value={fmtTokens(stat.embeddingTokens) + " tok"} />
+                          <StatRow
+                            label="Cost"
+                            value={"$" + (stat.llmCostUsd + stat.embeddingCostUsd).toFixed(5)}
+                            highlight
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Pricing reference */}
+                <div className="border-t border-gray-100 p-4">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">
+                    Pricing Reference / 1M tokens
+                  </p>
+                  <table className="w-full text-[10px]">
+                    <thead>
+                      <tr className="text-gray-400">
+                        <th className="text-left font-semibold pb-1.5">Model</th>
+                        <th className="text-right font-semibold pb-1.5">In</th>
+                        <th className="text-right font-semibold pb-1.5">Out</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {PRICING_TABLE.map((row) => (
+                        <tr key={row.model}>
+                          <td className="py-1 text-gray-600 pr-2">{row.model}</td>
+                          <td className="py-1 text-right text-gray-500 font-mono">{row.input}</td>
+                          <td className="py-1 text-right text-gray-500 font-mono">{row.output}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="text-[9px] text-gray-300 mt-3 leading-relaxed">
+                    Approximate list prices. Actual costs may vary. Costs reset on page refresh.
+                  </p>
+                </div>
+              </div>
             </div>
-          )}
+          </aside>
         </div>
 
         {/* Input */}
@@ -421,18 +591,8 @@ export default function Home() {
                 className="px-5 py-2.5 bg-ngen-red text-white rounded-xl text-sm font-semibold hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2"
               >
                 Search
-                <svg
-                  className="w-3.5 h-3.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2.5}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
             </form>
@@ -443,7 +603,34 @@ export default function Home() {
   );
 }
 
-/* ── Loading Dots ────────────────────────────────────────────────────── */
+/* ── Helpers ─────────────────────────────────────────────────────────────── */
+
+function fmtTokens(n: number): string {
+  if (n === 0) return "0";
+  if (n >= 1000) return (n / 1000).toFixed(1) + "k";
+  return n.toString();
+}
+
+function StatRow({
+  label,
+  value,
+  highlight = false,
+}: {
+  label: string;
+  value: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between">
+      <span className="text-[10px] text-gray-400">{label}</span>
+      <span className={`text-[10px] font-semibold ${highlight ? "text-gray-800" : "text-gray-500"}`}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+/* ── Loading Dots ────────────────────────────────────────────────────────── */
 function LoadingDots() {
   return (
     <div className="flex gap-1 items-center">
@@ -458,7 +645,7 @@ function LoadingDots() {
   );
 }
 
-/* ── Formatted Text (handles **bold**) ───────────────────────────────── */
+/* ── Formatted Text (handles **bold**) ───────────────────────────────────── */
 function FormattedText({ text }: { text: string }) {
   const lines = text.split("\n");
   return (
@@ -484,7 +671,7 @@ function FormattedText({ text }: { text: string }) {
   );
 }
 
-/* ── Filter Section ──────────────────────────────────────────────────── */
+/* ── Filter Section ──────────────────────────────────────────────────────── */
 function FilterSection({
   label,
   options,
@@ -544,12 +731,7 @@ function FilterSection({
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
@@ -576,9 +758,7 @@ function FilterSection({
                   onChange={() => toggle(opt)}
                   className="accent-ngen-red flex-shrink-0"
                 />
-                <span className="text-xs text-gray-600 truncate leading-tight">
-                  {opt}
-                </span>
+                <span className="text-xs text-gray-600 truncate leading-tight">{opt}</span>
               </label>
             ))}
           </div>
@@ -588,21 +768,13 @@ function FilterSection({
   );
 }
 
-/* ── Company Card ────────────────────────────────────────────────────── */
+/* ── Company Card ────────────────────────────────────────────────────────── */
 function CompanyCard({ company, rank }: { company: SearchResult; rank: number }) {
   const scorePct = Math.round(company.score * 100);
   const scoreColor =
-    scorePct >= 80
-      ? "bg-emerald-500"
-      : scorePct >= 65
-      ? "bg-amber-400"
-      : "bg-gray-400";
+    scorePct >= 80 ? "bg-emerald-500" : scorePct >= 65 ? "bg-amber-400" : "bg-gray-400";
   const scoreTextColor =
-    scorePct >= 80
-      ? "text-emerald-700"
-      : scorePct >= 65
-      ? "text-amber-700"
-      : "text-gray-600";
+    scorePct >= 80 ? "text-emerald-700" : scorePct >= 65 ? "text-amber-700" : "text-gray-600";
 
   const hasTags =
     company.sectors.length > 0 ||
@@ -612,18 +784,12 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 hover:shadow-sm transition-all">
-      {/* Card Header */}
       <div className="px-5 pt-4 pb-4 flex items-start gap-4">
-        {/* Rank badge */}
         <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
           <span className="text-xs font-black text-gray-500">#{rank}</span>
         </div>
-
-        {/* Company info */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-gray-900 text-sm leading-tight">
-            {company.company_name}
-          </h3>
+          <h3 className="font-bold text-gray-900 text-sm leading-tight">{company.company_name}</h3>
           <div className="flex items-center gap-2 mt-0.5 flex-wrap">
             {company.province && company.province !== "Unknown" && (
               <span className="text-xs text-gray-500">{company.province}</span>
@@ -644,8 +810,6 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
             {company.site || company.homepage}
           </a>
         </div>
-
-        {/* Match score */}
         <div className="flex-shrink-0 text-right min-w-[52px]">
           <span className={`text-lg font-black leading-none ${scoreTextColor}`}>
             {scorePct}
@@ -653,58 +817,42 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
           </span>
           <p className="text-[10px] text-gray-400 mt-0.5">match</p>
           <div className="w-12 h-1 bg-gray-100 rounded-full mt-1 overflow-hidden">
-            <div
-              className={`h-full ${scoreColor} rounded-full`}
-              style={{ width: `${scorePct}%` }}
-            />
+            <div className={`h-full ${scoreColor} rounded-full`} style={{ width: `${scorePct}%` }} />
           </div>
         </div>
       </div>
 
-      {/* Description */}
       {company.description && (
         <div className="px-5 pb-4 border-t border-gray-50 pt-3">
-          <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
-            {company.description}
-          </p>
+          <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">{company.description}</p>
         </div>
       )}
 
-      {/* Tag sections */}
       {hasTags && (
         <div className="border-t border-gray-100 px-5 py-3 grid grid-cols-2 gap-x-6 gap-y-3">
           {company.sectors.length > 0 && (
-            <TagGroup label="Sectors" color="blue">
-              {company.sectors.slice(0, 3).map((s) => (
-                <Tag key={s} text={s} color="blue" />
-              ))}
+            <TagGroup label="Sectors">
+              {company.sectors.slice(0, 3).map((s) => <Tag key={s} text={s} color="blue" />)}
             </TagGroup>
           )}
           {company.capabilities.length > 0 && (
-            <TagGroup label="Capabilities" color="amber">
-              {company.capabilities.slice(0, 3).map((c) => (
-                <Tag key={c} text={c} color="amber" />
-              ))}
+            <TagGroup label="Capabilities">
+              {company.capabilities.slice(0, 3).map((c) => <Tag key={c} text={c} color="amber" />)}
             </TagGroup>
           )}
           {company.certifications.length > 0 && (
-            <TagGroup label="Certifications" color="green">
-              {company.certifications.slice(0, 3).map((c) => (
-                <Tag key={c} text={c} color="green" />
-              ))}
+            <TagGroup label="Certifications">
+              {company.certifications.slice(0, 3).map((c) => <Tag key={c} text={c} color="green" />)}
             </TagGroup>
           )}
           {company.materials.length > 0 && (
-            <TagGroup label="Materials" color="purple">
-              {company.materials.slice(0, 3).map((m) => (
-                <Tag key={m} text={m} color="purple" />
-              ))}
+            <TagGroup label="Materials">
+              {company.materials.slice(0, 3).map((m) => <Tag key={m} text={m} color="purple" />)}
             </TagGroup>
           )}
         </div>
       )}
 
-      {/* Footer */}
       <div className="border-t border-gray-100 px-5 py-2.5 flex justify-end">
         <a
           href={company.homepage}
@@ -713,18 +861,9 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-ngen-red transition-colors"
         >
           Visit Website
-          <svg
-            className="w-3 h-3"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-            />
+          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </a>
       </div>
@@ -732,19 +871,10 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
   );
 }
 
-function TagGroup({
-  label,
-  children,
-}: {
-  label: string;
-  color: string;
-  children: React.ReactNode;
-}) {
+function TagGroup({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
-        {label}
-      </p>
+      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">{label}</p>
       <div className="flex flex-wrap gap-1">{children}</div>
     </div>
   );
@@ -752,17 +882,13 @@ function TagGroup({
 
 function Tag({ text, color }: { text: string; color: string }) {
   const styles: Record<string, string> = {
-    blue: "bg-blue-50 text-blue-700 border-blue-100",
-    green: "bg-emerald-50 text-emerald-700 border-emerald-100",
-    amber: "bg-amber-50 text-amber-700 border-amber-100",
+    blue:   "bg-blue-50 text-blue-700 border-blue-100",
+    green:  "bg-emerald-50 text-emerald-700 border-emerald-100",
+    amber:  "bg-amber-50 text-amber-700 border-amber-100",
     purple: "bg-purple-50 text-purple-700 border-purple-100",
   };
   return (
-    <span
-      className={`text-[11px] px-2 py-0.5 rounded border font-medium leading-tight ${
-        styles[color] || styles.blue
-      }`}
-    >
+    <span className={`text-[11px] px-2 py-0.5 rounded border font-medium leading-tight ${styles[color] || styles.blue}`}>
       {text}
     </span>
   );

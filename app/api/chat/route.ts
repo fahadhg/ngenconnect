@@ -24,6 +24,21 @@ interface LLMConfig {
   model: string;
 }
 
+interface LLMResult {
+  text: string;
+  inputTokens: number;
+  outputTokens: number;
+}
+
+// Pricing per 1M tokens (USD) — approximate list prices
+const MODEL_PRICING: Record<string, { input: number; output: number }> = {
+  "claude-sonnet-4-6": { input: 3.0,   output: 15.0  },
+  "gpt-4.1":           { input: 2.0,   output: 8.0   },
+  "gpt-4.1-mini":      { input: 0.4,   output: 1.6   },
+  "deepseek-chat":     { input: 0.27,  output: 1.1   },
+  "gemini-2.5-flash":  { input: 0.075, output: 0.30  },
+};
+
 const LLM_PRIORITY: LLMConfig[] = [
   {
     name: "Claude Sonnet 4.6",
@@ -65,7 +80,7 @@ function getBestLLM(): { config: LLMConfig; apiKey: string } | null {
   return null;
 }
 
-async function callGemini(prompt: string, apiKey: string, model: string): Promise<string> {
+async function callGemini(prompt: string, apiKey: string, model: string): Promise<LLMResult> {
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
@@ -79,7 +94,11 @@ async function callGemini(prompt: string, apiKey: string, model: string): Promis
     }
   );
   const data = await response.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+  return {
+    text: data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.",
+    inputTokens: data.usageMetadata?.promptTokenCount || 0,
+    outputTokens: data.usageMetadata?.candidatesTokenCount || 0,
+  };
 }
 
 async function callOpenAICompatible(
@@ -87,7 +106,7 @@ async function callOpenAICompatible(
   apiKey: string,
   baseUrl: string,
   model: string
-): Promise<string> {
+): Promise<LLMResult> {
   const client = new OpenAI({ apiKey, baseURL: baseUrl });
   const response = await client.chat.completions.create({
     model,
@@ -98,10 +117,14 @@ async function callOpenAICompatible(
     temperature: 0.3,
     max_tokens: 2000,
   });
-  return response.choices[0]?.message?.content || "No response generated.";
+  return {
+    text: response.choices[0]?.message?.content || "No response generated.",
+    inputTokens: response.usage?.prompt_tokens || 0,
+    outputTokens: response.usage?.completion_tokens || 0,
+  };
 }
 
-async function callAnthropic(prompt: string, apiKey: string, model: string): Promise<string> {
+async function callAnthropic(prompt: string, apiKey: string, model: string): Promise<LLMResult> {
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -118,7 +141,11 @@ async function callAnthropic(prompt: string, apiKey: string, model: string): Pro
     }),
   });
   const data = await response.json();
-  return data.content?.[0]?.text || "No response generated.";
+  return {
+    text: data.content?.[0]?.text || "No response generated.",
+    inputTokens: data.usage?.input_tokens || 0,
+    outputTokens: data.usage?.output_tokens || 0,
+  };
 }
 
 export async function POST(request: NextRequest) {
@@ -179,17 +206,28 @@ Close with a single sentence recommending a concrete next step (e.g., direct out
 
 Do not invent any company names, capabilities, certifications, or other details not present in the data above.`;
 
-    let summary: string;
+    let result: LLMResult;
 
     if (llm.config.envKey === "ANTHROPIC_API_KEY") {
-      summary = await callAnthropic(prompt, llm.apiKey, llm.config.model);
+      result = await callAnthropic(prompt, llm.apiKey, llm.config.model);
     } else if (llm.config.envKey === "GEMINI_API_KEY" && !llm.config.baseUrl) {
-      summary = await callGemini(prompt, llm.apiKey, llm.config.model);
+      result = await callGemini(prompt, llm.apiKey, llm.config.model);
     } else {
-      summary = await callOpenAICompatible(prompt, llm.apiKey, llm.config.baseUrl, llm.config.model);
+      result = await callOpenAICompatible(prompt, llm.apiKey, llm.config.baseUrl, llm.config.model);
     }
 
-    return NextResponse.json({ summary, model: llm.config.name });
+    const pricing = MODEL_PRICING[llm.config.model] ?? { input: 0, output: 0 };
+    const costUsd =
+      (result.inputTokens * pricing.input + result.outputTokens * pricing.output) / 1_000_000;
+
+    return NextResponse.json({
+      summary: result.text,
+      model: llm.config.name,
+      modelId: llm.config.model,
+      inputTokens: result.inputTokens,
+      outputTokens: result.outputTokens,
+      costUsd,
+    });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Chat failed";
     return NextResponse.json({ error: message }, { status: 500 });
