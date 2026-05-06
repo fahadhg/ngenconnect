@@ -2,17 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { SearchResult } from "@/lib/types";
 import OpenAI from "openai";
 
-const SYSTEM_PROMPT = `You are NGen Connect, a matchmaking assistant for the Canadian advanced manufacturing ecosystem (Industry 4.0).
+const SYSTEM_PROMPT = `You are NGen Connect, an expert matchmaking advisor for the Canadian advanced manufacturing ecosystem (Industry 4.0).
 
-You help users find manufacturers, technology providers, and suppliers from a curated database of 1,000+ Canadian companies.
+You analyze structured company data and produce precise, data-grounded matchmaking recommendations for procurement professionals and business development teams.
 
 Rules:
-- ONLY answer based on the company data provided. Never invent companies or capabilities.
-- When listing companies, always include their website URL.
-- If no companies match, say so clearly.
-- Be specific — reference actual capabilities, certifications, and sectors from the data.
-- Keep it concise and actionable.
-- Start with a 1-2 sentence overview, then highlight the top 3-5 matches with WHY they match.`;
+- ONLY use the company data provided. Never invent companies, capabilities, certifications, or materials.
+- Analyze 3 to 5 companies maximum. Quality and depth matter more than quantity.
+- For each match, write a dedicated paragraph that cites specific capabilities, certifications, materials, and sectors directly from the company record. Explain exactly why this company fits the query.
+- Always include the company website URL when referencing a company.
+- Write in clear, professional prose. Use numbered paragraphs for individual companies — do not use bullet points or markdown headers.
+- Bold the company name at the start of each paragraph using **Company Name** format.
+- Be specific and data-driven: cite exact certifications (e.g., AS9100D, ISO 9001:2015), materials (e.g., titanium, Inconel), capabilities (e.g., 5-axis CNC, LPBF additive), and sectors from the records.
+- If no strong matches exist, state that clearly and explain what was found instead.
+- Close with 1 sentence on suggested next steps.`;
 
 interface LLMConfig {
   name: string;
@@ -132,7 +135,7 @@ export async function POST(request: NextRequest) {
 
     // Build context from search results
     const companyContext = (companies as SearchResult[])
-      .slice(0, 10)
+      .slice(0, 5)
       .map(
         (c, i) =>
           `[${i + 1}] ${c.company_name} (${c.homepage})\n` +
@@ -151,23 +154,30 @@ export async function POST(request: NextRequest) {
       .map(([k, v]) => `${k}: ${(v as string[]).join(", ")}`)
       .join(", ") || "None";
 
-    const prompt = `A user is searching for manufacturing partners, suppliers, or technology providers.
+    const prompt = `A procurement specialist or business development manager is searching for Canadian manufacturing partners, suppliers, or technology providers.
 
-Query: ${query}
+Search query: "${query}"
 Active filters: ${activeFilters}
 
-Here are the top matching companies from our database:
+Top matching companies from the NGen Connect database, ranked by semantic relevance:
 
 ${companyContext}
 
-Provide a concise matchmaking summary:
-1. Start with a 1-2 sentence overview of what you found
-2. Highlight the top 3-5 most relevant matches and explain WHY they match the query
-3. For each match, mention their key strengths and website URL
-4. If filters are active, note how results were narrowed
-5. Be specific — reference actual capabilities, certifications, and sectors from the data
+Provide a detailed matchmaking analysis following this structure:
 
-Keep it concise and actionable. Do not invent information not in the data above.`;
+Open with 1–2 sentences summarizing the quality and nature of the matches found.
+
+Then, for each of the top 3–5 companies, write a numbered paragraph that:
+- Leads with **Company Name** (bolded) and their website URL
+- Explains precisely why this company matches the query — cite specific capabilities, certifications, materials, and sectors from the data above
+- Notes any standout differentiators relevant to this particular search (e.g., rare certifications, specialized materials, relevant province)
+- Mentions company size where it is relevant to the query context
+
+If active filters shaped the results, briefly note how in one sentence after the company paragraphs.
+
+Close with a single sentence recommending a concrete next step (e.g., direct outreach, requesting a capability statement, visiting their site).
+
+Do not invent any company names, capabilities, certifications, or other details not present in the data above.`;
 
     let summary: string;
 

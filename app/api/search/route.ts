@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     }
 
     const queryEmbedding = await embedQuery(query);
-    const results = searchCompanies(queryEmbedding, filters || {}, 20);
+    const results = searchCompanies(queryEmbedding, filters || {}, 5);
 
     return NextResponse.json({ results, total: results.length });
   } catch (error: unknown) {
