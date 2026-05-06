@@ -16,6 +16,9 @@ export interface CompanyMetadata {
   materials: string;
   province: string;
   company_size: string;
+  lat?: number;
+  lng?: number;
+  city?: string;
 }
 
 export interface SearchResult {

@@ -32,7 +32,8 @@ function matchesFilter(company: CompanyRecord, filters: Record<string, string[]>
   for (const [key, values] of Object.entries(filters)) {
     if (!values || values.length === 0) continue;
 
-    const field = company.metadata[key as keyof typeof company.metadata] || "";
+    const raw = company.metadata[key as keyof typeof company.metadata];
+    const field = typeof raw === "string" ? raw : "";
 
     if (key === "province" || key === "company_size") {
       if (!values.includes(field)) return false;
@@ -85,4 +86,35 @@ export function searchCompanies(
 function splitField(field: string): string[] {
   if (!field) return [];
   return field.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+export interface MapCompany {
+  company_name: string;
+  site: string;
+  homepage: string;
+  province: string;
+  city?: string;
+  lat: number;
+  lng: number;
+  sectors: string[];
+}
+
+export function getMapCompanies(): MapCompany[] {
+  const index = loadIndex();
+  const results: MapCompany[] = [];
+  for (const company of index.companies) {
+    const m = company.metadata;
+    if (m.lat == null || m.lng == null) continue;
+    results.push({
+      company_name: m.company_name,
+      site: m.site,
+      homepage: m.homepage || `https://${m.site}`,
+      province: m.province,
+      city: m.city,
+      lat: m.lat,
+      lng: m.lng,
+      sectors: splitField(m.sectors),
+    });
+  }
+  return results;
 }
