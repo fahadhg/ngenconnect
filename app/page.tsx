@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { getFilteredOptions } from "@/lib/filterMap";
 
 interface SearchResult {
   company_name: string;
@@ -40,6 +41,57 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Derived filter options based on current sector + capability selections
+  const availableOptions = useMemo(() => {
+    if (!filterOptions) return filterOptions;
+    const { capabilities, certifications, materials } = getFilteredOptions(
+      {
+        capabilities: filterOptions.capabilities,
+        certifications: filterOptions.certifications,
+        materials: filterOptions.materials,
+      },
+      filters.sectors || [],
+      filters.capabilities || []
+    );
+    return { ...filterOptions, capabilities, certifications, materials };
+  }, [filterOptions, filters.sectors, filters.capabilities]);
+
+  function handleSectorChange(newSectors: string[]) {
+    if (!filterOptions) return;
+    const derived = getFilteredOptions(
+      { capabilities: filterOptions.capabilities, certifications: filterOptions.certifications, materials: filterOptions.materials },
+      newSectors,
+      []
+    );
+    const capSet = new Set(derived.capabilities);
+    const certSet = new Set(derived.certifications);
+    const matSet = new Set(derived.materials);
+    setFilters((prev) => ({
+      ...prev,
+      sectors: newSectors,
+      capabilities: (prev.capabilities || []).filter((c) => capSet.has(c)),
+      certifications: (prev.certifications || []).filter((c) => certSet.has(c)),
+      materials: (prev.materials || []).filter((m) => matSet.has(m)),
+    }));
+  }
+
+  function handleCapabilityChange(newCapabilities: string[]) {
+    if (!filterOptions) return;
+    const derived = getFilteredOptions(
+      { capabilities: filterOptions.capabilities, certifications: filterOptions.certifications, materials: filterOptions.materials },
+      filters.sectors || [],
+      newCapabilities
+    );
+    const certSet = new Set(derived.certifications);
+    const matSet = new Set(derived.materials);
+    setFilters((prev) => ({
+      ...prev,
+      capabilities: newCapabilities,
+      certifications: (prev.certifications || []).filter((c) => certSet.has(c)),
+      materials: (prev.materials || []).filter((m) => matSet.has(m)),
+    }));
+  }
 
   useEffect(() => {
     fetch("/api/search")
@@ -140,38 +192,41 @@ export default function Home() {
               label="Sector / Industry"
               options={filterOptions?.sectors || []}
               selected={filters.sectors || []}
-              onChange={(v) => setFilters({ ...filters, sectors: v })}
+              onChange={handleSectorChange}
             />
             <FilterSection
               label="Capabilities"
-              options={filterOptions?.capabilities || []}
+              options={availableOptions?.capabilities || filterOptions?.capabilities || []}
               selected={filters.capabilities || []}
-              onChange={(v) => setFilters({ ...filters, capabilities: v })}
+              onChange={handleCapabilityChange}
+              dimmed={(filters.sectors || []).length > 0 && (availableOptions?.capabilities.length ?? 0) < (filterOptions?.capabilities.length ?? 0)}
             />
             <FilterSection
               label="Certifications"
-              options={filterOptions?.certifications || []}
+              options={availableOptions?.certifications || filterOptions?.certifications || []}
               selected={filters.certifications || []}
-              onChange={(v) => setFilters({ ...filters, certifications: v })}
+              onChange={(v) => setFilters((prev) => ({ ...prev, certifications: v }))}
+              dimmed={(filters.sectors || []).length > 0 && (availableOptions?.certifications.length ?? 0) < (filterOptions?.certifications.length ?? 0)}
             />
             <FilterSection
               label="Materials"
-              options={filterOptions?.materials || []}
+              options={availableOptions?.materials || filterOptions?.materials || []}
               selected={filters.materials || []}
-              onChange={(v) => setFilters({ ...filters, materials: v })}
+              onChange={(v) => setFilters((prev) => ({ ...prev, materials: v }))}
+              dimmed={(filters.sectors || []).length > 0 && (availableOptions?.materials.length ?? 0) < (filterOptions?.materials.length ?? 0)}
             />
             <FilterSection
               label="Province"
               options={filterOptions?.provinces || []}
               selected={filters.province || []}
-              onChange={(v) => setFilters({ ...filters, province: v })}
+              onChange={(v) => setFilters((prev) => ({ ...prev, province: v }))}
               single
             />
             <FilterSection
               label="Company Size"
               options={filterOptions?.company_sizes || []}
               selected={filters.company_size || []}
-              onChange={(v) => setFilters({ ...filters, company_size: v })}
+              onChange={(v) => setFilters((prev) => ({ ...prev, company_size: v }))}
               single
             />
           </div>
@@ -436,12 +491,14 @@ function FilterSection({
   selected,
   onChange,
   single = false,
+  dimmed = false,
 }: {
   label: string;
   options: string[];
   selected: string[];
   onChange: (val: string[]) => void;
   single?: boolean;
+  dimmed?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -473,6 +530,11 @@ function FilterSection({
           {selected.length > 0 && (
             <span className="text-[10px] bg-ngen-red/10 text-ngen-red px-1.5 py-0.5 rounded font-bold">
               {selected.length}
+            </span>
+          )}
+          {dimmed && selected.length === 0 && (
+            <span className="text-[10px] text-gray-400 font-normal">
+              {options.length} relevant
             </span>
           )}
         </span>
