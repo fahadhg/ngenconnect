@@ -63,7 +63,25 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [statsOpen, setStatsOpen] = useState(false);
   const [usageStats, setUsageStats] = useState<UsageStat[]>([]);
+  const [statsHydrated, setStatsHydrated] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Rehydrate from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("ngen_usage_stats");
+      if (stored) setUsageStats(JSON.parse(stored));
+    } catch {}
+    setStatsHydrated(true);
+  }, []);
+
+  // Persist to localStorage whenever stats change (skip before hydration)
+  useEffect(() => {
+    if (!statsHydrated) return;
+    try {
+      localStorage.setItem("ngen_usage_stats", JSON.stringify(usageStats));
+    } catch {}
+  }, [usageStats, statsHydrated]);
 
   // Derived filter options based on current sector + capability selections
   const availableOptions = useMemo(() => {
@@ -458,10 +476,18 @@ export default function Home() {
             } transition-all duration-300 bg-white border-l border-gray-200 flex-shrink-0 overflow-hidden`}
           >
             <div className="w-72 h-full flex flex-col">
-              <div className="px-5 py-4 border-b border-gray-100">
+              <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
                 <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                   API Usage
                 </p>
+                {usageStats.length > 0 && (
+                  <button
+                    onClick={() => setUsageStats([])}
+                    className="text-[11px] text-gray-400 hover:text-red-500 font-semibold transition-colors"
+                  >
+                    Clear
+                  </button>
+                )}
               </div>
 
               <div className="flex-1 overflow-y-auto">
