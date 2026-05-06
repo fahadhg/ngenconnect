@@ -1,6 +1,7 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
+import { useMemo } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 
 interface MapCompany {
@@ -39,6 +40,28 @@ function getColor(province: string): string {
   return PROVINCE_COLORS[province] ?? "#6b7280";
 }
 
+// Spread co-located markers in a golden-angle spiral so they don't stack
+function computeJitteredPositions(companies: MapCompany[]): [number, number][] {
+  const groups = new Map<string, number[]>();
+  companies.forEach((c, i) => {
+    const key = `${c.lat.toFixed(3)},${c.lng.toFixed(3)}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(i);
+  });
+
+  const positions: [number, number][] = companies.map((c) => [c.lat, c.lng]);
+  for (const indices of groups.values()) {
+    if (indices.length <= 1) continue;
+    indices.forEach((idx, j) => {
+      const c = companies[idx];
+      const angle = j * 2.399963; // golden angle ≈ 137.508° in radians
+      const r = j === 0 ? 0 : 0.06 * Math.sqrt(j);
+      positions[idx] = [c.lat + r * Math.cos(angle), c.lng + r * Math.sin(angle)];
+    });
+  }
+  return positions;
+}
+
 // Tiny hook to re-fit map when filtered companies change
 function FitBounds({ companies }: { companies: MapCompany[] }) {
   const map = useMap();
@@ -48,6 +71,8 @@ function FitBounds({ companies }: { companies: MapCompany[] }) {
 }
 
 export default function CanadaMap({ companies, highlightedProvince }: Props) {
+  const jitteredPositions = useMemo(() => computeJitteredPositions(companies), [companies]);
+
   return (
     <MapContainer
       center={[56.0, -95.0]}
@@ -74,7 +99,7 @@ export default function CanadaMap({ companies, highlightedProvince }: Props) {
         return (
           <CircleMarker
             key={`${company.site}-${i}`}
-            center={[company.lat, company.lng]}
+            center={jitteredPositions[i]}
             radius={6}
             pathOptions={{
               fillColor: color,
