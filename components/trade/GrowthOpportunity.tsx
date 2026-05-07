@@ -62,13 +62,13 @@ export default function GrowthOpportunity() {
 
   useEffect(() => {
     fetch('/api/atlas/growth-opportunity')
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(d => { setData(d); setLoading(false); })
       .catch(e => { setError(e.message); setLoading(false); });
   }, []);
 
   if (loading) return <div className="h-72 flex items-center justify-center text-ink-muted text-sm">Loading growth opportunities…</div>;
-  if (error || !data) return <div className="h-72 flex items-center justify-center text-negative text-sm">Failed to load data</div>;
+  if (error || !data || !data.opportunities) return <div className="h-72 flex items-center justify-center text-negative text-sm">Failed to load data</div>;
 
   const sorted = [...data.opportunities].sort((a, b) => {
     if (sort === 'opportunity') return b.opportunityDiamonds - a.opportunityDiamonds || b.globalSize - a.globalSize;

@@ -47,7 +47,7 @@ export default function GlobalMarketShare() {
 
   useEffect(() => {
     fetch('/api/atlas/global-share')
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(d => { setData(d); setLoading(false); })
       .catch(e => { setError(e.message); setLoading(false); });
   }, []);
@@ -61,7 +61,7 @@ export default function GlobalMarketShare() {
   };
 
   if (loading) return <div className="h-72 flex items-center justify-center text-ink-muted text-sm">Loading global market share data…</div>;
-  if (error || !data) return <div className="h-72 flex items-center justify-center text-negative text-sm">Failed to load data</div>;
+  if (error || !data || !data.years || !data.sectors?.length) return <div className="h-72 flex items-center justify-center text-negative text-sm">Failed to load data</div>;
 
   // flatten to recharts format: [{ year, Vehicles: 8.2, Machinery: 3.1, ... }]
   const chartData = data.years.map(y => {

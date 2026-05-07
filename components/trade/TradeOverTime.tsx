@@ -55,13 +55,13 @@ export default function TradeOverTime() {
   useEffect(() => {
     setLoading(true);
     fetch(`/api/atlas/trade-history?mode=${mode}`)
-      .then(r => r.json())
+      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(d => { setData(d); setLoading(false); })
       .catch(e => { setError(e.message); setLoading(false); });
   }, [mode]);
 
   if (loading) return <div className="h-80 flex items-center justify-center text-ink-muted text-sm">Loading trade history…</div>;
-  if (error || !data) return <div className="h-80 flex items-center justify-center text-negative text-sm">Failed to load data</div>;
+  if (error || !data || !data.years || !data.regions) return <div className="h-80 flex items-center justify-center text-negative text-sm">Failed to load data</div>;
 
   const chartData = data.years.map(y => {
     const row: Record<string, any> = { year: y };
