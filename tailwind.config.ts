@@ -27,8 +27,8 @@ const config: Config = {
           muted: "var(--accent-muted)",
         },
         ngen: {
-          DEFAULT: "#F15A22",
-          muted: "rgba(241, 90, 34, 0.12)",
+          DEFAULT: "#C8102E",
+          muted: "rgba(200, 16, 46, 0.08)",
         },
         border: "var(--border)",
         "border-hover": "var(--border-hover)",

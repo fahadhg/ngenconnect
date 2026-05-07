@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 export default function IntelPage() {
   return (
-    <div className="trade-theme min-h-screen bg-surface-0 text-ink font-sans">
-      <nav className="sticky top-0 z-40 border-b border-border bg-surface-0/90 backdrop-blur-sm">
+    <div className="trade-theme min-h-screen bg-gray-50">
+      <nav className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-6 h-12 text-sm">
-          <Link href="/trade" className="font-semibold text-ngen">Trade Intelligence</Link>
-          <Link href="/trade" className="text-ink-muted hover:text-ink transition-colors">Industries</Link>
-          <Link href="/trade/browse" className="text-ink-muted hover:text-ink transition-colors">Imports</Link>
-          <Link href="/trade/exports" className="text-ink-muted hover:text-ink transition-colors">Exports</Link>
-          <Link href="/trade/intel" className="text-ink font-medium">Intel</Link>
+          <Link href="/trade" className="font-semibold text-ngen-red">Trade Intelligence</Link>
+          <Link href="/trade" className="text-gray-500 hover:text-gray-900 transition-colors">Industries</Link>
+          <Link href="/trade/browse" className="text-gray-500 hover:text-gray-900 transition-colors">Imports</Link>
+          <Link href="/trade/exports" className="text-gray-500 hover:text-gray-900 transition-colors">Exports</Link>
+          <Link href="/trade/intel" className="text-gray-900 font-semibold">Intel</Link>
         </div>
       </nav>
       <main className="min-h-screen">

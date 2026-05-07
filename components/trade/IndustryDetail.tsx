@@ -159,7 +159,7 @@ export default function IndustryDetail({ section, codes, importData, usRates, su
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
           <div className="bg-surface-1 border border-border rounded-lg p-3">
             <div className="text-[10px] text-ink-faint uppercase tracking-wider mb-1">Total Imports</div>
-            <div className="font-mono text-lg font-semibold" style={{ color: '#F15A22' }}>
+            <div className="font-mono text-lg font-semibold" style={{ color: '#C8102E' }}>
               {section.totalImports > 0 ? fmtVal(section.totalImports) : '—'}
             </div>
           </div>

@@ -2,25 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Trade Intelligence dark-theme CSS variables (used by /trade/* pages) ── */
+/* ── Trade Intelligence — light theme matching NGen Connect ── */
 .trade-theme {
-  --surface-0: #0a0c0f;
-  --surface-1: #111318;
-  --surface-2: #181b21;
-  --surface-3: #22262e;
-  --ink: #f0f2f5;
-  --ink-muted: #9ca3af;
-  --ink-faint: #5a6272;
-  --accent: #F15A22;
-  --accent-muted: rgba(241, 90, 34, 0.12);
-  --positive: #10b981;
-  --positive-muted: rgba(16, 185, 129, 0.10);
-  --negative: #ef4444;
-  --negative-muted: rgba(239, 68, 68, 0.10);
-  --warn: #f59e0b;
-  --warn-muted: rgba(245, 158, 11, 0.10);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.15);
+  --surface-0: #f9fafb;
+  --surface-1: #ffffff;
+  --surface-2: #f3f4f6;
+  --surface-3: #e5e7eb;
+  --ink: #111827;
+  --ink-muted: #6b7280;
+  --ink-faint: #9ca3af;
+  --accent: #C8102E;
+  --accent-muted: rgba(200, 16, 46, 0.08);
+  --positive: #059669;
+  --positive-muted: rgba(5, 150, 105, 0.10);
+  --negative: #dc2626;
+  --negative-muted: rgba(220, 38, 38, 0.10);
+  --warn: #d97706;
+  --warn-muted: rgba(217, 119, 6, 0.10);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.16);
 }
 
 /* Trade-theme utility classes */

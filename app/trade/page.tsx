@@ -74,15 +74,15 @@ export default async function TradePage() {
   const surtaxCodes = sections.reduce((s, sec) => s + sec.surtaxAffected, 0);
 
   return (
-    <div className="trade-theme min-h-screen bg-surface-0 text-ink font-sans">
+    <div className="trade-theme min-h-screen bg-gray-50">
       {/* Sub-nav */}
-      <nav className="sticky top-0 z-40 border-b border-border bg-surface-0/90 backdrop-blur-sm">
+      <nav className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-6 h-12 text-sm">
-          <Link href="/trade" className="font-semibold text-ngen">Trade Intelligence</Link>
-          <Link href="/trade" className="text-ink-muted hover:text-ink transition-colors">Industries</Link>
-          <Link href="/trade/browse" className="text-ink-muted hover:text-ink transition-colors">Imports</Link>
-          <Link href="/trade/exports" className="text-ink-muted hover:text-ink transition-colors">Exports</Link>
-          <Link href="/trade/intel" className="text-ink-muted hover:text-ink transition-colors">Intel</Link>
+          <Link href="/trade" className="font-semibold text-ngen-red">Trade Intelligence</Link>
+          <Link href="/trade" className="text-gray-500 hover:text-gray-900 transition-colors">Industries</Link>
+          <Link href="/trade/browse" className="text-gray-500 hover:text-gray-900 transition-colors">Imports</Link>
+          <Link href="/trade/exports" className="text-gray-500 hover:text-gray-900 transition-colors">Exports</Link>
+          <Link href="/trade/intel" className="text-gray-500 hover:text-gray-900 transition-colors">Intel</Link>
         </div>
       </nav>
 
