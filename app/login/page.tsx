@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { testSignIn, testSignUp } from "@/lib/test-auth";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -12,8 +12,6 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const supabase = createClient();
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -21,25 +19,19 @@ export default function LoginPage() {
     setMessage("");
 
     if (mode === "login") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-      } else {
+      const result = await testSignIn(email, password);
+      if (result.success) {
         window.location.href = "/";
+      } else {
+        setError(result.error || "Login failed");
+        setLoading(false);
       }
     } else {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { full_name: fullName } },
-      });
-      if (error) {
-        setError(error.message);
-        setLoading(false);
+      const result = await testSignUp(email, password, fullName);
+      if (result.success) {
+        window.location.href = "/";
       } else {
-        setMessage("Account created. Check your email to confirm, then log in.");
-        setMode("login");
+        setError(result.error || "Signup failed");
         setLoading(false);
       }
     }
@@ -65,8 +57,13 @@ export default function LoginPage() {
           </div>
         </div>
 
+        {/* Test Mode Banner */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 mb-4 text-center">
+          <p className="text-xs text-amber-700 font-medium">Test Mode - Enter any email/password to sign in</p>
+        </div>
+
         {/* Card */}
-        <div className="bg-white/95 backdrop-blur-sm border border-gray-200/80 rounded-2xl p-8 shadow-lg overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-sm border border-gray-200/80 rounded-2xl p-8 shadow-lg overflow-hidden relative">
           {/* Accent bar */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-ngen-orange to-orange-600" />
 

@@ -1,63 +1,13 @@
-import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request });
-
-  // Skip auth check if Supabase credentials are not configured
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
-  if (!supabaseUrl || !supabaseKey) {
-    return supabaseResponse;
-  }
-
-  const supabase = createServerClient(
-    supabaseUrl,
-    supabaseKey,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          );
-          supabaseResponse = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
-  );
-
-  // Refresh session — required for Server Components to stay in sync
-  const { data: { user } } = await supabase.auth.getUser();
-
-  const { pathname } = request.nextUrl;
-  const isLoginPage = pathname === "/login";
-
-  // Not authenticated and not on login → redirect to login
-  if (!user && !isLoginPage) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
-
-  // Authenticated and on login → redirect to home
-  if (user && isLoginPage) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
-  }
-
-  return supabaseResponse;
+  // Test auth mode - skip Supabase authentication entirely
+  // This allows full access to the app for UI testing
+  // Remove this and restore Supabase auth for production
+  return NextResponse.next({ request });
 }
 
 export const config = {
-  // Protect all page routes; leave API routes, static files, and auth callback unprotected
   matcher: [
     "/((?!_next/static|_next/image|favicon.ico|api|auth).*)",
   ],

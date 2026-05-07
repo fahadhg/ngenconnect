@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
+import { getTestUser, testSignOut, isTestAuthEnabled } from "@/lib/test-auth";
 
 const NAV = [
   {
@@ -76,25 +76,22 @@ export default function NavSidebar() {
   const pathname = usePathname();
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
-  
-  let supabase;
-  try {
-    supabase = createClient();
-  } catch (error) {
-    console.warn("Supabase not configured, running in limited mode");
-    supabase = null;
-  }
 
   useEffect(() => {
-    if (!supabase) return;
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    // Use test auth
+    if (isTestAuthEnabled()) {
+      const user = getTestUser();
       if (user) {
         setUserEmail(user.email || "");
         setUserName(user.user_metadata?.full_name || user.email?.split("@")[0] || "");
       }
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
   }, []);
+
+  const handleSignOut = () => {
+    testSignOut();
+    window.location.href = "/login";
+  };
 
   return (
     <aside className="w-56 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 shadow-sm">
@@ -141,15 +138,11 @@ export default function NavSidebar() {
             {userName?.[0] || userEmail?.[0] || "?"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-gray-700 truncate leading-tight">{userName}</p>
-            <p className="text-[11px] text-gray-400 truncate leading-tight">{userEmail}</p>
+            <p className="text-xs font-semibold text-gray-700 truncate leading-tight">{userName || "Test User"}</p>
+            <p className="text-[11px] text-gray-400 truncate leading-tight">{userEmail || "test@example.com"}</p>
           </div>
           <button
-            onClick={() => {
-              if (supabase) {
-                supabase.auth.signOut().then(() => { window.location.href = "/login"; });
-              }
-            }}
+            onClick={handleSignOut}
             className="flex-shrink-0 text-gray-300 hover:text-ngen-orange transition-colors duration-150 opacity-0 group-hover:opacity-100"
             title="Sign out"
           >
