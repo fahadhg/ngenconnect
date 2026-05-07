@@ -148,8 +148,8 @@ export default function TradeGlobe() {
         </div>
       </div>
 
-      {/* Globe container */}
-      <div ref={containerRef} className="relative bg-[#050911]" style={{ height: 500 }}>
+      {/* Globe container — pointer-events:none so the canvas doesn't swallow page scroll/clicks */}
+      <div ref={containerRef} className="relative bg-[#050911] overflow-hidden" style={{ height: 500, pointerEvents: 'none' }}>
         {loading ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
             <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
