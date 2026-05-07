@@ -89,11 +89,11 @@ export default function NavSidebar() {
   }, []);
 
   return (
-    <aside className="w-56 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 shadow-sm-soft">
+    <aside className="w-56 bg-white border-r border-gray-200 flex flex-col flex-shrink-0 shadow-sm">
       {/* Logo & Branding */}
       <div className="px-4 py-5 border-b border-gray-100 bg-gradient-to-br from-gray-50 to-white">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-ngen-orange to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md-soft">
+          <div className="w-8 h-8 bg-gradient-to-br from-ngen-orange to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
             <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
             </svg>
@@ -129,7 +129,7 @@ export default function NavSidebar() {
       {/* User footer */}
       <div className="border-t border-gray-100 p-3 bg-gradient-to-t from-gray-50 to-white">
         <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-gray-50 transition-colors duration-150 group">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-ngen-orange to-orange-600 flex items-center justify-center flex-shrink-0 text-white text-xs font-bold shadow-sm-soft">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-ngen-orange to-orange-600 flex items-center justify-center flex-shrink-0 text-white text-xs font-bold shadow-sm">
             {userName?.[0] || userEmail?.[0] || "?"}
           </div>
           <div className="flex-1 min-w-0">
