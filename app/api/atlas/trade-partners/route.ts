@@ -1,21 +1,6 @@
 import { NextResponse } from 'next/server';
+import { atlas } from '@/lib/atlas/data';
 
-const GQL = 'https://atlas.hks.harvard.edu/api/graphql';
-
-async function gql(query: string) {
-  const res = await fetch(GQL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query }),
-    next: { revalidate: 86400 },
-  });
-  if (!res.ok) throw new Error(`GraphQL fetch failed: ${res.status}`);
-  const json = await res.json();
-  if (json.errors) throw new Error(json.errors[0].message);
-  return json.data;
-}
-
-// Country centroids by ISO3 code
 const COORDS: Record<string, [number, number]> = {
   USA: [37.09, -95.71], CHN: [35.86, 104.19], MEX: [23.63, -102.55],
   JPN: [36.20, 138.25], DEU: [51.17, 10.45], GBR: [55.38, -3.44],
@@ -35,61 +20,46 @@ const COORDS: Record<string, [number, number]> = {
   EGY: [26.82, 30.80], BGR: [42.73, 25.49], ROU: [45.94, 24.97],
   UKR: [48.38, 31.17], HRV: [45.10, 15.20], KAZ: [48.02, 66.92],
   DZA: [28.03, 1.66], MAR: [31.79, -7.09], PER: [-9.19, -75.02],
-  NGA: [9.08, 8.68], BAN: [23.68, 90.36], ECU: [-1.83, -78.18],
-  GTM: [15.78, -90.23], CRI: [9.75, -83.75], CIV: [7.54, -5.55],
+  NGA: [9.08, 8.68], ECU: [-1.83, -78.18], GTM: [15.78, -90.23],
+  CRI: [9.75, -83.75], CIV: [7.54, -5.55],
 };
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  // bilateral data is only available through 2022
-  const year = parseInt(searchParams.get('year') ?? '2022', 10);
+  const year = Math.min(2022, parseInt(searchParams.get('year') ?? '2022', 10));
 
   try {
-    const [tradeData, countryMeta] = await Promise.all([
-      gql(`{
-        countryCountryYear(countryId: 124, yearMin: ${year}, yearMax: ${year}) {
-          partnerCountryId exportValue importValue
-        }
-      }`),
-      gql(`{
-        locationCountry { countryId iso3Code nameShortEn }
-      }`),
-    ]);
+    const bilateral = atlas.canadaBilateral();
+    const countries = atlas.countries();
 
-    const metaMap = new Map<string, { iso3: string; name: string }>();
-    for (const c of countryMeta.locationCountry) {
-      metaMap.set(c.countryId, { iso3: c.iso3Code, name: c.nameShortEn });
-    }
+    const metaMap = new Map(
+      countries.map(c => [c.countryId, { iso3: c.iso3Code, name: c.nameShortEn }])
+    );
 
-    const partners = tradeData.countryCountryYear
-      .map((r: any) => {
+    const partners = bilateral
+      .filter(r => r.year === year)
+      .map(r => {
         const meta = metaMap.get(r.partnerCountryId);
         if (!meta) return null;
         const coords = COORDS[meta.iso3];
         if (!coords) return null;
         return {
           partnerCountryId: r.partnerCountryId,
-          name: meta.name,
-          iso3: meta.iso3,
-          lat: coords[0],
-          lng: coords[1],
+          name:       meta.name,
+          iso3:       meta.iso3,
+          lat:        coords[0],
+          lng:        coords[1],
           exportValue: r.exportValue ?? 0,
           importValue: r.importValue ?? 0,
-          totalTrade: (r.exportValue ?? 0) + (r.importValue ?? 0),
+          totalTrade:  (r.exportValue ?? 0) + (r.importValue ?? 0),
         };
       })
-      .filter(Boolean)
-      .filter((r: any) => r.totalTrade > 0)
-      .sort((a: any, b: any) => b.totalTrade - a.totalTrade)
+      .filter((r): r is NonNullable<typeof r> => r !== null && r.totalTrade > 0)
+      .sort((a, b) => b.totalTrade - a.totalTrade)
       .slice(0, 50);
 
-    return NextResponse.json({
-      status: 'ok',
-      year,
-      partners,
-    });
+    return NextResponse.json({ status: 'ok', year, partners });
   } catch (e: any) {
-    console.error('[trade-partners]', e.message);
     return NextResponse.json({ status: 'error', message: e.message }, { status: 500 });
   }
 }

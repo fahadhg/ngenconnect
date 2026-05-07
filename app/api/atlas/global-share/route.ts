@@ -1,19 +1,5 @@
 import { NextResponse } from 'next/server';
-
-const GQL = 'https://atlas.hks.harvard.edu/api/graphql';
-
-async function gql(query: string) {
-  const res = await fetch(GQL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query }),
-    next: { revalidate: 86400 },
-  });
-  if (!res.ok) throw new Error(`GraphQL fetch failed: ${res.status}`);
-  const json = await res.json();
-  if (json.errors) throw new Error(json.errors[0].message);
-  return json.data;
-}
+import { atlas } from '@/lib/atlas/data';
 
 const SECTOR_COLORS: Record<string, string> = {
   '0': '#e8b84b', '1': '#5aaa3c', '2': '#999999', '3': '#c4a35a',
@@ -28,41 +14,25 @@ const SECTOR_NAMES: Record<string, string> = {
 
 export async function GET() {
   try {
-    const [sectorData, sectorMeta] = await Promise.all([
-      gql(`{
-        countryProductYear(countryId: 124, productClass: HS92, productLevel: 1,
-          yearMin: 1995, yearMax: 2024) {
-          productId year globalMarketShare exportValue
-        }
-      }`),
-      gql(`{
-        productHs92(productLevel: 1) {
-          productId code nameShortEn
-        }
-      }`),
-    ]);
+    const sectorRows = atlas.canadaSectorYear();
+    const sectors    = atlas.sectors();
 
-    const codeMap = new Map<string, string>();
-    const nameMap = new Map<string, string>();
-    for (const p of sectorMeta.productHs92) {
-      codeMap.set(p.productId, p.code);
-      nameMap.set(p.productId, p.nameShortEn);
-    }
+    const codeMap = new Map(sectors.map(s => [s.productId, s.code]));
+    const nameMap = new Map(sectors.map(s => [s.productId, s.nameShortEn]));
 
     const years = Array.from(
-      new Set(sectorData.countryProductYear.map((r: any) => r.year))
-    ).sort() as number[];
+      new Set(sectorRows.map(r => r.year))
+    ).sort((a, b) => a - b);
 
-    // group by sector code
     const bySector = new Map<string, { name: string; yearMap: Map<number, number> }>();
-    for (const row of sectorData.countryProductYear) {
+    for (const row of sectorRows) {
       const code = codeMap.get(row.productId) ?? '9';
       const name = nameMap.get(row.productId) ?? SECTOR_NAMES[code] ?? 'Other';
       if (!bySector.has(code)) bySector.set(code, { name, yearMap: new Map() });
       bySector.get(code)!.yearMap.set(row.year, (row.globalMarketShare ?? 0) * 100);
     }
 
-    const sectors = Array.from(bySector.entries()).map(([code, { name, yearMap }]) => ({
+    const sectorList = Array.from(bySector.entries()).map(([code, { name, yearMap }]) => ({
       code,
       name: SECTOR_NAMES[code] ?? name,
       color: SECTOR_COLORS[code] ?? '#888888',
@@ -74,15 +44,15 @@ export async function GET() {
     });
 
     const latestYear = years[years.length - 1];
-    const largest = sectors.reduce((best, s) => {
-      const share = s.data.find(d => d.year === latestYear)?.share ?? 0;
+    const largest = sectorList.reduce((best, s) => {
+      const share     = s.data.find(d => d.year === latestYear)?.share ?? 0;
       const bestShare = best.data.find(d => d.year === latestYear)?.share ?? 0;
       return share > bestShare ? s : best;
     });
 
     return NextResponse.json({
       years,
-      sectors,
+      sectors:      sectorList,
       largestSector: largest.name,
       largestShare: +(largest.data.find(d => d.year === latestYear)?.share ?? 0).toFixed(2),
     });
