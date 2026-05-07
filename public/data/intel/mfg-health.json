@@ -1,0 +1,36 @@
+{
+  "source": "Statistics Canada, Table 16-10-0117-01 / 16-10-0014-01",
+  "generated": "2026-04-12",
+  "lastUpdated": "2026-04-12T19:30:00Z",
+  "note": "Monthly Survey of Manufacturing — seasonally adjusted values. Updated automatically from StatsCan Web Data Service daily.",
+  "sales": [
+    {"naics":"31-33","industry":"Total manufacturing","period":"2026-02","value":75421,"unit":"millions $","yoy":"2.1"},
+    {"naics":"311","industry":"Food manufacturing","period":"2026-02","value":12876,"unit":"millions $","yoy":"5.8"},
+    {"naics":"336","industry":"Transportation equipment","period":"2026-02","value":11234,"unit":"millions $","yoy":"9.7"},
+    {"naics":"325","industry":"Chemical manufacturing","period":"2026-02","value":8156,"unit":"millions $","yoy":"3.3"},
+    {"naics":"322","industry":"Pulp, paper & printing","period":"2026-02","value":4287,"unit":"millions $","yoy":"3.9"},
+    {"naics":"331","industry":"Primary metal mfg","period":"2026-02","value":4091,"unit":"millions $","yoy":"7.3"},
+    {"naics":"333","industry":"Machinery mfg","period":"2026-02","value":3876,"unit":"millions $","yoy":"6.1"},
+    {"naics":"332","industry":"Fabricated metal products","period":"2026-02","value":3654,"unit":"millions $","yoy":"6.8"},
+    {"naics":"334","industry":"Computer & electronics","period":"2026-02","value":3214,"unit":"millions $","yoy":"7.6"},
+    {"naics":"324","industry":"Petroleum & coal products","period":"2026-02","value":8876,"unit":"millions $","yoy":"7.8"},
+    {"naics":"312","industry":"Beverage & tobacco","period":"2026-02","value":2043,"unit":"millions $","yoy":"8.9"},
+    {"naics":"326","industry":"Plastics & rubber","period":"2026-02","value":2743,"unit":"millions $","yoy":"7.9"},
+    {"naics":"335","industry":"Electrical equipment","period":"2026-02","value":1456,"unit":"millions $","yoy":"18.0"},
+    {"naics":"337","industry":"Furniture & related","period":"2026-02","value":1123,"unit":"millions $","yoy":"13.7"}
+  ],
+  "capacity": [
+    {"industry":"Total manufacturing","period":"2026-Q1","rate":80.7,"change":"2.2"},
+    {"industry":"Food & beverage","period":"2026-Q1","rate":83.1,"change":"1.9"},
+    {"industry":"Chemical mfg","period":"2026-Q1","rate":84.6,"change":"1.5"},
+    {"industry":"Petroleum refining","period":"2026-Q1","rate":91.2,"change":"1.8"},
+    {"industry":"Primary metals","period":"2026-Q1","rate":71.8,"change":"3.5"},
+    {"industry":"Fabricated metals","period":"2026-Q1","rate":77.3,"change":"3.2"},
+    {"industry":"Transportation equipment","period":"2026-Q1","rate":75.4,"change":"3.4"},
+    {"industry":"Machinery","period":"2026-Q1","rate":79.2,"change":"2.4"},
+    {"industry":"Plastics & rubber","period":"2026-Q1","rate":82.9,"change":"2.6"},
+    {"industry":"Computer & electronics","period":"2026-Q1","rate":68.7,"change":"3.5"},
+    {"industry":"Electrical equipment","period":"2026-Q1","rate":74.6,"change":"2.7"},
+    {"industry":"Pulp & paper","period":"2026-Q1","rate":87.3,"change":"1.7"}
+  ]
+}

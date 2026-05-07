@@ -1,0 +1,43 @@
+{
+  "source": "Statistics Canada, Table 12-10-0011-01 + Global Affairs Canada",
+  "generated": "2025-Q1",
+  "note": "Canadian merchandise exports 2024, by top destination. Values in CAD millions.",
+  "topDestinations": [
+    {"country":"US","name":"United States","value":547823000000,"hasFTA":true,"ftaName":"CUSMA","share":75.2},
+    {"country":"CN","name":"China","value":36214000000,"hasFTA":false,"ftaName":null,"share":5.0},
+    {"country":"JP","name":"Japan","value":14312000000,"hasFTA":true,"ftaName":"CPTPP","share":2.0},
+    {"country":"GB","name":"United Kingdom","value":21847000000,"hasFTA":true,"ftaName":"CUKTCA","share":3.0},
+    {"country":"DE","name":"Germany","value":11234000000,"hasFTA":true,"ftaName":"CETA","share":1.5},
+    {"country":"KR","name":"South Korea","value":8234000000,"hasFTA":true,"ftaName":"CKFTA","share":1.1},
+    {"country":"MX","name":"Mexico","value":7891000000,"hasFTA":true,"ftaName":"CUSMA","share":1.1},
+    {"country":"NL","name":"Netherlands","value":7123000000,"hasFTA":true,"ftaName":"CETA","share":1.0},
+    {"country":"IN","name":"India","value":6543000000,"hasFTA":false,"ftaName":null,"share":0.9},
+    {"country":"BE","name":"Belgium","value":5432000000,"hasFTA":true,"ftaName":"CETA","share":0.7},
+    {"country":"FR","name":"France","value":5123000000,"hasFTA":true,"ftaName":"CETA","share":0.7},
+    {"country":"IT","name":"Italy","value":4321000000,"hasFTA":true,"ftaName":"CETA","share":0.6},
+    {"country":"AU","name":"Australia","value":3987000000,"hasFTA":true,"ftaName":"CPTPP","share":0.5},
+    {"country":"SA","name":"Saudi Arabia","value":3241000000,"hasFTA":false,"ftaName":null,"share":0.4},
+    {"country":"SG","name":"Singapore","value":2876000000,"hasFTA":true,"ftaName":"CPTPP","share":0.4}
+  ],
+  "partnerRates": {
+    "US":  {"72":50.0,"73":50.0,"76":35.0,"84":25.0,"87":50.0,"default":25.0},
+    "EU":  {"72":3.7, "73":3.7, "76":3.0, "84":1.7, "87":6.5, "default":3.5},
+    "UK":  {"72":4.0, "73":4.0, "76":3.0, "84":2.0, "87":6.5, "default":4.0},
+    "JP":  {"72":3.9, "73":3.9, "76":0.0, "84":0.0, "87":0.0, "default":2.5},
+    "MX":  {"72":0.0, "73":0.0, "76":0.0, "84":0.0, "87":0.0, "default":0.0},
+    "KR":  {"72":5.5, "73":5.5, "76":4.0, "84":5.0, "87":8.0, "default":5.5},
+    "CN":  {"72":10.0,"73":10.0,"76":8.0, "84":6.0, "87":10.0,"default":9.0},
+    "IN":  {"72":17.5,"73":17.5,"76":7.5, "84":7.5, "87":12.5,"default":12.5},
+    "AU":  {"72":0.0, "73":0.0, "76":0.0, "84":0.0, "87":5.0, "default":2.0},
+    "SG":  {"72":0.0, "73":0.0, "76":0.0, "84":0.0, "87":0.0, "default":0.0}
+  },
+  "byChapter": {
+    "72": {"topDest":"US","topShare":68,"secondDest":"CN","secondShare":8,"note":"Steel: US 50% tariff (S232+IEEPA) severely impacts exports"},
+    "73": {"topDest":"US","topShare":82,"secondDest":"EU","secondShare":5,"note":"Steel articles: US 50% tariff; CETA/CPTPP diversification opportunity"},
+    "84": {"topDest":"US","topShare":71,"secondDest":"EU","secondShare":8,"note":"Machinery: 25% IEEPA applies"},
+    "87": {"topDest":"US","topShare":88,"secondDest":"EU","secondShare":4,"note":"Vehicles: S232 autos + IEEPA = 50%; highly concentrated in US"},
+    "76": {"topDest":"US","topShare":64,"secondDest":"JP","secondShare":9,"note":"Aluminum: US 35% tariff; Japan/CPTPP preferred at 0%"},
+    "27": {"topDest":"US","topShare":91,"secondDest":"JP","secondShare":3,"note":"Energy: US 25% IEEPA; highly US-dependent"},
+    "10": {"topDest":"US","topShare":45,"secondDest":"CN","secondShare":25,"note":"Cereals: Diversified; China faces no FTA but large market"}
+  }
+}

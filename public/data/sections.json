@@ -1,0 +1,837 @@
+[
+  {
+    "id": 1,
+    "slug": "live-animals-animal-products",
+    "name": "Live Animals & Animal Products",
+    "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "description": "Live animals, meat, fish, dairy, eggs, honey",
+    "codeCount": 714,
+    "dutiableCount": 140,
+    "totalImports": 5384380386,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 2961409248
+      },
+      {
+        "k": "NZ",
+        "n": "NZ",
+        "v": 430749774
+      },
+      {
+        "k": "AU",
+        "n": "AU",
+        "v": 376906320
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "slug": "vegetable-products",
+    "name": "Vegetable Products",
+    "chapters": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "description": "Plants, vegetables, fruit, nuts, coffee, spices, cereals",
+    "codeCount": 713,
+    "dutiableCount": 97,
+    "totalImports": 10110297933,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 5055148610
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 1516544583
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 808823635
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "slug": "animal-vegetable-fats",
+    "name": "Animal & Vegetable Fats & Oils",
+    "chapters": [
+      15
+    ],
+    "description": "Edible fats, oils, and waxes",
+    "codeCount": 78,
+    "dutiableCount": 29,
+    "totalImports": 817834992,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 368025684
+      },
+      {
+        "k": "MY",
+        "n": "MY",
+        "v": 98140146
+      },
+      {
+        "k": "ID",
+        "n": "ID",
+        "v": 81783468
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "slug": "prepared-foodstuffs",
+    "name": "Prepared Foodstuffs & Beverages",
+    "chapters": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ],
+    "description": "Processed foods, beverages, sugar, tobacco",
+    "codeCount": 863,
+    "dutiableCount": 252,
+    "totalImports": 22703731508,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 10897790537
+      },
+      {
+        "k": "IT",
+        "n": "IT",
+        "v": 1362223062
+      },
+      {
+        "k": "FR",
+        "n": "FR",
+        "v": 1362223062
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "mineral-products",
+    "name": "Mineral Products",
+    "chapters": [
+      25,
+      26,
+      27
+    ],
+    "description": "Salt, sulphur, ores, mineral fuels, oils",
+    "codeCount": 236,
+    "dutiableCount": 6,
+    "totalImports": 54856830080,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 41755687624
+      },
+      {
+        "k": "NG",
+        "n": "NG",
+        "v": 2175459985
+      },
+      {
+        "k": "SA",
+        "n": "SA",
+        "v": 2044185838
+      },
+      {
+        "k": "NL",
+        "n": "NL",
+        "v": 1001661690
+      },
+      {
+        "k": "EC",
+        "n": "EC",
+        "v": 587707018
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "slug": "chemical-products",
+    "name": "Chemical & Allied Products",
+    "chapters": [
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38
+    ],
+    "description": "Chemicals, pharmaceuticals, fertilizers, dyes, soaps",
+    "codeCount": 1307,
+    "dutiableCount": 106,
+    "totalImports": 76304185717,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 36364408217
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 3327916691
+      },
+      {
+        "k": "DE",
+        "n": "DE",
+        "v": 2868493499
+      },
+      {
+        "k": "BR",
+        "n": "BR",
+        "v": 2372374025
+      },
+      {
+        "k": "CH",
+        "n": "CH",
+        "v": 2284967818
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "slug": "plastics-rubber",
+    "name": "Plastics & Rubber",
+    "chapters": [
+      39,
+      40
+    ],
+    "description": "Plastics, rubber and articles thereof",
+    "codeCount": 413,
+    "dutiableCount": 38,
+    "totalImports": 36911267085,
+    "surtaxAffected": 2,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 21443236771
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 5826808617
+      },
+      {
+        "k": "JP",
+        "n": "JP",
+        "v": 615748352
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 542293505
+      },
+      {
+        "k": "DE",
+        "n": "DE",
+        "v": 380280805
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "slug": "hides-leather-furskins",
+    "name": "Hides, Leather & Furskins",
+    "chapters": [
+      41,
+      42,
+      43
+    ],
+    "description": "Raw hides, leather goods, travel goods, furskins",
+    "codeCount": 115,
+    "dutiableCount": 22,
+    "totalImports": 2901893261,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 1019789306
+      },
+      {
+        "k": "VN",
+        "n": "VN",
+        "v": 323655966
+      },
+      {
+        "k": "IT",
+        "n": "IT",
+        "v": 256472001
+      },
+      {
+        "k": "KH",
+        "n": "KH",
+        "v": 155601323
+      },
+      {
+        "k": "FR",
+        "n": "FR",
+        "v": 144410083
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "slug": "wood-articles",
+    "name": "Wood & Articles of Wood",
+    "chapters": [
+      44,
+      45,
+      46
+    ],
+    "description": "Wood, cork, straw, basketware",
+    "codeCount": 297,
+    "dutiableCount": 60,
+    "totalImports": 4599665833,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 2568557369
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 1039502394
+      },
+      {
+        "k": "VN",
+        "n": "VN",
+        "v": 59168550
+      },
+      {
+        "k": "TR",
+        "n": "TR",
+        "v": 53628699
+      },
+      {
+        "k": "CA",
+        "n": "CA",
+        "v": 50452425
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "slug": "pulp-paper",
+    "name": "Pulp, Paper & Paperboard",
+    "chapters": [
+      47,
+      48,
+      49
+    ],
+    "description": "Wood pulp, paper, books, printed products",
+    "codeCount": 223,
+    "dutiableCount": 0,
+    "totalImports": 13075760024,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 9206386442
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 1418505365
+      },
+      {
+        "k": "BR",
+        "n": "BR",
+        "v": 265536244
+      },
+      {
+        "k": "FR",
+        "n": "FR",
+        "v": 177005705
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 147420044
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "slug": "textiles-apparel",
+    "name": "Textiles & Apparel",
+    "chapters": [
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "description": "Fibres, fabrics, garments, carpets",
+    "codeCount": 1032,
+    "dutiableCount": 301,
+    "totalImports": 23036222712,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 6125857393
+      },
+      {
+        "k": "VN",
+        "n": "VN",
+        "v": 2375732719
+      },
+      {
+        "k": "US",
+        "n": "US",
+        "v": 2357010885
+      },
+      {
+        "k": "BD",
+        "n": "BD",
+        "v": 2070692094
+      },
+      {
+        "k": "KH",
+        "n": "KH",
+        "v": 1422777037
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "slug": "footwear-headgear",
+    "name": "Footwear, Headgear & Accessories",
+    "chapters": [
+      64,
+      65,
+      66,
+      67
+    ],
+    "description": "Footwear, hats, umbrellas, feathers",
+    "codeCount": 116,
+    "dutiableCount": 57,
+    "totalImports": 4893141627,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 1710059027
+      },
+      {
+        "k": "VN",
+        "n": "VN",
+        "v": 1354281323
+      },
+      {
+        "k": "IT",
+        "n": "IT",
+        "v": 198196441
+      },
+      {
+        "k": "ID",
+        "n": "ID",
+        "v": 157545286
+      },
+      {
+        "k": "KH",
+        "n": "KH",
+        "v": 154695620
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "slug": "stone-ceramic-glass",
+    "name": "Stone, Ceramic & Glass",
+    "chapters": [
+      68,
+      69,
+      70
+    ],
+    "description": "Stone, plaster, cement, ceramics, glass products",
+    "codeCount": 238,
+    "dutiableCount": 59,
+    "totalImports": 8288749149,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 4128653174
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 1805266607
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 279930036
+      },
+      {
+        "k": "IT",
+        "n": "IT",
+        "v": 224632284
+      },
+      {
+        "k": "ES",
+        "n": "ES",
+        "v": 179530699
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "slug": "precious-metals-jewellery",
+    "name": "Precious Metals & Jewellery",
+    "chapters": [
+      71
+    ],
+    "description": "Natural pearls, precious stones, metals, jewellery",
+    "codeCount": 119,
+    "dutiableCount": 4,
+    "totalImports": 36701353923,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 6861876299
+      },
+      {
+        "k": "PE",
+        "n": "PE",
+        "v": 5841417873
+      },
+      {
+        "k": "BR",
+        "n": "BR",
+        "v": 4347314167
+      },
+      {
+        "k": "CH",
+        "n": "CH",
+        "v": 3785256949
+      },
+      {
+        "k": "ZA",
+        "n": "ZA",
+        "v": 2669746249
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "slug": "base-metals-and-articles",
+    "name": "Base Metals & Articles",
+    "chapters": [
+      72,
+      73,
+      74,
+      75,
+      76,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83
+    ],
+    "description": "Iron, steel, copper, aluminium, tools, cutlery",
+    "codeCount": 1494,
+    "dutiableCount": 110,
+    "totalImports": 50425787269,
+    "surtaxAffected": 1047,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 22186273413
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 8482077336
+      },
+      {
+        "k": "SE",
+        "n": "SE",
+        "v": 1736449341
+      },
+      {
+        "k": "KR",
+        "n": "KR",
+        "v": 1137408200
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 1096276885
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "slug": "machinery-mechanical-electrical-equipment",
+    "name": "Machinery & Electrical Equipment",
+    "chapters": [
+      84,
+      85
+    ],
+    "description": "Mechanical appliances, motors, computers, electronics",
+    "codeCount": 1723,
+    "dutiableCount": 89,
+    "totalImports": 195076443025,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 73554358138
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 34385198133
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 12918258935
+      },
+      {
+        "k": "VN",
+        "n": "VN",
+        "v": 8791359296
+      },
+      {
+        "k": "DE",
+        "n": "DE",
+        "v": 5053017130
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "slug": "vehicles-aircraft-vessels",
+    "name": "Vehicles, Aircraft & Vessels",
+    "chapters": [
+      86,
+      87,
+      88,
+      89
+    ],
+    "description": "Railway, vehicles, aircraft, ships and boats",
+    "codeCount": 426,
+    "dutiableCount": 121,
+    "totalImports": 139576467796,
+    "surtaxAffected": 59,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 72508132110
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 21170467253
+      },
+      {
+        "k": "JP",
+        "n": "JP",
+        "v": 9003371676
+      },
+      {
+        "k": "KR",
+        "n": "KR",
+        "v": 5453059487
+      },
+      {
+        "k": "DE",
+        "n": "DE",
+        "v": 5326834394
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "slug": "optical-precision-instruments",
+    "name": "Optical & Precision Instruments",
+    "chapters": [
+      90,
+      91,
+      92
+    ],
+    "description": "Medical, optical, photographic instruments, watches",
+    "codeCount": 351,
+    "dutiableCount": 68,
+    "totalImports": 23961672148,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 9365625705
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 1796801111
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 1642857147
+      },
+      {
+        "k": "DE",
+        "n": "DE",
+        "v": 1118018676
+      },
+      {
+        "k": "CH",
+        "n": "CH",
+        "v": 957793578
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "slug": "arms-ammunition",
+    "name": "Arms & Ammunition",
+    "chapters": [
+      93
+    ],
+    "description": "Weapons, ammunition, and accessories",
+    "codeCount": 79,
+    "dutiableCount": 11,
+    "totalImports": 596085551,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "US",
+        "n": "US",
+        "v": 341825090
+      },
+      {
+        "k": "TR",
+        "n": "TR",
+        "v": 41331563
+      },
+      {
+        "k": "IT",
+        "n": "IT",
+        "v": 24003401
+      },
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 17210966
+      },
+      {
+        "k": "NO",
+        "n": "NO",
+        "v": 13920956
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "slug": "miscellaneous-manufactured-articles",
+    "name": "Miscellaneous Manufactured Articles",
+    "chapters": [
+      94,
+      95,
+      96
+    ],
+    "description": "Furniture, lighting, toys, games, misc. manufactures",
+    "codeCount": 341,
+    "dutiableCount": 100,
+    "totalImports": 24066980269,
+    "surtaxAffected": 0,
+    "topSources": [
+      {
+        "k": "CN",
+        "n": "CN",
+        "v": 10323287810
+      },
+      {
+        "k": "US",
+        "n": "US",
+        "v": 5441950156
+      },
+      {
+        "k": "MX",
+        "n": "MX",
+        "v": 1807495926
+      },
+      {
+        "k": "VN",
+        "n": "VN",
+        "v": 1339768946
+      },
+      {
+        "k": "IT",
+        "n": "IT",
+        "v": 236043422
+      }
+    ]
+  }
+]

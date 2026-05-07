@@ -1,0 +1,52 @@
+{
+  "source": "Harvard Atlas of Economic Complexity (OEC) + Statistics Canada Table 12-10-0011-01",
+  "generated": "2022 ECI / 2024 trade values",
+  "eci": {
+    "value": 1.02,
+    "rank": 33,
+    "year": 2022,
+    "trend": [
+      {"year": 2012, "eci": 1.58, "rank": 28},
+      {"year": 2014, "eci": 1.52, "rank": 30},
+      {"year": 2016, "eci": 1.48, "rank": 31},
+      {"year": 2018, "eci": 1.45, "rank": 32},
+      {"year": 2020, "eci": 1.38, "rank": 34},
+      {"year": 2022, "eci": 1.02, "rank": 33}
+    ],
+    "peers": [
+      {"country": "Japan",        "eci":  2.23, "iso2": "JP"},
+      {"country": "Germany",      "eci":  2.09, "iso2": "DE"},
+      {"country": "South Korea",  "eci":  1.82, "iso2": "KR"},
+      {"country": "United States","eci":  1.55, "iso2": "US"},
+      {"country": "France",       "eci":  1.38, "iso2": "FR"},
+      {"country": "UK",           "eci":  1.42, "iso2": "GB"},
+      {"country": "Canada",       "eci":  1.02, "iso2": "CA"},
+      {"country": "China",        "eci":  0.72, "iso2": "CN"},
+      {"country": "India",        "eci":  0.48, "iso2": "IN"},
+      {"country": "Australia",    "eci": -0.12, "iso2": "AU"},
+      {"country": "Brazil",       "eci": -0.19, "iso2": "BR"},
+      {"country": "Saudi Arabia", "eci": -1.52, "iso2": "SA"}
+    ]
+  },
+  "topProducts": [
+    {"hs2": "27", "label": "Petroleum & Energy",     "exportValue": 145000000000, "share": 19.9, "pci": -0.82},
+    {"hs2": "87", "label": "Vehicles & Auto Parts",  "exportValue":  82000000000, "share": 11.2, "pci":  1.22},
+    {"hs2": "84", "label": "Machinery & Reactors",   "exportValue":  51000000000, "share":  7.0, "pci":  1.78},
+    {"hs2": "26", "label": "Ores & Minerals",        "exportValue":  38000000000, "share":  5.2, "pci": -0.61},
+    {"hs2": "88", "label": "Aircraft & Aerospace",   "exportValue":  28000000000, "share":  3.8, "pci":  2.14},
+    {"hs2": "10", "label": "Cereals & Canola",       "exportValue":  25000000000, "share":  3.4, "pci": -0.48},
+    {"hs2": "47", "label": "Pulp & Wood Fibres",     "exportValue":  22000000000, "share":  3.0, "pci": -0.23},
+    {"hs2": "72", "label": "Iron & Steel",           "exportValue":  19000000000, "share":  2.6, "pci":  0.82},
+    {"hs2": "76", "label": "Aluminum Products",      "exportValue":  17000000000, "share":  2.3, "pci":  0.31},
+    {"hs2": "85", "label": "Electronics & Equip.",   "exportValue":  16000000000, "share":  2.2, "pci":  1.63},
+    {"hs2": "30", "label": "Pharmaceuticals",        "exportValue":  14000000000, "share":  1.9, "pci":  1.54},
+    {"hs2": "44", "label": "Wood & Lumber",          "exportValue":  13000000000, "share":  1.8, "pci": -0.35}
+  ],
+  "concentration": {
+    "usShare": 75.2,
+    "ftaShare": 86.4,
+    "hhi": 0.581,
+    "topCountriesShare": 87.3
+  },
+  "totalExports": 728000000000
+}

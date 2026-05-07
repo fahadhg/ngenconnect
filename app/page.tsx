@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { getFilteredOptions } from "@/lib/filterMap";
 
 interface SearchResult {
@@ -54,10 +55,19 @@ const PRICING_TABLE = [
   { model: "Gemini Embedding",  input: "$0.025",output: "—"      },
 ];
 
-export default function Home() {
+export default function Page() {
+  return (
+    <Suspense>
+      <Home />
+    </Suspense>
+  );
+}
+
+function Home() {
+  const searchParams = useSearchParams();
   const [filters, setFilters] = useState<Record<string, string[]>>({});
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(searchParams.get("q") ?? "");
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -74,6 +84,12 @@ export default function Home() {
     } catch {}
     setStatsHydrated(true);
   }, []);
+
+  // Apply sector filter from URL param (set by Trade Intelligence "Find Canadian Suppliers")
+  useEffect(() => {
+    const sector = searchParams.get("sector");
+    if (sector) setFilters(prev => ({ ...prev, sectors: [sector] }));
+  }, [searchParams]);
 
   // Persist to localStorage whenever stats change (skip before hydration)
   useEffect(() => {

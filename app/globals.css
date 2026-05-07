@@ -2,6 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Trade Intelligence dark-theme CSS variables (used by /trade/* pages) ── */
+.trade-theme {
+  --surface-0: #0a0c0f;
+  --surface-1: #111318;
+  --surface-2: #181b21;
+  --surface-3: #22262e;
+  --ink: #f0f2f5;
+  --ink-muted: #9ca3af;
+  --ink-faint: #5a6272;
+  --accent: #F15A22;
+  --accent-muted: rgba(241, 90, 34, 0.12);
+  --positive: #10b981;
+  --positive-muted: rgba(16, 185, 129, 0.10);
+  --negative: #ef4444;
+  --negative-muted: rgba(239, 68, 68, 0.10);
+  --warn: #f59e0b;
+  --warn-muted: rgba(245, 158, 11, 0.10);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
+}
+
+/* Trade-theme utility classes */
+.trade-theme .live-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+.trade-theme .stagger > * { opacity: 0; animation: slideUp 0.45s ease-out forwards; }
+.trade-theme .stagger > *:nth-child(1) { animation-delay: 0ms; }
+.trade-theme .stagger > *:nth-child(2) { animation-delay: 50ms; }
+.trade-theme .stagger > *:nth-child(3) { animation-delay: 100ms; }
+.trade-theme .stagger > *:nth-child(4) { animation-delay: 150ms; }
+.trade-theme .stagger > *:nth-child(5) { animation-delay: 200ms; }
+.trade-theme .stagger > *:nth-child(6) { animation-delay: 250ms; }
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
+  50% { box-shadow: 0 0 8px 2px rgba(239, 68, 68, 0.15); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 body {
   font-family: "DM Sans", system-ui, sans-serif;
 }
