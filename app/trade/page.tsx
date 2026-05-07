@@ -122,34 +122,7 @@ export default async function TradePage() {
           </div>
         </section>
 
-        {/* Toolkit */}
-        <section className="mb-10">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-base font-semibold">Full Toolkit</h2>
-              <p className="text-[11px] text-ink-faint mt-0.5">Advanced analysis tools for trade professionals</p>
-            </div>
-            <Link href="/trade/browse" className="text-xs border border-border text-ink-muted hover:text-ink hover:border-ngen/40 px-4 py-2 rounded transition-colors">
-              Open toolkit →
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {TOOLS.map(t => {
-              const Icon = t.icon;
-              return (
-                <Link key={t.label} href="/trade/browse" className="p-4 bg-surface-1 border border-border rounded-lg hover:border-ngen/40 hover:bg-surface-2 transition-all group">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-9 h-9 rounded-lg bg-surface-2 flex items-center justify-center group-hover:bg-ngen/10 transition-colors">
-                      <Icon className="w-4 h-4 text-ink-muted group-hover:text-ngen transition-colors" />
-                    </div>
-                    <div className="text-sm font-medium group-hover:text-ngen transition-colors">{t.label}</div>
-                  </div>
-                  <div className="text-xs text-ink-muted leading-relaxed">{t.desc}</div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
+        {/* Full Toolkit — hidden for now */}
       </main>
     </div>
   );
