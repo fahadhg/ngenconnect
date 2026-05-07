@@ -76,9 +76,17 @@ export default function NavSidebar() {
   const pathname = usePathname();
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
-  const supabase = createClient();
+  
+  let supabase;
+  try {
+    supabase = createClient();
+  } catch (error) {
+    console.warn("Supabase not configured, running in limited mode");
+    supabase = null;
+  }
 
   useEffect(() => {
+    if (!supabase) return;
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUserEmail(user.email || "");
@@ -137,7 +145,11 @@ export default function NavSidebar() {
             <p className="text-[11px] text-gray-400 truncate leading-tight">{userEmail}</p>
           </div>
           <button
-            onClick={() => supabase.auth.signOut().then(() => { window.location.href = "/login"; })}
+            onClick={() => {
+              if (supabase) {
+                supabase.auth.signOut().then(() => { window.location.href = "/login"; });
+              }
+            }}
             className="flex-shrink-0 text-gray-300 hover:text-ngen-orange transition-colors duration-150 opacity-0 group-hover:opacity-100"
             title="Sign out"
           >
