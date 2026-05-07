@@ -104,7 +104,7 @@ export default function HistoryPage() {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7-7m0 0L5 14m7-7v12" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
                   </button>
@@ -150,93 +150,6 @@ export default function HistoryPage() {
                           <p className="text-sm font-bold text-ngen-orange">${totalCost.toFixed(5)}</p>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-                  <button
-                    onClick={() => setExpanded(isOpen ? null : c.id)}
-                    className="w-full text-left px-5 py-4 flex items-start gap-4"
-                  >
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 leading-snug truncate">
-                        {c.query}
-                      </p>
-                      <div className="flex items-center gap-3 mt-1.5 flex-wrap">
-                        <span className="text-[11px] text-gray-400">
-                          {date.toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })}
-                          {" · "}
-                          {date.toLocaleTimeString("en-CA", { hour: "2-digit", minute: "2-digit" })}
-                        </span>
-                        {c.model_used && (
-                          <span className="text-[11px] text-gray-400">{c.model_used}</span>
-                        )}
-                        {c.companies_matched && (
-                          <span className="text-[11px] text-gray-400">
-                            {Array.isArray(c.companies_matched) ? c.companies_matched.length : 0} companies
-                          </span>
-                        )}
-                        <span className="text-[11px] font-semibold text-gray-500">
-                          ${totalCost.toFixed(5)}
-                        </span>
-                      </div>
-                    </div>
-                    <svg
-                      className={`w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5 transition-transform ${isOpen ? "rotate-180" : ""}`}
-                      fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-
-                  {isOpen && c.response && (
-                    <div className="border-t border-gray-100 px-5 py-4 space-y-4">
-                      {/* Token breakdown */}
-                      <div className="flex gap-4 text-[11px]">
-                        <span className="text-gray-400">Input: <strong className="text-gray-600">{c.input_tokens?.toLocaleString()}</strong></span>
-                        <span className="text-gray-400">Output: <strong className="text-gray-600">{c.output_tokens?.toLocaleString()}</strong></span>
-                        <span className="text-gray-400">Embed: <strong className="text-gray-600">{c.embedding_tokens?.toLocaleString()}</strong></span>
-                        <span className="text-gray-400">Cost: <strong className="text-gray-600">${totalCost.toFixed(5)}</strong></span>
-                      </div>
-
-                      {/* Response */}
-                      <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-                        {c.response.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
-                          part.startsWith("**") && part.endsWith("**") ? (
-                            <strong key={i} className="font-semibold text-gray-900">{part.slice(2, -2)}</strong>
-                          ) : (
-                            <span key={i}>{part}</span>
-                          )
-                        )}
-                      </div>
-
-                      {/* Matched companies */}
-                      {Array.isArray(c.companies_matched) && c.companies_matched.length > 0 && (
-                        <div className="pt-2 border-t border-gray-100">
-                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                            Matched Companies
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {c.companies_matched.map((co, i) => (
-                              <a
-                                key={i}
-                                href={co.homepage}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-xs font-medium text-ngen-red hover:underline"
-                              >
-                                {co.company_name}
-                              </a>
-                            ))}
-                          </div>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>

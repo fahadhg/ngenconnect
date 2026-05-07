@@ -122,34 +122,4 @@ export default function NewsPage() {
       </div>
     </div>
   );
-                  <div className="flex items-center justify-between gap-2">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${colorClass}`}>
-                      {article.source}
-                    </span>
-                    {dateStr && (
-                      <span className="text-[10px] text-gray-400 flex-shrink-0">{dateStr}</span>
-                    )}
-                  </div>
-                  <h3 className="text-sm font-semibold text-gray-900 leading-snug group-hover:text-ngen-red transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  {article.description && (
-                    <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
-                      {article.description}
-                    </p>
-                  )}
-                  <div className="flex items-center gap-1 mt-auto text-[10px] font-semibold text-gray-400 group-hover:text-ngen-red transition-colors">
-                    Read article
-                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  );
 }
