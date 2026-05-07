@@ -78,9 +78,9 @@ export default function ProfilePage() {
         </div>
 
         {/* Avatar & Info Card */}
-        <div className="bg-white border border-gray-200 rounded-xl p-7 mb-6 shadow-sm-soft">
+        <div className="bg-white border border-gray-200 rounded-xl p-7 mb-6 shadow-sm">
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-ngen-orange to-orange-600 flex items-center justify-center flex-shrink-0 shadow-md-soft">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-ngen-orange to-orange-600 flex items-center justify-center flex-shrink-0 shadow-md">
               <span className="text-2xl font-bold text-white uppercase">
                 {fullName?.[0] || profile?.email?.[0] || "?"}
               </span>
@@ -101,7 +101,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Edit Form */}
-        <div className="bg-white border border-gray-200 rounded-xl p-7 shadow-sm-soft">
+        <div className="bg-white border border-gray-200 rounded-xl p-7 shadow-sm">
           <h2 className="text-base font-bold text-gray-900 mb-6">Update Profile</h2>
           <form onSubmit={handleSave} className="space-y-6">
             <div>
@@ -149,7 +149,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-6 py-3 bg-gradient-to-r from-ngen-orange to-orange-600 text-white rounded-lg text-sm font-bold uppercase tracking-wide hover:shadow-md-soft disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                className="px-6 py-3 bg-gradient-to-r from-ngen-orange to-orange-600 text-white rounded-lg text-sm font-bold uppercase tracking-wide hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
               >
                 {saving ? "Saving..." : "Save Changes"}
               </button>

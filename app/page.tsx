@@ -255,7 +255,7 @@ function Home() {
       <aside
         className={`${
           sidebarOpen ? "w-72" : "w-0"
-        } transition-all duration-300 bg-white border-r border-gray-200 flex-shrink-0 overflow-hidden shadow-sm-soft`}
+        } transition-all duration-300 bg-white border-r border-gray-200 flex-shrink-0 overflow-hidden shadow-sm`}
       >
         <div className="w-72 h-full flex flex-col">
           <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-50 to-white">
@@ -320,7 +320,7 @@ function Home() {
       {/* Main */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-5 py-3.5 flex items-center gap-4 shadow-sm-soft">
+        <header className="bg-white border-b border-gray-200 px-5 py-3.5 flex items-center gap-4 shadow-sm">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 hover:bg-gray-100 rounded-lg transition duration-200 flex-shrink-0 text-gray-500 hover:text-gray-900"
@@ -344,7 +344,7 @@ function Home() {
             onClick={() => setStatsOpen(!statsOpen)}
             className={`ml-auto flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition duration-200 border ${
               statsOpen
-                ? "bg-gray-900 text-white border-gray-900 shadow-md-soft"
+                ? "bg-gray-900 text-white border-gray-900 shadow-md"
                 : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
             }`}
             title="Toggle usage stats"
@@ -395,7 +395,7 @@ function Home() {
                   <button
                     onClick={() => handleSearch(query)}
                     disabled={loading || !query.trim()}
-                    className="px-6 py-3 bg-ngen-orange text-white font-semibold rounded-xl hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md-soft hover:shadow-lg-soft"
+                    className="px-6 py-3 bg-ngen-orange text-white font-semibold rounded-xl hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
                   >
                     {loading ? "Searching..." : "Search"}
                   </button>
@@ -412,7 +412,7 @@ function Home() {
                         key={s}
                         onClick={() => handleSearch(s)}
                         disabled={loading}
-                        className="text-left px-4 py-3.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:border-ngen-orange hover:bg-ngen-orange/5 hover:shadow-md-soft transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="text-left px-4 py-3.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:border-ngen-orange hover:bg-ngen-orange/5 hover:shadow-md transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <span className="text-xs font-semibold text-ngen-orange block mb-1 opacity-60 group-hover:opacity-100 transition-opacity">
                           Example {i + 1}
@@ -449,16 +449,16 @@ function Home() {
                   <div key={i} className="animate-fade-up">
                     {msg.role === "user" ? (
                       <div className="flex justify-end">
-                        <div className="bg-ngen-orange text-white px-5 py-3 rounded-2xl rounded-br-sm max-w-md text-sm font-medium shadow-md-soft">
+                        <div className="bg-ngen-orange text-white px-5 py-3 rounded-2xl rounded-br-sm max-w-md text-sm font-medium shadow-md">
                           {msg.content}
                         </div>
                       </div>
                     ) : (
                       <div className="space-y-4">
                         {/* Analysis Card */}
-                        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md-soft hover:shadow-lg-soft transition-shadow">
+                        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                           <div className="px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white flex items-center gap-3">
-                            <div className="w-5 h-5 bg-gradient-to-br from-ngen-orange to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm-soft">
+                            <div className="w-5 h-5 bg-gradient-to-br from-ngen-orange to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
                               <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
                               </svg>
@@ -499,7 +499,7 @@ function Home() {
 
                 {loading && (
                   <div className="animate-fade-up">
-                    <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3 shadow-md-soft">
+                    <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3 shadow-md">
                       <LoadingDots />
                       <span className="text-sm text-gray-500">
                         Searching database and analyzing matches...
@@ -517,7 +517,7 @@ function Home() {
           <aside
             className={`${
               statsOpen ? "w-80" : "w-0"
-            } transition-all duration-300 bg-white border-l border-gray-200 flex-shrink-0 overflow-hidden shadow-sm-soft`}
+            } transition-all duration-300 bg-white border-l border-gray-200 flex-shrink-0 overflow-hidden shadow-sm`}
           >
             <div className="w-80 h-full flex flex-col">
               <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-l from-gray-50 to-white">
@@ -537,7 +537,7 @@ function Home() {
               <div className="flex-1 overflow-y-auto">
                 {/* Session totals widget */}
                 <div className="p-4 border-b border-gray-100">
-                  <div className="bg-gradient-to-br from-ngen-navy to-gray-900 rounded-xl p-5 text-white shadow-md-soft">
+                  <div className="bg-gradient-to-br from-ngen-navy to-gray-900 rounded-xl p-5 text-white shadow-md">
                     <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                       Session Total
                     </p>

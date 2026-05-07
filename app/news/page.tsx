@@ -50,8 +50,8 @@ export default function NewsPage() {
                   onClick={() => setFilter(s)}
                   className={`text-xs font-semibold px-4 py-2 rounded-lg border transition-all duration-200 ${
                     filter === s
-                      ? "bg-ngen-orange text-white border-ngen-orange shadow-md-soft"
-                      : "bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:shadow-sm-soft"
+                      ? "bg-ngen-orange text-white border-ngen-orange shadow-md"
+                      : "bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:shadow-sm"
                   }`}
                 >
                   {s}
@@ -71,7 +71,7 @@ export default function NewsPage() {
             </div>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-16 text-center shadow-sm-soft">
+          <div className="bg-white border border-gray-200 rounded-xl p-16 text-center shadow-sm">
             <svg className="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6m-6-8h6v4H7V8z" />
             </svg>
@@ -94,7 +94,7 @@ export default function NewsPage() {
                   href={article.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-4 hover:border-ngen-orange/50 hover:shadow-md-soft transition-all duration-200 group"
+                  className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-4 hover:border-ngen-orange/50 hover:shadow-md transition-all duration-200 group"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <span className={`text-xs font-bold px-3 py-1.5 rounded-lg border ${colorClass}`}>

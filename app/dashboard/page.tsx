@@ -119,8 +119,8 @@ export default function DashboardPage() {
           ].map(({ label, value, sub, accent }) => (
             <div key={label} className={`relative overflow-hidden p-6 rounded-xl border transition-all duration-200 ${
               accent 
-                ? "bg-gradient-to-br from-ngen-orange/10 to-ngen-orange/5 border-ngen-orange/30 hover:border-ngen-orange/60 hover:shadow-md-soft" 
-                : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-md-soft"
+                ? "bg-gradient-to-br from-ngen-orange/10 to-ngen-orange/5 border-ngen-orange/30 hover:border-ngen-orange/60 hover:shadow-md" 
+                : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-md"
             }`}>
               <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">{label}</p>
               <p className={`text-3xl font-bold leading-none mb-1 ${accent ? "text-ngen-orange" : "text-gray-900"}`}>{value}</p>
@@ -131,7 +131,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Activity chart */}
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm-soft">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
             <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-5">
               Activity — Last {stats.recent.length} Days
             </p>
@@ -139,7 +139,7 @@ export default function DashboardPage() {
               {stats.recent.slice().reverse().map(({ date, count }) => (
                 <div key={date} className="flex-1 flex flex-col items-center gap-1 group">
                   <div
-                    className="w-full bg-gradient-to-t from-ngen-orange to-ngen-orange/70 rounded hover:from-ngen-orange/90 hover:to-ngen-orange/80 transition-all cursor-default shadow-sm-soft"
+                    className="w-full bg-gradient-to-t from-ngen-orange to-ngen-orange/70 rounded hover:from-ngen-orange/90 hover:to-ngen-orange/80 transition-all cursor-default shadow-sm"
                     style={{ height: `${(count / maxDayCount) * 100}px` }}
                     title={`${date}: ${count} search${count !== 1 ? "es" : ""}`}
                   />
@@ -153,7 +153,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Model breakdown */}
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm-soft">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
             <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-5">
               Model Usage Breakdown
             </p>
@@ -169,7 +169,7 @@ export default function DashboardPage() {
                       </span>
                     </div>
                     <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-ngen-orange to-orange-500 rounded-full transition-all duration-300 group-hover:shadow-md-soft" style={{ width: `${pct}%` }} />
+                      <div className="h-full bg-gradient-to-r from-ngen-orange to-orange-500 rounded-full transition-all duration-300 group-hover:shadow-md" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                 );
@@ -179,7 +179,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Token breakdown */}
-        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm-soft mb-6">
+        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm mb-6">
           <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-6">Token Breakdown</p>
           <div className="grid grid-cols-3 gap-6">
             {[

@@ -89,7 +89,7 @@ export default function MapPage() {
       <aside
         className={`${
           sidebarOpen ? "w-72 sm:w-64" : "w-0"
-        } transition-all duration-300 bg-white border-r border-gray-200 flex-shrink-0 overflow-hidden flex flex-col shadow-sm-soft`}
+        } transition-all duration-300 bg-white border-r border-gray-200 flex-shrink-0 overflow-hidden flex flex-col shadow-sm`}
       >
         <div className="w-72 sm:w-64 flex flex-col h-full">
           <div className="px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
@@ -153,7 +153,7 @@ export default function MapPage() {
       {/* Map area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-5 py-3.5 flex items-center gap-4 flex-shrink-0 shadow-sm-soft">
+        <header className="bg-white border-b border-gray-200 px-5 py-3.5 flex items-center gap-4 flex-shrink-0 shadow-sm">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="p-2 hover:bg-gray-100 rounded-lg transition duration-200 flex-shrink-0 text-gray-500 hover:text-gray-900"

@@ -18,8 +18,8 @@ function StatTile({ label, value, sub, accent }: { label: string; value: string;
   return (
     <div className={`relative overflow-hidden p-5 rounded-xl transition-all duration-200 border ${
       accent 
-        ? "bg-gradient-to-br from-ngen-orange/10 to-ngen-orange/5 border-ngen-orange/30 hover:border-ngen-orange/60 hover:shadow-md-soft" 
-        : "bg-surface-1 border-border hover:border-border-hover hover:shadow-md-soft"
+        ? "bg-gradient-to-br from-ngen-orange/10 to-ngen-orange/5 border-ngen-orange/30 hover:border-ngen-orange/60 hover:shadow-md" 
+        : "bg-surface-1 border-border hover:border-border-hover hover:shadow-md"
     }`}>
       <div className="text-xs font-bold text-ink-muted uppercase tracking-wider mb-2">{label}</div>
       <div className={`text-2xl font-bold ${accent ? "text-ngen-orange" : "text-ink"} tracking-tight`}>{value}</div>
@@ -33,7 +33,7 @@ function SectionCard({ sec }: { sec: HSSection }) {
   return (
     <Link
       href={`/trade/industries/${sec.slug}`}
-      className="group block p-5 bg-white border border-gray-200 rounded-lg hover:border-ngen-orange/50 hover:shadow-md-soft hover:bg-gradient-to-br hover:from-white hover:to-ngen-orange/5 transition-all duration-200"
+      className="group block p-5 bg-white border border-gray-200 rounded-lg hover:border-ngen-orange/50 hover:shadow-md hover:bg-gradient-to-br hover:from-white hover:to-ngen-orange/5 transition-all duration-200"
     >
       <div className="font-semibold text-sm mb-2 text-gray-900 group-hover:text-ngen-orange transition-colors line-clamp-2">{sec.name}</div>
       <div className="text-xs text-gray-500 mb-4 leading-relaxed line-clamp-2">{sec.description}</div>
@@ -80,7 +80,7 @@ export default async function TradePage() {
   return (
     <div className="trade-theme min-h-screen bg-gray-50">
       {/* Sub-nav */}
-      <nav className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm shadow-sm-soft">
+      <nav className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-8 h-14 text-sm">
           <Link href="/trade" className="font-semibold text-ngen-orange hover:text-orange-600 transition-colors">Trade Intelligence</Link>
           <Link href="/trade" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Industries</Link>

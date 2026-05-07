@@ -58,7 +58,7 @@ export default function HistoryPage() {
         </div>
 
         {conversations.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-16 text-center shadow-sm-soft">
+          <div className="bg-white border border-gray-200 rounded-xl p-16 text-center shadow-sm">
             <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-7 h-7 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -77,7 +77,7 @@ export default function HistoryPage() {
               const timeStr = date.toLocaleTimeString("en-CA", { hour: "2-digit", minute: "2-digit" });
 
               return (
-                <div key={c.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 hover:shadow-sm-soft transition-all">
+                <div key={c.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 hover:shadow-sm transition-all">
                   <button
                     onClick={() => setExpanded(isOpen ? null : c.id)}
                     className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors text-left"

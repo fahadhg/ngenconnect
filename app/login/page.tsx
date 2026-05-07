@@ -54,7 +54,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm relative z-10">
         {/* Logo */}
         <div className="flex items-center gap-3 justify-center mb-12">
-          <div className="w-11 h-11 bg-gradient-to-br from-ngen-orange to-orange-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md-soft">
+          <div className="w-11 h-11 bg-gradient-to-br from-ngen-orange to-orange-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
             <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
             </svg>
@@ -66,7 +66,7 @@ export default function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-white/95 backdrop-blur-sm border border-gray-200/80 rounded-2xl p-8 shadow-lg-soft overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-sm border border-gray-200/80 rounded-2xl p-8 shadow-lg overflow-hidden">
           {/* Accent bar */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-ngen-orange to-orange-600" />
 
@@ -78,7 +78,7 @@ export default function LoginPage() {
                 onClick={() => { setMode(m); setError(""); setMessage(""); }}
                 className={`flex-1 text-sm font-semibold py-2.5 rounded-lg transition-all duration-200 ${
                   mode === m
-                    ? "bg-white text-ngen-orange shadow-md-soft border border-ngen-orange/20"
+                    ? "bg-white text-ngen-orange shadow-md border border-ngen-orange/20"
                     : "text-gray-600 hover:text-gray-900"
                 }`}
               >
@@ -153,7 +153,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-ngen-orange to-orange-600 text-white rounded-lg text-sm font-bold uppercase tracking-wide hover:shadow-lg-soft hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 mt-3"
+              className="w-full py-3 bg-gradient-to-r from-ngen-orange to-orange-600 text-white rounded-lg text-sm font-bold uppercase tracking-wide hover:shadow-lg hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 mt-3"
             >
               {loading
                 ? "Please wait..."
