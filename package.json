@@ -21,7 +21,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-globe.gl": "^2.37.1",
+    "react-is": "^19.2.6",
     "react-leaflet": "^5.0.0",
+    "react-simple-maps": "^3.0.0",
     "recharts": "^3.8.1"
   },
   "devDependencies": {
