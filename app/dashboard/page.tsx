@@ -102,69 +102,74 @@ export default function DashboardPage() {
 
   return (
     <div className="flex-1 overflow-y-auto bg-gray-50">
-      <div className="max-w-4xl mx-auto px-6 py-8">
-        <div className="mb-6">
-          <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-sm text-gray-400 mt-0.5">Your session usage and activity</p>
+      <div className="max-w-5xl mx-auto px-6 py-10">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
+          <p className="text-base text-gray-600">Your session usage, analytics, and activity overview</p>
         </div>
 
         {/* KPI cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Total Searches", value: stats.total.toLocaleString(), sub: "all time" },
-            { label: "Total Cost", value: `$${stats.totalCost.toFixed(4)}`, sub: "USD" },
-            { label: "Tokens Used", value: fmtTokens(stats.totalInputTokens + stats.totalOutputTokens + stats.totalEmbeddingTokens), sub: "combined" },
-            { label: "Avg Cost / Search", value: `$${(stats.totalCost / stats.total).toFixed(5)}`, sub: "USD" },
-          ].map(({ label, value, sub }) => (
-            <div key={label} className="bg-white border border-gray-200 rounded-xl p-4">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{label}</p>
-              <p className="text-2xl font-black text-gray-900 leading-none">{value}</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">{sub}</p>
+            { label: "Total Searches", value: stats.total.toLocaleString(), sub: "all time", accent: false },
+            { label: "Total Cost", value: `$${stats.totalCost.toFixed(4)}`, sub: "USD", accent: true },
+            { label: "Tokens Used", value: fmtTokens(stats.totalInputTokens + stats.totalOutputTokens + stats.totalEmbeddingTokens), sub: "combined", accent: false },
+            { label: "Avg Cost/Search", value: `$${(stats.totalCost / stats.total).toFixed(5)}`, sub: "USD", accent: false },
+          ].map(({ label, value, sub, accent }) => (
+            <div key={label} className={`relative overflow-hidden p-6 rounded-xl border transition-all duration-200 ${
+              accent 
+                ? "bg-gradient-to-br from-ngen-orange/10 to-ngen-orange/5 border-ngen-orange/30 hover:border-ngen-orange/60 hover:shadow-md" 
+                : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-md"
+            }`}>
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">{label}</p>
+              <p className={`text-3xl font-bold leading-none mb-1 ${accent ? "text-ngen-orange" : "text-gray-900"}`}>{value}</p>
+              <p className="text-xs text-gray-400 font-medium">{sub}</p>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Activity chart */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-              Activity (last {stats.recent.length} days)
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-5">
+              Activity — Last {stats.recent.length} Days
             </p>
-            <div className="flex items-end gap-1 h-24">
+            <div className="flex items-end gap-1.5 h-28">
               {stats.recent.slice().reverse().map(({ date, count }) => (
                 <div key={date} className="flex-1 flex flex-col items-center gap-1 group">
                   <div
-                    className="w-full bg-ngen-red/20 rounded-sm hover:bg-ngen-red/40 transition-colors cursor-default"
-                    style={{ height: `${(count / maxDayCount) * 88}px` }}
+                    className="w-full bg-gradient-to-t from-ngen-orange to-ngen-orange/70 rounded hover:from-ngen-orange/90 hover:to-ngen-orange/80 transition-all cursor-default shadow-sm"
+                    style={{ height: `${(count / maxDayCount) * 100}px` }}
                     title={`${date}: ${count} search${count !== 1 ? "es" : ""}`}
                   />
                 </div>
               ))}
             </div>
-            <div className="flex justify-between mt-1.5">
-              <span className="text-[9px] text-gray-300">{stats.recent[stats.recent.length - 1]?.date}</span>
-              <span className="text-[9px] text-gray-300">{stats.recent[0]?.date}</span>
+            <div className="flex justify-between mt-3 text-[11px] text-gray-400 font-medium">
+              <span>{stats.recent[stats.recent.length - 1]?.date}</span>
+              <span>{stats.recent[0]?.date}</span>
             </div>
           </div>
 
           {/* Model breakdown */}
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">
-              Model Usage
+          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+            <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-5">
+              Model Usage Breakdown
             </p>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {stats.byModel.map(({ model, count, cost }) => {
                 const pct = Math.round((count / stats.total) * 100);
                 return (
-                  <div key={model}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-gray-700 truncate">{model}</span>
-                      <span className="text-xs text-gray-400 ml-2 flex-shrink-0">
-                        {count} · ${cost.toFixed(4)}
+                  <div key={model} className="group">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-900 truncate">{model}</span>
+                      <span className="text-xs text-gray-500 ml-2 flex-shrink-0 font-medium">
+                        {pct}% · ${cost.toFixed(4)}
                       </span>
                     </div>
-                    <div className="w-full h-1.5 bg-gray-100 rounded-full">
-                      <div className="h-full bg-ngen-red rounded-full" style={{ width: `${pct}%` }} />
+                    <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-ngen-orange to-orange-500 rounded-full transition-all duration-300 group-hover:shadow-md" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                 );
@@ -174,17 +179,17 @@ export default function DashboardPage() {
         </div>
 
         {/* Token breakdown */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Token Breakdown</p>
-          <div className="grid grid-cols-3 gap-4">
+        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm mb-6">
+          <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-6">Token Breakdown</p>
+          <div className="grid grid-cols-3 gap-6">
             {[
-              { label: "Input Tokens", value: fmtTokens(stats.totalInputTokens) },
-              { label: "Output Tokens", value: fmtTokens(stats.totalOutputTokens) },
-              { label: "Embedding Tokens", value: fmtTokens(stats.totalEmbeddingTokens) },
+              { label: "Input Tokens", value: fmtTokens(stats.totalInputTokens), color: "ngen-orange" },
+              { label: "Output Tokens", value: fmtTokens(stats.totalOutputTokens), color: "orange-500" },
+              { label: "Embedding Tokens", value: fmtTokens(stats.totalEmbeddingTokens), color: "orange-400" },
             ].map(({ label, value }) => (
-              <div key={label} className="text-center">
-                <p className="text-xl font-black text-gray-900">{value}</p>
-                <p className="text-[10px] text-gray-400 mt-0.5">{label}</p>
+              <div key={label} className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border border-gray-100">
+                <p className="text-2xl font-bold text-gray-900 mb-1">{value}</p>
+                <p className="text-xs text-gray-600 font-medium">{label}</p>
               </div>
             ))}
           </div>

@@ -16,10 +16,14 @@ export const metadata: Metadata = {
 
 function StatTile({ label, value, sub, accent }: { label: string; value: string; sub?: string; accent?: boolean }) {
   return (
-    <div className="bg-surface-1 border border-border rounded-lg p-4 hover:border-border-hover transition-colors">
-      <div className="text-[10px] text-ink-faint uppercase tracking-wider mb-1.5">{label}</div>
-      <div className={`font-mono text-xl font-semibold ${accent ? 'text-ngen' : 'text-ink'}`}>{value}</div>
-      {sub && <div className="text-[10px] text-ink-faint mt-1.5">{sub}</div>}
+    <div className={`relative overflow-hidden p-5 rounded-xl transition-all duration-200 border ${
+      accent 
+        ? "bg-gradient-to-br from-ngen-orange/10 to-ngen-orange/5 border-ngen-orange/30 hover:border-ngen-orange/60 hover:shadow-md" 
+        : "bg-surface-1 border-border hover:border-border-hover hover:shadow-md"
+    }`}>
+      <div className="text-xs font-bold text-ink-muted uppercase tracking-wider mb-2">{label}</div>
+      <div className={`text-2xl font-bold ${accent ? "text-ngen-orange" : "text-ink"} tracking-tight`}>{value}</div>
+      {sub && <div className="text-xs text-ink-faint mt-2.5">{sub}</div>}
     </div>
   );
 }
@@ -29,25 +33,25 @@ function SectionCard({ sec }: { sec: HSSection }) {
   return (
     <Link
       href={`/trade/industries/${sec.slug}`}
-      className="block p-4 bg-surface-1 border border-border rounded-lg hover:border-ngen/50 hover:bg-surface-2/80 transition-all group"
+      className="group block p-5 bg-white border border-gray-200 rounded-lg hover:border-ngen-orange/50 hover:shadow-md hover:bg-gradient-to-br hover:from-white hover:to-ngen-orange/5 transition-all duration-200"
     >
-      <div className="font-medium text-sm mb-1.5 group-hover:text-ngen transition-colors leading-snug">{sec.name}</div>
-      <div className="text-xs text-ink-faint mb-3 leading-relaxed line-clamp-2">{sec.description}</div>
-      <div className="flex items-end justify-between">
+      <div className="font-semibold text-sm mb-2 text-gray-900 group-hover:text-ngen-orange transition-colors line-clamp-2">{sec.name}</div>
+      <div className="text-xs text-gray-500 mb-4 leading-relaxed line-clamp-2">{sec.description}</div>
+      <div className="flex items-end justify-between mb-3">
         <div>
-          <div className="text-[10px] text-ink-faint uppercase tracking-wider mb-0.5">Imports</div>
-          <div className="font-mono text-sm font-medium">{hasImports ? fmtVal(sec.totalImports) : '—'}</div>
+          <div className="text-[11px] text-gray-500 uppercase tracking-wider mb-1">Imports</div>
+          <div className="font-bold text-base text-gray-900">{hasImports ? fmtVal(sec.totalImports) : '—'}</div>
         </div>
         <div className="text-right">
-          <div className="text-[10px] text-ink-muted">{sec.codeCount.toLocaleString()} codes</div>
+          <div className="text-xs text-gray-400">{sec.codeCount.toLocaleString()} codes</div>
           {sec.surtaxAffected > 0 && (
-            <div className="text-[10px] font-medium text-negative">{sec.surtaxAffected} surtaxed</div>
+            <div className="text-xs font-semibold text-ngen-orange">{sec.surtaxAffected} surtaxed</div>
           )}
         </div>
       </div>
       {sec.topSources.length > 0 && (
-        <div className="mt-3 pt-2.5 border-t border-border/50 text-[10px] text-ink-faint truncate">
-          Top: {sec.topSources.slice(0, 3).map(s => s.n).join(' · ')}
+        <div className="pt-3 border-t border-gray-100 text-xs text-gray-500 truncate">
+          Top: <span className="text-gray-700 font-medium">{sec.topSources.slice(0, 3).map(s => s.n).join(' · ')}</span>
         </div>
       )}
     </Link>
@@ -77,26 +81,25 @@ export default async function TradePage() {
     <div className="trade-theme min-h-screen bg-gray-50">
       {/* Sub-nav */}
       <nav className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-6 h-12 text-sm">
-          <Link href="/trade" className="font-semibold text-ngen-red">Trade Intelligence</Link>
-          <Link href="/trade" className="text-gray-500 hover:text-gray-900 transition-colors">Industries</Link>
-          <Link href="/trade/browse" className="text-gray-500 hover:text-gray-900 transition-colors">Imports</Link>
-          <Link href="/trade/exports" className="text-gray-500 hover:text-gray-900 transition-colors">Exports</Link>
-          <Link href="/trade/intel" className="text-gray-500 hover:text-gray-900 transition-colors">Intel</Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center gap-8 h-14 text-sm">
+          <Link href="/trade" className="font-semibold text-ngen-orange hover:text-orange-600 transition-colors">Trade Intelligence</Link>
+          <Link href="/trade" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Industries</Link>
+          <Link href="/trade/browse" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Imports</Link>
+          <Link href="/trade/exports" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Exports</Link>
+          <Link href="/trade/intel" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Intel</Link>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         {/* Hero */}
-        <div className="mb-10">
-          <div className="flex items-center gap-2 mb-4">
+        <div className="mb-14">
+          <div className="flex items-center gap-2.5 mb-5">
             <span className="live-dot" />
-            <span className="text-xs text-ink-muted font-medium tracking-wide uppercase">Canadian Tariff Intelligence</span>
+            <span className="text-xs text-gray-600 font-semibold tracking-wide uppercase">Canadian Tariff Intelligence</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-3">Trade Intelligence</h1>
-          <p className="text-sm text-ink-muted max-w-2xl leading-relaxed mb-6">
-            Live CBSA tariff data, StatsCan import analytics, and surtax monitoring for Canadian manufacturers.
-            Browse by industry or open the toolkit for BOM analysis, FTA optimization, and supply chain risk scoring.
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-balance">Trade Intelligence</h1>
+          <p className="text-base text-gray-600 max-w-2xl leading-relaxed mb-8">
+            Live CBSA tariff data, StatsCan import analytics, and surtax monitoring for Canadian manufacturers. Browse by industry or open the toolkit for BOM analysis, FTA optimization, and supply chain risk scoring.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <StatTile label="Total Imports"   value={fmtVal(totalImports)}             sub="StatsCan CIMT 2025" accent />

@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+/* ── Root Design Tokens — Modern & Sleek ── */
+:root {
+  /* Primary Colors */
+  --color-navy: #0A1628;
+  --color-orange: #FF6B35;
+  --color-white: #FFFFFF;
+  
+  /* Neutrals */
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1F2937;
+  --color-gray-900: #111827;
+  
+  /* Semantic */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-info: #3B82F6;
+}
+
 /* ── Trade Intelligence — light theme matching NGen Connect ── */
 .trade-theme {
   --surface-0: #f9fafb;
@@ -11,70 +39,127 @@
   --ink: #111827;
   --ink-muted: #6b7280;
   --ink-faint: #9ca3af;
-  --accent: #C8102E;
-  --accent-muted: rgba(200, 16, 46, 0.08);
-  --positive: #059669;
-  --positive-muted: rgba(5, 150, 105, 0.10);
-  --negative: #dc2626;
-  --negative-muted: rgba(220, 38, 38, 0.10);
-  --warn: #d97706;
-  --warn-muted: rgba(217, 119, 6, 0.10);
+  --accent: #FF6B35;
+  --accent-muted: rgba(255, 107, 53, 0.08);
+  --positive: #10B981;
+  --positive-muted: rgba(16, 185, 129, 0.10);
+  --negative: #EF4444;
+  --negative-muted: rgba(239, 68, 68, 0.10);
+  --warn: #F59E0B;
+  --warn-muted: rgba(245, 158, 11, 0.10);
   --border: rgba(0, 0, 0, 0.08);
   --border-hover: rgba(0, 0, 0, 0.16);
+}
+
+/* ── Typography & Base Styles ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+  @apply bg-gray-50 text-gray-900;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  @apply font-semibold tracking-tight;
 }
 
 /* Trade-theme utility classes */
 .trade-theme .live-dot {
   display: inline-block;
-  width: 6px; height: 6px;
+  width: 6px; 
+  height: 6px;
   border-radius: 50%;
-  background: #ef4444;
+  background: #FF6B35;
   animation: pulse-glow 2s ease-in-out infinite;
 }
-.trade-theme .stagger > * { opacity: 0; animation: slideUp 0.45s ease-out forwards; }
+
+.trade-theme .stagger > * { 
+  opacity: 0; 
+  animation: slideUp 0.45s ease-out forwards; 
+}
 .trade-theme .stagger > *:nth-child(1) { animation-delay: 0ms; }
 .trade-theme .stagger > *:nth-child(2) { animation-delay: 50ms; }
 .trade-theme .stagger > *:nth-child(3) { animation-delay: 100ms; }
 .trade-theme .stagger > *:nth-child(4) { animation-delay: 150ms; }
 .trade-theme .stagger > *:nth-child(5) { animation-delay: 200ms; }
 .trade-theme .stagger > *:nth-child(6) { animation-delay: 250ms; }
+
+/* ── Animations ── */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
-  50% { box-shadow: 0 0 8px 2px rgba(239, 68, 68, 0.15); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.3); }
+  50% { box-shadow: 0 0 8px 2px rgba(255, 107, 53, 0.15); }
 }
+
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-body {
-  font-family: "DM Sans", system-ui, sans-serif;
-}
-
-h1, h2, h3, h4 {
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-/* Chat messages fade in */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-up {
-  animation: fadeUp 0.3s ease-out forwards;
-}
 
-/* Pulse for loading */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
 }
+
+@keyframes shimmer {
+  -100% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* ── Utility Classes ── */
+.animate-fade-up {
+  animation: fadeUp 0.3s ease-out forwards;
+}
+
 .animate-pulse-subtle {
   animation: pulse-subtle 1.5s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { 
+  width: 8px; 
+  height: 8px;
+}
+
+::-webkit-scrollbar-track { 
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb { 
+  background: #D1D5DB; 
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover { 
+  background: #9CA3AF;
+  background-clip: content-box;
+}
+
+/* ── Card & Surface Elevation ── */
+.card-base {
+  @apply bg-white border border-gray-200 rounded-lg shadow-sm;
+}
+
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-lg hover:border-gray-300;
+}
+
+.surface-elevated {
+  @apply bg-white shadow-sm border border-gray-100 rounded-lg;
 }

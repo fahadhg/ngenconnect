@@ -11,10 +11,10 @@ interface Article {
 }
 
 const SOURCE_COLORS: Record<string, string> = {
-  "Canadian Manufacturing": "bg-red-50 text-red-700 border-red-100",
-  "Modern Machine Shop":    "bg-blue-50 text-blue-700 border-blue-100",
-  "Automation World":       "bg-amber-50 text-amber-700 border-amber-100",
-  "IndustryWeek":           "bg-purple-50 text-purple-700 border-purple-100",
+  "Canadian Manufacturing": "bg-ngen-orange/10 text-ngen-orange border-ngen-orange/30",
+  "Modern Machine Shop":    "bg-blue-50 text-blue-700 border-blue-200",
+  "Automation World":       "bg-amber-50 text-amber-700 border-amber-200",
+  "IndustryWeek":           "bg-purple-50 text-purple-700 border-purple-200",
 };
 
 export default function NewsPage() {
@@ -34,24 +34,24 @@ export default function NewsPage() {
 
   return (
     <div className="flex-1 overflow-y-auto bg-gray-50">
-      <div className="max-w-4xl mx-auto px-6 py-8">
-        <div className="mb-6 flex items-start justify-between gap-4">
+      <div className="max-w-5xl mx-auto px-6 py-10">
+        <div className="mb-8 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Manufacturing News</h1>
-            <p className="text-sm text-gray-400 mt-0.5">
-              Latest from Canadian manufacturing &amp; Industry 4.0
+            <h1 className="text-3xl font-bold text-gray-900">Manufacturing News</h1>
+            <p className="text-base text-gray-600 mt-2">
+              Latest coverage from Canadian manufacturing and Industry 4.0
             </p>
           </div>
           {!loading && articles.length > 0 && (
-            <div className="flex gap-1.5 flex-wrap justify-end">
+            <div className="flex gap-2 flex-wrap justify-end">
               {sources.map((s) => (
                 <button
                   key={s}
                   onClick={() => setFilter(s)}
-                  className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition-all ${
+                  className={`text-xs font-semibold px-4 py-2 rounded-lg border transition-all duration-200 ${
                     filter === s
-                      ? "bg-ngen-red text-white border-ngen-red"
-                      : "bg-white text-gray-500 border-gray-200 hover:border-gray-300"
+                      ? "bg-ngen-orange text-white border-ngen-orange shadow-md"
+                      : "bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:shadow-sm"
                   }`}
                 >
                   {s}
@@ -63,29 +63,30 @@ export default function NewsPage() {
 
         {loading ? (
           <div className="flex items-center justify-center py-24">
-            <div className="flex gap-1">
+            <div className="flex gap-2">
               {[0, 1, 2].map((i) => (
-                <span key={i} className="w-2 h-2 rounded-full bg-gray-300 animate-bounce"
-                  style={{ animationDelay: `${i * 0.12}s`, animationDuration: "0.8s" }} />
+                <span key={i} className="w-3 h-3 rounded-full bg-ngen-orange animate-pulse"
+                  style={{ animationDelay: `${i * 0.15}s` }} />
               ))}
             </div>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-xl p-12 text-center">
-            <p className="text-sm font-semibold text-gray-700">No articles available</p>
-            <p className="text-xs text-gray-400 mt-1">
-              News feeds may be temporarily unavailable. Try again shortly.
-            </p>
+          <div className="bg-white border border-gray-200 rounded-xl p-16 text-center shadow-sm">
+            <svg className="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6m-6-8h6v4H7V8z" />
+            </svg>
+            <p className="text-lg font-semibold text-gray-700 mb-1">No articles available</p>
+            <p className="text-sm text-gray-500">News feeds may be temporarily unavailable. Try again shortly.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {filtered.map((article, i) => {
               const dateStr = article.pubDate
                 ? new Date(article.pubDate).toLocaleDateString("en-CA", {
                     month: "short", day: "numeric", year: "numeric",
                   })
                 : "";
-              const colorClass = SOURCE_COLORS[article.source] || "bg-gray-50 text-gray-600 border-gray-100";
+              const colorClass = SOURCE_COLORS[article.source] || "bg-gray-50 text-gray-600 border-gray-200";
 
               return (
                 <a
@@ -93,28 +94,24 @@ export default function NewsPage() {
                   href={article.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col gap-2.5 hover:border-gray-300 hover:shadow-sm transition-all group"
+                  className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col gap-4 hover:border-ngen-orange/50 hover:shadow-md transition-all duration-200 group"
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${colorClass}`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <span className={`text-xs font-bold px-3 py-1.5 rounded-lg border ${colorClass}`}>
                       {article.source}
                     </span>
-                    {dateStr && (
-                      <span className="text-[10px] text-gray-400 flex-shrink-0">{dateStr}</span>
-                    )}
+                    <span className="text-xs text-gray-500 font-medium flex-shrink-0">{dateStr}</span>
                   </div>
-                  <h3 className="text-sm font-semibold text-gray-900 leading-snug group-hover:text-ngen-red transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  {article.description && (
-                    <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
-                      {article.description}
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-gray-900 group-hover:text-ngen-orange transition-colors line-clamp-3 leading-relaxed mb-2">
+                      {article.title}
                     </p>
-                  )}
-                  <div className="flex items-center gap-1 mt-auto text-[10px] font-semibold text-gray-400 group-hover:text-ngen-red transition-colors">
-                    Read article
-                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">{article.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 text-ngen-orange opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-xs font-semibold">Read more</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
                 </a>
