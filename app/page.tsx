@@ -255,19 +255,19 @@ function Home() {
       <aside
         className={`${
           sidebarOpen ? "w-72" : "w-0"
-        } transition-all duration-300 bg-white border-r border-gray-200 flex-shrink-0 overflow-hidden`}
+        } transition-all duration-300 bg-white border-r border-gray-200 flex-shrink-0 overflow-hidden shadow-sm-soft`}
       >
         <div className="w-72 h-full flex flex-col">
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-50 to-white">
+            <p className="text-xs font-bold text-gray-600 uppercase tracking-widest">
               Refine Results
             </p>
             {activeFilterCount > 0 && (
               <button
                 onClick={() => setFilters({})}
-                className="text-[11px] text-ngen-red font-semibold hover:underline"
+                className="text-xs text-ngen-orange font-semibold hover:text-orange-600 transition-colors"
               >
-                Clear all ({activeFilterCount})
+                Clear ({activeFilterCount})
               </button>
             )}
           </div>
@@ -320,21 +320,21 @@ function Home() {
       {/* Main */}
       <main className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-5 py-3 flex items-center gap-3">
+        <header className="bg-white border-b border-gray-200 px-5 py-3.5 flex items-center gap-4 shadow-sm-soft">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-gray-100 rounded-lg transition flex-shrink-0"
+            className="p-2 hover:bg-gray-100 rounded-lg transition duration-200 flex-shrink-0 text-gray-500 hover:text-gray-900"
             title="Toggle filters"
           >
-            <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M7 12h10M10 20h4" />
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 4h18M7 12h10M10 20h4" />
             </svg>
           </button>
 
           <span className="text-sm font-semibold text-gray-700">Search</span>
 
           {activeFilterCount > 0 && (
-            <span className="text-[11px] font-semibold text-ngen-red bg-red-50 border border-red-100 px-2.5 py-1 rounded-full">
+            <span className="text-xs font-semibold text-ngen-orange bg-ngen-orange/10 border border-ngen-orange/20 px-3 py-1 rounded-full">
               {activeFilterCount} filter{activeFilterCount > 1 ? "s" : ""} active
             </span>
           )}
@@ -342,20 +342,20 @@ function Home() {
           {/* Usage stats toggle */}
           <button
             onClick={() => setStatsOpen(!statsOpen)}
-            className={`ml-auto flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+            className={`ml-auto flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition duration-200 border ${
               statsOpen
-                ? "bg-gray-900 text-white border-gray-900"
+                ? "bg-gray-900 text-white border-gray-900 shadow-md-soft"
                 : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
             }`}
             title="Toggle usage stats"
           >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round"
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
             Usage
             {usageStats.length > 0 && (
-              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${statsOpen ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"}`}>
+              <span className={`text-[11px] font-bold px-2 py-0.5 rounded ${statsOpen ? "bg-white/20 text-white" : "bg-gray-100 text-gray-600"}`}>
                 ${sessionTotals.costUsd.toFixed(4)}
               </span>
             )}
@@ -367,75 +367,109 @@ function Home() {
           {/* Chat area */}
           <div className="flex-1 overflow-y-auto px-5 py-6 min-w-0">
             {messages.length === 0 ? (
-              <div className="max-w-2xl mx-auto pt-12">
-                <div className="mb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 tracking-tight mb-2">
+              <div className="max-w-3xl mx-auto pt-16">
+                {/* Hero Section */}
+                <div className="mb-12 text-center">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-ngen-orange/10 border border-ngen-orange/20 rounded-full mb-6">
+                    <div className="w-2 h-2 bg-ngen-orange rounded-full animate-pulse"></div>
+                    <span className="text-xs font-semibold text-ngen-orange uppercase tracking-wider">AI-Powered Matchmaking</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-4 text-balance">
                     Find your next manufacturing partner
                   </h2>
-                  <p className="text-gray-500 text-sm leading-relaxed">
-                    Search 1,000+ Canadian manufacturers, suppliers, and technology
-                    providers. Describe what you need in plain language.
+                  <p className="text-gray-500 text-base leading-relaxed max-w-2xl mx-auto">
+                    Search 1,000+ Canadian manufacturers, suppliers, and technology providers. Use natural language to discover the perfect match for your needs.
                   </p>
                 </div>
 
-                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">
-                  Example searches
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {suggestions.map((s, i) => (
-                    <button
-                      key={s}
-                      onClick={() => handleSearch(s)}
-                      className="text-left px-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-ngen-red/30 hover:bg-red-50/20 hover:shadow-sm transition-all group"
-                    >
-                      <span className="text-[11px] font-bold text-gray-300 block mb-0.5 group-hover:text-ngen-red/40 transition-colors">
-                        0{i + 1}
-                      </span>
-                      {s}
-                    </button>
-                  ))}
+                {/* Search Input */}
+                <div className="mb-12 flex flex-col gap-3">
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSearch(query)}
+                    placeholder="Describe what you're looking for..."
+                    className="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-ngen-orange focus:ring-2 focus:ring-ngen-orange/20 transition-all"
+                  />
+                  <button
+                    onClick={() => handleSearch(query)}
+                    disabled={loading || !query.trim()}
+                    className="px-6 py-3 bg-ngen-orange text-white font-semibold rounded-xl hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md-soft hover:shadow-lg-soft"
+                  >
+                    {loading ? "Searching..." : "Search"}
+                  </button>
                 </div>
 
-                <div className="mt-10 p-4 bg-white border border-gray-200 rounded-xl">
-                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                {/* Example Searches */}
+                <div className="mb-12">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                    Try these searches
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {suggestions.map((s, i) => (
+                      <button
+                        key={s}
+                        onClick={() => handleSearch(s)}
+                        disabled={loading}
+                        className="text-left px-4 py-3.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:border-ngen-orange hover:bg-ngen-orange/5 hover:shadow-md-soft transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <span className="text-xs font-semibold text-ngen-orange block mb-1 opacity-60 group-hover:opacity-100 transition-opacity">
+                          Example {i + 1}
+                        </span>
+                        <span className="text-sm text-gray-900 group-hover:text-ngen-orange transition-colors">{s}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* How It Works */}
+                <div className="p-6 bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                     How it works
                   </p>
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     {[
-                      ["Semantic Search", "Your query is embedded and matched against 1,000+ companies using vector similarity."],
-                      ["Top 3–5 Matches", "Only the strongest matches are returned — no noise, no long lists."],
-                      ["AI Analysis", "A detailed breakdown explains exactly why each company fits your requirements."],
-                    ].map(([title, desc]) => (
-                      <div key={title}>
-                        <p className="text-xs font-semibold text-gray-700 mb-1">{title}</p>
-                        <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
+                      { num: "01", title: "Semantic Search", desc: "Your query is embedded and matched against 1,000+ companies using advanced AI." },
+                      { num: "02", title: "Top Matches Only", desc: "Only the strongest matches are returned — no noise, no long lists to scroll." },
+                      { num: "03", title: "AI Analysis", desc: "A detailed breakdown explains exactly why each company fits your requirements." },
+                    ].map(({ num, title, desc }) => (
+                      <div key={title} className="space-y-2">
+                        <div className="text-xs font-bold text-ngen-orange">{num}</div>
+                        <p className="text-sm font-semibold text-gray-900">{title}</p>
+                        <p className="text-xs text-gray-500 leading-relaxed">{desc}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="max-w-3xl mx-auto space-y-5">
+              <div className="max-w-3xl mx-auto space-y-6">
                 {messages.map((msg, i) => (
                   <div key={i} className="animate-fade-up">
                     {msg.role === "user" ? (
                       <div className="flex justify-end">
-                        <div className="bg-ngen-red text-white px-4 py-2.5 rounded-2xl rounded-br-sm max-w-md text-sm font-medium">
+                        <div className="bg-ngen-orange text-white px-5 py-3 rounded-2xl rounded-br-sm max-w-md text-sm font-medium shadow-md-soft">
                           {msg.content}
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-3">
-                        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-                          <div className="px-5 py-3 border-b border-gray-100 flex items-center gap-2">
-                            <div className="w-4 h-4 bg-ngen-red rounded flex items-center justify-center flex-shrink-0">
-                              <span className="text-white text-[9px] font-black">N</span>
+                      <div className="space-y-4">
+                        {/* Analysis Card */}
+                        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md-soft hover:shadow-lg-soft transition-shadow">
+                          <div className="px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white flex items-center gap-3">
+                            <div className="w-5 h-5 bg-gradient-to-br from-ngen-orange to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm-soft">
+                              <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+                              </svg>
                             </div>
-                            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
-                              Matchmaking Analysis
-                            </span>
+                            <div className="flex-1">
+                              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                Matchmaking Analysis
+                              </span>
+                            </div>
                             {msg.model && (
-                              <span className="ml-auto text-[10px] text-gray-300 font-medium">
+                              <span className="text-xs text-gray-400 font-medium">
                                 {msg.model}
                               </span>
                             )}
@@ -445,13 +479,13 @@ function Home() {
                           </div>
                         </div>
 
+                        {/* Companies Grid */}
                         {msg.companies && msg.companies.length > 0 && (
                           <div>
-                            <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2 px-1">
-                              {msg.companies.length} Matched{" "}
-                              {msg.companies.length === 1 ? "Company" : "Companies"}
+                            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4 px-1">
+                              {msg.companies.length} matched company{msg.companies.length !== 1 ? "ies" : ""}
                             </p>
-                            <div className="space-y-2.5">
+                            <div className="space-y-3">
                               {msg.companies.map((c, j) => (
                                 <CompanyCard key={j} company={c} rank={j + 1} />
                               ))}
@@ -465,9 +499,9 @@ function Home() {
 
                 {loading && (
                   <div className="animate-fade-up">
-                    <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3">
+                    <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center gap-3 shadow-md-soft">
                       <LoadingDots />
-                      <span className="text-sm text-gray-400">
+                      <span className="text-sm text-gray-500">
                         Searching database and analyzing matches...
                       </span>
                     </div>
@@ -482,18 +516,18 @@ function Home() {
           {/* Right: Stats Panel */}
           <aside
             className={`${
-              statsOpen ? "w-72" : "w-0"
-            } transition-all duration-300 bg-white border-l border-gray-200 flex-shrink-0 overflow-hidden`}
+              statsOpen ? "w-80" : "w-0"
+            } transition-all duration-300 bg-white border-l border-gray-200 flex-shrink-0 overflow-hidden shadow-sm-soft`}
           >
-            <div className="w-72 h-full flex flex-col">
-              <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+            <div className="w-80 h-full flex flex-col">
+              <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-l from-gray-50 to-white">
+                <p className="text-xs font-bold text-gray-600 uppercase tracking-widest">
                   API Usage
                 </p>
                 {usageStats.length > 0 && (
                   <button
                     onClick={() => setUsageStats([])}
-                    className="text-[11px] text-gray-400 hover:text-red-500 font-semibold transition-colors"
+                    className="text-xs text-gray-400 hover:text-ngen-orange font-semibold transition-colors"
                   >
                     Clear
                   </button>
@@ -503,32 +537,32 @@ function Home() {
               <div className="flex-1 overflow-y-auto">
                 {/* Session totals widget */}
                 <div className="p-4 border-b border-gray-100">
-                  <div className="bg-gray-900 rounded-xl p-4 text-white">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
+                  <div className="bg-gradient-to-br from-ngen-navy to-gray-900 rounded-xl p-5 text-white shadow-md-soft">
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                       Session Total
                     </p>
-                    <p className="text-3xl font-black tracking-tight">
+                    <p className="text-4xl font-bold tracking-tight">
                       ${sessionTotals.costUsd.toFixed(4)}
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-gray-400 mt-1">
                       {usageStats.length} search{usageStats.length !== 1 ? "es" : ""}
                     </p>
-                    <div className="mt-3 pt-3 border-t border-gray-800 grid grid-cols-3 gap-2 text-center">
+                    <div className="mt-4 pt-4 border-t border-gray-800/30 grid grid-cols-3 gap-2 text-center">
                       <div>
-                        <p className="text-[10px] text-gray-500 mb-0.5">Input</p>
-                        <p className="text-xs font-bold text-gray-200">
+                        <p className="text-[11px] text-gray-400 mb-1">Input</p>
+                        <p className="text-sm font-bold text-white">
                           {fmtTokens(sessionTotals.inputTokens)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-500 mb-0.5">Output</p>
-                        <p className="text-xs font-bold text-gray-200">
+                        <p className="text-[11px] text-gray-400 mb-1">Output</p>
+                        <p className="text-sm font-bold text-white">
                           {fmtTokens(sessionTotals.outputTokens)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-500 mb-0.5">Embed</p>
-                        <p className="text-xs font-bold text-gray-200">
+                        <p className="text-[11px] text-gray-400 mb-1">Embed</p>
+                        <p className="text-sm font-bold text-white">
                           {fmtTokens(sessionTotals.embeddingTokens)}
                         </p>
                       </div>
@@ -539,24 +573,24 @@ function Home() {
                 {/* Per-request history */}
                 {usageStats.length === 0 ? (
                   <div className="px-5 py-8 text-center">
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-400 leading-relaxed">
                       No searches yet. Usage will appear here after your first query.
                     </p>
                   </div>
                 ) : (
                   <div className="divide-y divide-gray-100">
                     {usageStats.map((stat, i) => (
-                      <div key={stat.id} className="px-4 py-3">
-                        <div className="flex items-start justify-between gap-2 mb-1.5">
-                          <p className="text-xs font-semibold text-gray-700 leading-tight line-clamp-1 flex-1">
+                      <div key={stat.id} className="px-4 py-3 hover:bg-gray-50 transition-colors">
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <p className="text-xs font-medium text-gray-700 leading-tight line-clamp-1 flex-1">
                             {stat.query}
                           </p>
-                          <span className="text-[10px] font-bold text-gray-400 flex-shrink-0">
+                          <span className="text-[11px] font-bold text-gray-400 flex-shrink-0 bg-gray-100 px-1.5 py-0.5 rounded">
                             #{usageStats.length - i}
                           </span>
                         </div>
-                        <p className="text-[10px] text-gray-400 mb-2">{stat.model}</p>
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                        <p className="text-[11px] text-gray-400 mb-2 font-medium">{stat.model}</p>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px]">
                           <StatRow label="Input" value={fmtTokens(stat.inputTokens) + " tok"} />
                           <StatRow label="Output" value={fmtTokens(stat.outputTokens) + " tok"} />
                           <StatRow label="Embed" value={fmtTokens(stat.embeddingTokens) + " tok"} />
@@ -572,30 +606,30 @@ function Home() {
                 )}
 
                 {/* Pricing reference */}
-                <div className="border-t border-gray-100 p-4">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">
-                    Pricing Reference / 1M tokens
+                <div className="border-t border-gray-100 p-4 bg-gray-50">
+                  <p className="text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-3">
+                    Pricing / 1M tokens
                   </p>
                   <table className="w-full text-[10px]">
                     <thead>
-                      <tr className="text-gray-400">
-                        <th className="text-left font-semibold pb-1.5">Model</th>
+                      <tr className="text-gray-500 text-left">
+                        <th className="font-semibold pb-1.5">Model</th>
                         <th className="text-right font-semibold pb-1.5">In</th>
                         <th className="text-right font-semibold pb-1.5">Out</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody className="divide-y divide-gray-100">
                       {PRICING_TABLE.map((row) => (
-                        <tr key={row.model}>
-                          <td className="py-1 text-gray-600 pr-2">{row.model}</td>
-                          <td className="py-1 text-right text-gray-500 font-mono">{row.input}</td>
-                          <td className="py-1 text-right text-gray-500 font-mono">{row.output}</td>
+                        <tr key={row.model} className="hover:bg-white/60 transition-colors">
+                          <td className="py-1.5 text-gray-600 pr-2 font-medium">{row.model}</td>
+                          <td className="py-1.5 text-right text-gray-500 font-mono">{row.input}</td>
+                          <td className="py-1.5 text-right text-gray-500 font-mono">{row.output}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
-                  <p className="text-[9px] text-gray-300 mt-3 leading-relaxed">
-                    Approximate list prices. Actual costs may vary. Costs reset on page refresh.
+                  <p className="text-[10px] text-gray-500 mt-2.5 leading-relaxed">
+                    Approximate list prices. Actual costs may vary.
                   </p>
                 </div>
               </div>
