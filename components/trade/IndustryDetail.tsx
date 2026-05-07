@@ -11,32 +11,9 @@ import {
 } from '@/lib/trade/data';
 import { assessRisk } from '@/lib/trade/analysis';
 import { getROO } from '@/lib/trade/roo';
+import { HS_SLUG_TO_SECTOR } from '@/lib/trade/sectorHsMap';
 
 const PG = 50;
-
-// HS Section slug → NGen Connect sector filter
-const HS_SLUG_TO_SECTOR: Record<string, string> = {
-  'live-animals-animal-products':       'Agri-Food & Beverage',
-  'vegetable-products':                 'Agri-Food & Beverage',
-  'animal-vegetable-fats-oils':         'Agri-Food & Beverage',
-  'prepared-foodstuffs-beverages':      'Agri-Food & Beverage',
-  'mineral-products':                   'Mining & Metals',
-  'chemical-products':                  'Clean Technology',
-  'plastics-rubber':                    'Plastics & Composites',
-  'leather-travel-goods':               'Advanced Manufacturing',
-  'wood-articles':                      'Forestry & Wood Products',
-  'pulp-paper':                         'Forestry & Wood Products',
-  'textiles-apparel':                   'Textiles & Apparel',
-  'footwear-headgear':                  'Advanced Manufacturing',
-  'stone-glass':                        'Advanced Manufacturing',
-  'precious-metals-gems':               'Mining & Metals',
-  'base-metals':                        'Mining & Metals',
-  'machinery-mechanical-electrical':    'Advanced Manufacturing',
-  'vehicles-aircraft-vessels':          'Automotive',
-  'optical-instruments-clocks':         'Advanced Manufacturing',
-  'arms-ammunition':                    'Defence',
-  'miscellaneous-manufactured':         'Advanced Manufacturing',
-};
 
 const RISK_CLS = {
   low: { bg: 'bg-positive/10', text: 'text-positive', label: 'Low' },
@@ -63,6 +40,15 @@ interface Props {
   surtaxData: SurtaxOverlay;
 }
 
+function logTradeNav(event: string, data: Record<string, string>) {
+  try {
+    const key = "ngen_trade_nav";
+    const prev = JSON.parse(localStorage.getItem(key) ?? "[]");
+    prev.push({ event, ...data, ts: new Date().toISOString() });
+    localStorage.setItem(key, JSON.stringify(prev.slice(-200)));
+  } catch {}
+}
+
 function FindSuppliersButton({ section }: { section: HSSection }) {
   const router = useRouter();
   const sector = HS_SLUG_TO_SECTOR[section.slug];
@@ -73,7 +59,10 @@ function FindSuppliersButton({ section }: { section: HSSection }) {
 
   return (
     <button
-      onClick={() => router.push(href)}
+      onClick={() => {
+        logTradeNav("trade_to_connect", { slug: section.slug, sector: sector ?? "", query: section.name });
+        router.push(href);
+      }}
       className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
       style={{ background: '#C8102E', color: '#fff' }}
     >

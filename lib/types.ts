@@ -16,6 +16,7 @@ export interface CompanyMetadata {
   materials: string;
   province: string;
   company_size: string;
+  hs_slugs?: string[] | string;
   lat?: number;
   lng?: number;
   city?: string;
@@ -30,6 +31,7 @@ export interface SearchResult {
   capabilities: string[];
   certifications: string[];
   materials: string[];
+  hs_slugs: string[];
   province: string;
   company_size: string;
   score: number;
@@ -40,6 +42,7 @@ export interface FilterOptions {
   capabilities: string[];
   certifications: string[];
   materials: string[];
+  hs_slugs: string[];
   provinces: string[];
   company_sizes: string[];
 }

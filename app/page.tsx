@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { getFilteredOptions } from "@/lib/filterMap";
+import { getHsSlugsForCompany, getPrimaryHsSlug } from "@/lib/trade/granularHsMap";
+import type { SlugSummary } from "@/app/api/trade/sector-summary/route";
 
 interface SearchResult {
   company_name: string;
@@ -74,6 +76,7 @@ function Home() {
   const [statsOpen, setStatsOpen] = useState(false);
   const [usageStats, setUsageStats] = useState<UsageStat[]>([]);
   const [statsHydrated, setStatsHydrated] = useState(false);
+  const [slugStats, setSlugStats] = useState<Record<string, SlugSummary>>({});
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Rehydrate from localStorage on mount + fetch current user
@@ -90,6 +93,14 @@ function Home() {
     const sector = searchParams.get("sector");
     if (sector) setFilters(prev => ({ ...prev, sectors: [sector] }));
   }, [searchParams]);
+
+  // Fetch tariff slug summaries once for tariff exposure badges
+  useEffect(() => {
+    fetch("/api/trade/sector-summary")
+      .then(r => r.json())
+      .then(setSlugStats)
+      .catch(() => {});
+  }, []);
 
   // Persist to localStorage whenever stats change (skip before hydration)
   useEffect(() => {
@@ -453,7 +464,7 @@ function Home() {
                             </p>
                             <div className="space-y-2.5">
                               {msg.companies.map((c, j) => (
-                                <CompanyCard key={j} company={c} rank={j + 1} />
+                                <CompanyCard key={j} company={c} rank={j + 1} slugStats={slugStats} />
                               ))}
                             </div>
                           </div>
@@ -805,7 +816,20 @@ function FilterSection({
 }
 
 /* ── Company Card ────────────────────────────────────────────────────────── */
-function CompanyCard({ company, rank }: { company: SearchResult; rank: number }) {
+function logTradeNav(event: string, data: Record<string, string>) {
+  try {
+    const key = "ngen_trade_nav";
+    const prev = JSON.parse(localStorage.getItem(key) ?? "[]");
+    prev.push({ event, ...data, ts: new Date().toISOString() });
+    localStorage.setItem(key, JSON.stringify(prev.slice(-200)));
+  } catch {}
+}
+
+function CompanyCard({ company, rank, slugStats }: {
+  company: SearchResult;
+  rank: number;
+  slugStats: Record<string, SlugSummary>;
+}) {
   const scorePct = Math.round(company.score * 100);
   const scoreColor =
     scorePct >= 80 ? "bg-emerald-500" : scorePct >= 65 ? "bg-amber-400" : "bg-gray-400";
@@ -817,6 +841,24 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
     company.capabilities.length > 0 ||
     company.certifications.length > 0 ||
     company.materials.length > 0;
+
+  // Integration C: granular HS slug resolution from materials + capabilities + sectors
+  const allSlugs = getHsSlugsForCompany(company.sectors, company.capabilities, company.materials);
+  const primarySlug = allSlugs[0] ?? null;
+
+  // Integration A: collect exposed HS sections with surtax > 0, sorted by risk
+  const riskRank = { none: 0, low: 1, medium: 2, high: 3 };
+  const exposedSections = allSlugs
+    .map(slug => slugStats[slug])
+    .filter((s): s is SlugSummary => !!s && s.surtaxCount > 0)
+    .sort((a, b) => riskRank[b.riskLevel] - riskRank[a.riskLevel])
+    .filter((s, i, arr) => arr.findIndex(x => x.slug === s.slug) === i); // dedupe
+
+  const riskBadgeCls: Record<string, string> = {
+    low:    'text-amber-700 bg-amber-50 border-amber-200',
+    medium: 'text-orange-700 bg-orange-50 border-orange-200',
+    high:   'text-red-700 bg-red-50 border-red-200',
+  };
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 hover:shadow-sm transition-all">
@@ -858,6 +900,35 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
         </div>
       </div>
 
+      {/* Integration A: Tariff exposure badges — one per exposed HS section */}
+      {exposedSections.length > 0 && (
+        <div className="mx-5 mb-3 space-y-1">
+          {exposedSections.slice(0, 2).map(sec => (
+            <a
+              key={sec.slug}
+              href={`/trade/industries/${sec.slug}`}
+              onClick={() => logTradeNav("connect_to_trade", {
+                company: company.company_name,
+                slug: sec.slug,
+                trigger: "tariff_badge",
+              })}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-[11px] font-medium hover:opacity-80 transition-opacity ${riskBadgeCls[sec.riskLevel]}`}
+            >
+              <svg className="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+              <span className="flex-1">{sec.name} — {sec.surtaxCount} codes under US surtax</span>
+              <svg className="w-3 h-3 flex-shrink-0 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          ))}
+          {exposedSections.length > 2 && (
+            <p className="text-[10px] text-gray-400 px-1">+{exposedSections.length - 2} more exposed sections</p>
+          )}
+        </div>
+      )}
+
       {company.description && (
         <div className="px-5 pb-4 border-t border-gray-50 pt-3">
           <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">{company.description}</p>
@@ -889,7 +960,27 @@ function CompanyCard({ company, rank }: { company: SearchResult; rank: number })
         </div>
       )}
 
-      <div className="border-t border-gray-100 px-5 py-2.5 flex justify-end">
+      <div className="border-t border-gray-100 px-5 py-2.5 flex items-center justify-between gap-3">
+        {/* Integration B: Check Tariff Exposure button */}
+        {primarySlug ? (
+          <a
+            href={`/trade/industries/${primarySlug}`}
+            onClick={() => logTradeNav("connect_to_trade", {
+              company: company.company_name,
+              sector: company.sectors[0] ?? "",
+              slug: primarySlug,
+              trigger: "button",
+            })}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-ngen-red transition-colors"
+          >
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            Check Tariff Exposure
+          </a>
+        ) : (
+          <span />
+        )}
         <a
           href={company.homepage}
           target="_blank"

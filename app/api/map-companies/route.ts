@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { getMapCompanies } from "@/lib/search";
+import { loadCompaniesForMap } from "@/lib/search";
 
 export async function GET() {
   try {
-    const companies = getMapCompanies();
+    const companies = loadCompaniesForMap();
     return NextResponse.json({ companies, total: companies.length });
   } catch (err) {
     return NextResponse.json({ error: String(err) }, { status: 500 });
