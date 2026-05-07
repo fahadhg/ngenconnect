@@ -33,10 +33,10 @@ const sectorColor = (code: string) => SECTOR_COLORS[code] ?? '#888888';
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 const fmtUSD = (v: number | null | undefined) => {
   if (v == null) return '';
-  if (v >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
-  if (v >= 1e9)  return `$${(v / 1e9).toFixed(2)}B`;
-  if (v >= 1e6)  return `$${(v / 1e6).toFixed(0)}M`;
-  return `$${v.toLocaleString()}`;
+  if (v >= 1e12) return `$${(v / 1e12).toFixed(1)}T USD`;
+  if (v >= 1e9)  return `$${(v / 1e9).toFixed(1)}B USD`;
+  if (v >= 1e6)  return `$${(v / 1e6).toFixed(0)}M USD`;
+  return `$${v.toLocaleString()} USD`;
 };
 
 const fmtPct = (v: number | null | undefined, decimals = 2) =>
@@ -340,7 +340,7 @@ export default function AtlasExportBasket() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         <StatCard label="Total Exports"      value={fmtUSD(data.totalExports)}           sub={`${year} merchandise`}  icon={Globe2} />
         <StatCard label="ECI Score"          value={latestEci?.eci?.toFixed(3) ?? ''}   sub="Economic Complexity Index" icon={BarChart2} />
-        <StatCard label="GDP"                value={fmtUSD(latestEci?.gdp)}              sub={latestEci?.gdppc ? `GDPpc $${latestEci.gdppc.toLocaleString()}` : undefined} icon={TrendingUp} />
+        <StatCard label="GDP"                value={fmtUSD(latestEci?.gdp)}              sub={latestEci?.gdppc ? `GDPpc ${fmtUSD(latestEci.gdppc)}` : undefined} icon={TrendingUp} />
         <StatCard label="Products Exported"  value={data.products?.length?.toLocaleString() ?? ''}
           sub={`RCA ≥ 1: ${data.products?.filter((p: any) => (p.exportRca ?? 0) >= 1).length}`} icon={BarChart2} />
       </div>

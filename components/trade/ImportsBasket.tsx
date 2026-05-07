@@ -33,10 +33,10 @@ function darken(hex: string): string {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 const fmtUSD = (v: number | null | undefined) => {
   if (v == null) return '';
-  if (Math.abs(v) >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
-  if (Math.abs(v) >= 1e9)  return `$${(v / 1e9).toFixed(2)}B`;
-  if (Math.abs(v) >= 1e6)  return `$${(v / 1e6).toFixed(0)}M`;
-  return `$${v.toLocaleString()}`;
+  if (Math.abs(v) >= 1e12) return `$${(v / 1e12).toFixed(1)}T USD`;
+  if (Math.abs(v) >= 1e9)  return `$${(v / 1e9).toFixed(1)}B USD`;
+  if (Math.abs(v) >= 1e6)  return `$${(v / 1e6).toFixed(0)}M USD`;
+  return `$${v.toLocaleString()} USD`;
 };
 const fmtPct = (v: number | null | undefined) => v == null ? '' : `${(v * 100).toFixed(2)}%`;
 const fmtShare = (v: number | null | undefined) => v == null ? '' : `${v.toFixed(2)}%`;

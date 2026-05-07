@@ -113,10 +113,10 @@ export function getBestFTA(item: TariffItem): { key: string; rate: number; label
 }
 
 export function fmtVal(v: number): string {
-  if (v >= 1e9) return '$' + (v / 1e9).toFixed(1) + 'B';
-  if (v >= 1e6) return '$' + Math.round(v / 1e6) + 'M';
-  if (v >= 1e3) return '$' + Math.round(v / 1e3) + 'K';
-  return '$' + Math.round(v);
+  if (v >= 1e9) return '$' + (v / 1e9).toFixed(1) + 'B CAD';
+  if (v >= 1e6) return '$' + Math.round(v / 1e6) + 'M CAD';
+  if (v >= 1e3) return '$' + Math.round(v / 1e3) + 'K CAD';
+  return '$' + Math.round(v) + ' CAD';
 }
 
 // Surtax overlay types

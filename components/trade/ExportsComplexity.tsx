@@ -10,10 +10,10 @@ import { TrendingDown, Globe2, BarChart2, AlertTriangle } from 'lucide-react';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 const fmtB = (v: number) => {
-  if (v >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
-  if (v >= 1e9)  return `$${(v / 1e9).toFixed(0)}B`;
-  if (v >= 1e6)  return `$${(v / 1e6).toFixed(0)}M`;
-  return `$${v.toLocaleString()}`;
+  if (v >= 1e12) return `$${(v / 1e12).toFixed(1)}T CAD`;
+  if (v >= 1e9)  return `$${(v / 1e9).toFixed(1)}B CAD`;
+  if (v >= 1e6)  return `$${(v / 1e6).toFixed(0)}M CAD`;
+  return `$${v.toLocaleString()} CAD`;
 };
 
 function pciColor(pci: number): string {
@@ -124,7 +124,7 @@ function OverviewTab({ data }: { data: any }) {
           <BarChart data={destinations} layout="vertical" margin={{ left: 8, right: 32, top: 0, bottom: 0 }}>
             <XAxis
               type="number"
-              tickFormatter={(v) => `$${(v / 1e9).toFixed(0)}B`}
+              tickFormatter={(v) => fmtB(v)}
               tick={{ fontSize: 10, fill: '#5a6272' }}
               axisLine={false} tickLine={false}
             />

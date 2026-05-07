@@ -7,9 +7,10 @@ import { Factory, Users, Package, Globe2 } from 'lucide-react';
 // ─── helpers ─────────────────────────────────────────────────────────────────
 const fmtB = (v: number | null | undefined) => {
   if (v == null) return '—';
-  if (Math.abs(v) >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (Math.abs(v) >= 1e6) return `$${(v / 1e6).toFixed(0)}M`;
-  return `$${Number(v).toLocaleString()}`;
+  if (Math.abs(v) >= 1e12) return `$${(v / 1e12).toFixed(1)}T CAD`;
+  if (Math.abs(v) >= 1e9)  return `$${(v / 1e9).toFixed(1)}B CAD`;
+  if (Math.abs(v) >= 1e6)  return `$${(v / 1e6).toFixed(0)}M CAD`;
+  return `$${Number(v).toLocaleString()} CAD`;
 };
 
 const fmtPct = (v: string | number | null | undefined, showSign = true) => {
@@ -133,7 +134,7 @@ function MfgHealthModule() {
                     <span className="font-medium">{r.industry}</span>
                     <span className="text-ink-faint ml-1.5 font-mono text-[10px]">{r.naics}</span>
                   </td>
-                  <td className="py-2 px-3 font-mono">${r.value?.toLocaleString()}M</td>
+                  <td className="py-2 px-3 font-mono">${(r.value ?? 0).toLocaleString()}M CAD</td>
                   <td className={clsx('py-2 px-3 font-mono font-medium', yoyColor(r.yoy))}>{fmtPct(r.yoy)}</td>
                   <td className="py-2 px-3">
                     <div className="flex items-center gap-2">
