@@ -6,53 +6,75 @@
 
 import fs from 'fs';
 import path from 'path';
+import https from 'node:https';
+import http from 'node:http';
+import zlib from 'node:zlib';
+import { URL } from 'node:url';
 import { XMLParser } from 'fast-xml-parser';
 import type { TradeEvent, EventType } from '../lib/events/types';
 
 const OUT_PATH = path.join(process.cwd(), 'data/events/events.json');
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
-const HEADERS = {
-  'User-Agent': UA,
-  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-  'Accept-Language': 'en-CA,en;q=0.9',
-};
 
 // Three months ago
 const THREE_MONTHS_AGO = new Date();
 THREE_MONTHS_AGO.setMonth(THREE_MONTHS_AGO.getMonth() - 3);
 
-// ─── Fetch helpers ───────────────────────────────────────────────────────────
+// ─── Fetch helpers (node:https — bypasses undici/Akamai TLS fingerprint issues) ─
 
-async function fetchHtml(url: string, timeout = 20000): Promise<string | null> {
-  try {
-    const res = await fetch(url, {
-      headers: HEADERS,
-      signal: AbortSignal.timeout(timeout),
-      redirect: 'follow',
-    });
-    if (!res.ok) { console.warn(`  [HTTP ${res.status}] ${url}`); return null; }
-    return await res.text();
-  } catch (e) {
-    console.warn(`  [FAIL] ${url}: ${(e as Error).message}`);
-    return null;
-  }
+// Allow corporate CA cert bypass via env (scraping only — not security sensitive)
+const TLS_OPTS = process.env.NODE_TLS_REJECT_UNAUTHORIZED === '0' ? { rejectUnauthorized: false } : {};
+
+function httpGet(urlStr: string, accept = 'text/html,*/*', timeout = 22000, redirects = 6): Promise<string | null> {
+  return new Promise(resolve => {
+    const doReq = (cur: string, left: number) => {
+      let u: URL;
+      try { u = new URL(cur); } catch { resolve(null); return; }
+      const mod = u.protocol === 'https:' ? https : http;
+      const req = mod.get({
+        hostname: u.hostname,
+        port: u.port ? Number(u.port) : undefined,
+        path: u.pathname + u.search,
+        headers: {
+          'User-Agent': UA,
+          'Accept': accept,
+          'Accept-Language': 'en-CA,en;q=0.9',
+          'Accept-Encoding': 'gzip, deflate',
+          'Connection': 'keep-alive',
+        },
+        timeout,
+        ...TLS_OPTS,
+      }, res => {
+        const loc = res.headers.location;
+        if (res.statusCode && [301,302,303,307,308].includes(res.statusCode) && loc) {
+          res.resume();
+          if (left > 0) doReq(loc.startsWith('http') ? loc : `${u.protocol}//${u.host}${loc}`, left - 1);
+          else resolve(null);
+          return;
+        }
+        if (!res.statusCode || res.statusCode >= 400) {
+          console.warn(`  [HTTP ${res.statusCode}] ${cur}`);
+          res.resume(); resolve(null); return;
+        }
+        const enc = res.headers['content-encoding'];
+        const stream: NodeJS.ReadableStream = enc === 'gzip'
+          ? res.pipe(zlib.createGunzip())
+          : enc === 'deflate' ? res.pipe(zlib.createInflate()) : res;
+        const chunks: Buffer[] = [];
+        stream.on('data', (c: Buffer) => chunks.push(c));
+        stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf-8')));
+        stream.on('error', () => resolve(null));
+      });
+      req.on('error', (e) => { console.warn(`  [FAIL] ${cur}: ${e.message}`); resolve(null); });
+      req.on('timeout', () => { req.destroy(); console.warn(`  [TIMEOUT] ${cur}`); resolve(null); });
+    };
+    doReq(urlStr, redirects);
+  });
 }
 
-async function fetchXml(url: string, timeout = 20000): Promise<string | null> {
-  try {
-    const res = await fetch(url, {
-      headers: { ...HEADERS, 'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*' },
-      signal: AbortSignal.timeout(timeout),
-      redirect: 'follow',
-    });
-    if (!res.ok) { console.warn(`  [HTTP ${res.status}] ${url}`); return null; }
-    return await res.text();
-  } catch (e) {
-    console.warn(`  [FAIL] ${url}: ${(e as Error).message}`);
-    return null;
-  }
-}
+const fetchHtml = (url: string, timeout?: number) => httpGet(url, 'text/html,application/xhtml+xml,*/*;q=0.9', timeout);
+const fetchXml  = (url: string, timeout?: number) => httpGet(url, 'application/rss+xml,application/atom+xml,application/xml,text/xml,*/*', timeout);
 
 // ─── Country detection ───────────────────────────────────────────────────────
 
@@ -220,8 +242,9 @@ function rssItemToEvent(item: any, defaultSource: string): TradeEvent | null {
 
 async function fetchInternationalGC(): Promise<TradeEvent[]> {
   const urls = [
-    'https://www.international.gc.ca/world-monde/news-nouvelles/index.aspx?lang=eng',
+    'https://www.canada.ca/en/global-affairs/news.html',
     'https://www.canada.ca/en/global-affairs/news/releases.html',
+    'https://www.international.gc.ca/world-monde/news-nouvelles/index.aspx',
   ];
   const events: TradeEvent[] = [];
   const seen = new Set<string>();
@@ -487,7 +510,7 @@ async function fetchCME(): Promise<TradeEvent[]> {
 
 async function fetchBDC(): Promise<TradeEvent[]> {
   const events: TradeEvent[] = [];
-  const html = await fetchHtml('https://www.bdc.ca/en/events');
+  const html = await fetchHtml('https://www.bdc.ca/en/events-and-webinars') ?? await fetchHtml('https://www.bdc.ca/en/events.aspx');
   if (!html) return events;
 
   // BDC uses JSON-LD or card divs
@@ -527,9 +550,9 @@ async function fetchBDC(): Promise<TradeEvent[]> {
 
 async function fetchGACRSS(): Promise<TradeEvent[]> {
   const feeds = [
-    'https://www.canada.ca/en/global-affairs/news/releases.xml',
-    'https://www.canada.ca/en/global-affairs/feeds/news.xml',
-    'https://www.international.gc.ca/world-monde/news-nouvelles/news.xml',
+    'https://www.canada.ca/en/global-affairs/news/releases.rss',
+    'https://www.canada.ca/api/news/feeds?lang=en&department=dfatd-maecd',
+    'https://www.international.gc.ca/world-monde/news-nouvelles/rss.aspx',
   ];
   const events: TradeEvent[] = [];
   const seen = new Set<string>();
