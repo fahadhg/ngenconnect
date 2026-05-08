@@ -577,24 +577,41 @@ async function fetchCCC(): Promise<TradeEvent[]> {
   const html = await fetchHtml('https://chamber.ca/events/');
   if (!html) return events;
 
-  const cardRe = /<(?:article|div)[^>]*class="[^"]*(?:event|card)[^"]*"[^>]*>([\s\S]*?)<\/(?:article|div)>/gi;
-  let m: RegExpExecArray | null;
-  while ((m = cardRe.exec(html)) !== null) {
-    const block = m[1];
-    const titleM = /<h[2-4][^>]*>([\s\S]*?)<\/h[2-4]>/i.exec(block);
-    const title = titleM ? titleM[1].replace(/<[^>]+>/g, '').trim() : '';
-    if (!title || title.length < 8) continue;
-    if (!/trade|export|international|global|mission|bilateral/i.test(`${title} ${block}`)) continue;
+  // Events live in the event-slick-slider section as <a href="chamber.ca/events/..."> cards
+  // Each card contains: <p class="dates">DATE</p> and <h3>TITLE</h3>
+  const sliderStart = html.indexOf('event-slick-slider');
+  const section = sliderStart !== -1 ? html.slice(sliderStart, sliderStart + 200000) : html;
 
-    const dateM = /<time[^>]*datetime="([^"]+)"/.exec(block)
-      ?? /(\d{4}-\d{2}-\d{2})/.exec(block);
-    const date = parseDate(dateM?.[1]);
+  const seen = new Set<string>();
+  // Match each event anchor card
+  const cardRe = /<a\s[^>]*href="(https:\/\/chamber\.ca\/events\/[^"#]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+  let m: RegExpExecArray | null;
+  while ((m = cardRe.exec(section)) !== null) {
+    const link = m[1].split('?')[0];
+    if (seen.has(link)) continue;
+    seen.add(link);
+
+    const block = m[2];
+
+    // Date: <p class="dates">Mar 23, 2026</p> or similar
+    const dateM = /<p[^>]*class="[^"]*dates[^"]*"[^>]*>([\s\S]*?)<\/p>/i.exec(block)
+      ?? /<time[^>]*datetime="([^"]+)"/.exec(block)
+      ?? /(\w{3,9}\s+\d{1,2},?\s+\d{4}|\d{4}-\d{2}-\d{2})/.exec(block);
+    const rawDate = dateM ? dateM[1].replace(/<[^>]+>/g, '').trim() : '';
+    const date = parseDate(rawDate);
     if (!date) continue;
 
-    const linkM = /href="(https?:\/\/chamber\.ca\/[^"]+)"/.exec(block);
-    const link = linkM?.[1] ?? 'https://chamber.ca/events/';
+    // Title: <h3>...</h3>
+    const titleM = /<h[2-4][^>]*>([\s\S]*?)<\/h[2-4]>/i.exec(block);
+    const title = titleM ? titleM[1].replace(/<[^>]+>/g, '').trim() : '';
+    if (!title || title.length < 6) continue;
 
-    const desc = block.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    // Description: text-dark-body div or fallback to full block text
+    const descM = /<div[^>]*class="[^"]*text-dark-body[^"]*"[^>]*>([\s\S]*?)<\/div>/i.exec(block);
+    const desc = descM
+      ? descM[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+      : block.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+
     events.push({
       id: slugify(title, date),
       title,
