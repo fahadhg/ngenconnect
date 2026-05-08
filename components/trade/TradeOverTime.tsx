@@ -46,11 +46,11 @@ function CustomTooltip({ active, payload, label }: any) {
   );
 }
 
-export default function TradeOverTime() {
+export default function TradeOverTime({ defaultMode = 'export' }: { defaultMode?: 'export' | 'import' }) {
   const [data, setData] = useState<HistoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [mode, setMode] = useState<'export' | 'import'>('export');
+  const [mode, setMode] = useState<'export' | 'import'>(defaultMode);
 
   useEffect(() => {
     setLoading(true);

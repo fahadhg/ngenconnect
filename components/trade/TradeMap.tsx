@@ -19,10 +19,10 @@ const fmtUSD = (v: number) => {
   return `$${v.toLocaleString()}`;
 };
 
-export default function TradeMap() {
+export default function TradeMap({ defaultMode = 'export' }: { defaultMode?: 'export' | 'import' }) {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
-  const [mode, setMode] = useState<'export' | 'import'>('export');
+  const [mode, setMode] = useState<'export' | 'import'>(defaultMode);
   const [tooltip, setTooltip] = useState<{ name: string; value: number; x: number; y: number } | null>(null);
   const [year] = useState(2022);
 

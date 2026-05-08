@@ -97,9 +97,11 @@ export default function GrowthOpportunity() {
         <div className="text-xs text-ink-faint">{data.year}</div>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-border">
+      <div className="rounded-xl border border-border overflow-hidden">
+        <div className="overflow-x-auto">
+        <div className="overflow-y-auto max-h-[600px]">
         <table className="w-full text-xs">
-          <thead>
+          <thead className="sticky top-0 z-10">
             <tr className="border-b border-border bg-surface-2">
               <th className="py-2 px-3 text-left font-semibold text-ink-muted">PRODUCT NAME</th>
               <th
@@ -129,7 +131,7 @@ export default function GrowthOpportunity() {
             </tr>
           </thead>
           <tbody>
-            {sorted.slice(0, 20).map(p => (
+            {sorted.map(p => (
               <tr key={p.productId} className="border-b border-border hover:bg-surface-2 transition-colors">
                 <td className="py-2.5 px-3">
                   <div className="flex items-center gap-2">
@@ -165,6 +167,8 @@ export default function GrowthOpportunity() {
             ))}
           </tbody>
         </table>
+        </div>
+        </div>
       </div>
 
       {/* sector legend */}
