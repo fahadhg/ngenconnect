@@ -1,4 +1,29 @@
 {
-  "events": [],
-  "lastUpdated": "2026-05-08T13:40:31.753Z"
+  "events": [
+    {
+      "id": "2026-03-23-b7-2026-mission-to-brussels-and-paris",
+      "title": "B7 2026 Mission to Brussels and Paris",
+      "description": "Join the Canadian Chamber in Brussels and Paris for a mission focused on strengthening Canada–Europe collaboration in critical minerals, energy, and artificial intelligence.",
+      "date": "2026-03-23",
+      "source": "Canadian Chamber of Commerce",
+      "sourceUrl": "https://chamber.ca/events/b7-2026-mission-to-brussels-and-paris/",
+      "eventType": "other",
+      "countryIso3": [],
+      "fetchedAt": "2026-05-08T14:15:59.291Z"
+    },
+    {
+      "id": "2026-03-19-mission-to-japan",
+      "title": "Mission to Japan",
+      "description": "Join the Canadian Chamber in Tokyo and Osaka for a strategic dialogue to advance the Canada–Japan economic partnership and unlock new opportunities for bilateral collaboration in an evolving global landscape.",
+      "date": "2026-03-19",
+      "source": "Canadian Chamber of Commerce",
+      "sourceUrl": "https://chamber.ca/events/mission-to-japan/",
+      "eventType": "other",
+      "countryIso3": [
+        "JPN"
+      ],
+      "fetchedAt": "2026-05-08T14:15:59.292Z"
+    }
+  ],
+  "lastUpdated": "2026-05-08T14:16:44.551Z"
 }
