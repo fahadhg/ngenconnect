@@ -26,7 +26,7 @@ THREE_MONTHS_AGO.setMonth(THREE_MONTHS_AGO.getMonth() - 3);
 // Allow corporate CA cert bypass via env (scraping only — not security sensitive)
 const TLS_OPTS = process.env.NODE_TLS_REJECT_UNAUTHORIZED === '0' ? { rejectUnauthorized: false } : {};
 
-function httpGet(urlStr: string, accept = 'text/html,*/*', timeout = 22000, redirects = 6): Promise<string | null> {
+function httpGet(urlStr: string, accept = 'text/html,*/*', timeout = 15000, redirects = 6): Promise<string | null> {
   return new Promise(resolve => {
     const doReq = (cur: string, left: number) => {
       let u: URL;
@@ -328,43 +328,41 @@ async function fetchInternationalGC(): Promise<TradeEvent[]> {
 async function fetchCanadaCaNews(): Promise<TradeEvent[]> {
   const events: TradeEvent[] = [];
   const seen = new Set<string>();
-  const queries = ['trade mission', 'trade delegation', 'trade show canada', 'export mission minister'];
 
-  for (const q of queries) {
-    // Canada.ca uses Azure Cognitive Search — this is the real JSON endpoint
-    const url = `https://canada-ca-search.search.windows.net/indexes/canada-ca-index/docs?api-version=2020-06-30&search=${encodeURIComponent(q)}&%24filter=language+eq+%27en%27+and+contenttype+eq+%27News+releases%27&%24top=20&%24orderby=date+desc`;
-    // Fallback: use the GC Search API
-    const url2 = `https://www.canada.ca/en/news/advanced-news-search/news-results.json?topic=trade-and-investment&type=news-releases&keywords=${encodeURIComponent(q)}`;
+  // canada.ca news-results JSON endpoint — one query covers trade missions and delegations
+  const endpoints = [
+    'https://www.canada.ca/en/news/advanced-news-search/news-results.json?topic=trade-and-investment&type=news-releases',
+    'https://www.canada.ca/en/news/advanced-news-search/news-results.json?keywords=trade+mission&type=news-releases',
+  ];
 
-    for (const endpoint of [url2, url]) {
-      const raw = await fetchXml(endpoint);
-      if (!raw || raw.length < 50) continue;
-      try {
-        const data = JSON.parse(raw);
-        const items: any[] = data?.items ?? data?.results ?? data?.value ?? [];
-        for (const item of items) {
-          const title = String(item.title ?? item.name ?? '').replace(/<[^>]+>/g, '').trim();
-          if (!title || !(/trade|export|mission|delegation/i.test(title))) continue;
-          const date = parseDate(item.date ?? item.pubDate ?? item.dateModified ?? '');
-          if (!date) continue;
-          const link = String(item.url ?? item.link ?? '');
-          if (!link || seen.has(link)) continue;
-          seen.add(link);
-          const desc = String(item.description ?? item.excerpt ?? '').replace(/<[^>]+>/g, '').trim();
-          events.push({
-            id: slugify(title, date),
-            title,
-            description: desc.slice(0, 400),
-            date,
-            source: 'Global Affairs Canada',
-            sourceUrl: link,
-            eventType: detectEventType(title, desc),
-            countryIso3: detectCountries(`${title} ${desc}`),
-            fetchedAt: new Date().toISOString(),
-          });
-        }
-      } catch { /* not JSON or wrong format */ }
-    }
+  const results = await Promise.allSettled(endpoints.map(u => fetchXml(u)));
+  for (const res of results) {
+    if (res.status !== 'fulfilled' || !res.value) continue;
+    try {
+      const data = JSON.parse(res.value);
+      const items: any[] = data?.items ?? data?.results ?? [];
+      for (const item of items) {
+        const title = String(item.title ?? item.name ?? '').replace(/<[^>]+>/g, '').trim();
+        if (!title || !(/trade|export|mission|delegation/i.test(title))) continue;
+        const date = parseDate(item.date ?? item.pubDate ?? item.dateModified ?? '');
+        if (!date) continue;
+        const link = String(item.url ?? item.link ?? '');
+        if (!link || seen.has(link)) continue;
+        seen.add(link);
+        const desc = String(item.description ?? item.excerpt ?? '').replace(/<[^>]+>/g, '').trim();
+        events.push({
+          id: slugify(title, date),
+          title,
+          description: desc.slice(0, 400),
+          date,
+          source: 'Global Affairs Canada',
+          sourceUrl: link,
+          eventType: detectEventType(title, desc),
+          countryIso3: detectCountries(`${title} ${desc}`),
+          fetchedAt: new Date().toISOString(),
+        });
+      }
+    } catch { /* not JSON */ }
   }
 
   return events;
@@ -376,7 +374,7 @@ async function fetchTCS(): Promise<TradeEvent[]> {
   const events: TradeEvent[] = [];
   const html = await fetchHtml(
     'https://www.tradecommissioner.gc.ca/trade-events-evenements-commerciaux/index.aspx',
-    25000
+    18000
   );
   if (!html) return events;
   const seen = new Set<string>();
