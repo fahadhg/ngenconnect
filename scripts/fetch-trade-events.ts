@@ -568,7 +568,91 @@ async function fetchGACRSS(): Promise<TradeEvent[]> {
   return events;
 }
 
-// ─── Source 8: Canadian Chamber of Commerce events ───────────────────────────
+// ─── Source 8: Canadian Heritage — Creative Industries Trade Missions ────────
+
+async function fetchCanadianHeritage(): Promise<TradeEvent[]> {
+  const BASE = 'https://www.canada.ca';
+  const events: TradeEvent[] = [];
+  const html = await fetchHtml(
+    `${BASE}/en/canadian-heritage/services/creative-industries-trade-missions.html`
+  );
+  if (!html) return events;
+
+  const seen = new Set<string>();
+
+  // Canada.ca pages typically wrap each listing in <details>, <section>, or <div class="panel-...">
+  // Try to find anchors that look like event detail pages, then grab surrounding context
+  const linkRe = /<a\s[^>]*href="([^"#]+(?:trade-mission|mission-commerciale)[^"]*)"[^>]*>([\s\S]*?)<\/a>/gi;
+  let m: RegExpExecArray | null;
+
+  while ((m = linkRe.exec(html)) !== null) {
+    const rawLink = m[1];
+    const linkText = m[2].replace(/<[^>]+>/g, '').trim();
+    if (!linkText || linkText.length < 6) continue;
+    const link = rawLink.startsWith('http') ? rawLink : `${BASE}${rawLink}`;
+    if (seen.has(link)) continue;
+    seen.add(link);
+
+    // Grab ~800 chars of context around this match to find date and description
+    const start = Math.max(0, m.index - 300);
+    const ctx = html.slice(start, m.index + 800);
+    const dateM = /(\w{3,9}\.?\s+\d{1,2},?\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+\w{3,9}\s+\d{4})/i.exec(ctx);
+    const date = parseDate(dateM?.[1]);
+    if (!date) continue;
+
+    const desc = ctx.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    events.push({
+      id: slugify(linkText, date),
+      title: linkText,
+      description: desc.slice(0, 400),
+      date,
+      source: 'Canadian Heritage',
+      sourceUrl: link,
+      eventType: 'mission',
+      countryIso3: detectCountries(`${linkText} ${desc}`),
+      fetchedAt: new Date().toISOString(),
+    });
+  }
+
+  // Fallback: Canada.ca uses <h3> / <h4> + nearby <p> for event lists
+  // Match headings that sound like trade mission titles
+  const headingRe = /<h[234][^>]*>([\s\S]*?)<\/h[234]>/gi;
+  while ((m = headingRe.exec(html)) !== null) {
+    const title = m[1].replace(/<[^>]+>/g, '').trim();
+    if (!title || title.length < 8) continue;
+    if (!/mission|trade|export|creative|industry|industries/i.test(title)) continue;
+
+    const ctx = html.slice(m.index, m.index + 1200);
+    const dateM = /(\w{3,9}\.?\s+\d{1,2},?\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}\s+\w{3,9}\s+\d{4})/i.exec(ctx);
+    const date = parseDate(dateM?.[1]);
+    if (!date) continue;
+
+    const linkM = /href="([^"]+)"/.exec(ctx);
+    const rawLink = linkM?.[1] ?? '';
+    const link = rawLink.startsWith('http') ? rawLink
+      : rawLink ? `${BASE}${rawLink}`
+      : `${BASE}/en/canadian-heritage/services/creative-industries-trade-missions.html`;
+    if (seen.has(link)) continue;
+    seen.add(link);
+
+    const desc = ctx.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    events.push({
+      id: slugify(title, date),
+      title,
+      description: desc.slice(0, 400),
+      date,
+      source: 'Canadian Heritage',
+      sourceUrl: link,
+      eventType: 'mission',
+      countryIso3: detectCountries(`${title} ${desc}`),
+      fetchedAt: new Date().toISOString(),
+    });
+  }
+
+  return events;
+}
+
+// ─── Source 9: Canadian Chamber of Commerce events ───────────────────────────
 
 async function fetchCCC(): Promise<TradeEvent[]> {
   const events: TradeEvent[] = [];
@@ -651,6 +735,7 @@ async function main() {
     fetchEDC().then(r => { console.log(`  ✓ Export Development Canada: ${r.length}`); return r; }),
     fetchCME().then(r => { console.log(`  ✓ Canadian Manufacturers & Exporters: ${r.length}`); return r; }),
     fetchBDC().then(r => { console.log(`  ✓ Business Development Bank: ${r.length}`); return r; }),
+    fetchCanadianHeritage().then(r => { console.log(`  ✓ Canadian Heritage (Creative Industries): ${r.length}`); return r; }),
     fetchCCC().then(r => { console.log(`  ✓ Canadian Chamber of Commerce: ${r.length}`); return r; }),
   ]);
 
