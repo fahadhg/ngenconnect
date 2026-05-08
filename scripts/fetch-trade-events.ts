@@ -138,6 +138,47 @@ const COUNTRY_PATTERNS: Array<{ pattern: RegExp; iso3: string }> = [
   { pattern: /\b(pakistan|pakistani)\b/i, iso3: 'PAK' },
   { pattern: /\b(bangladesh|bangladeshi)\b/i, iso3: 'BGD' },
   { pattern: /\b(kazakh(stan)?)\b/i, iso3: 'KAZ' },
+  // Cities → country
+  { pattern: /\b(brussels|bruges|ghent|antwerp)\b/i, iso3: 'BEL' },
+  { pattern: /\b(paris|lyon|marseille|bordeaux|strasbourg)\b/i, iso3: 'FRA' },
+  { pattern: /\b(berlin|munich|frankfurt|hamburg|cologne)\b/i, iso3: 'DEU' },
+  { pattern: /\b(london|manchester|edinburgh|birmingham)\b/i, iso3: 'GBR' },
+  { pattern: /\b(rome|milan|florence|venice|naples)\b/i, iso3: 'ITA' },
+  { pattern: /\b(madrid|barcelona|seville|valencia)\b/i, iso3: 'ESP' },
+  { pattern: /\b(amsterdam|rotterdam|the hague)\b/i, iso3: 'NLD' },
+  { pattern: /\b(tokyo|osaka|kyoto|yokohama|nagoya)\b/i, iso3: 'JPN' },
+  { pattern: /\b(beijing|shanghai|guangzhou|shenzhen|chengdu)\b/i, iso3: 'CHN' },
+  { pattern: /\b(seoul|busan|incheon)\b/i, iso3: 'KOR' },
+  { pattern: /\b(mumbai|new delhi|bangalore|chennai|hyderabad)\b/i, iso3: 'IND' },
+  { pattern: /\b(sydney|melbourne|brisbane|perth)\b/i, iso3: 'AUS' },
+  { pattern: /\bs[aã]o paulo\b|\bbrasil?ia\b|\brio de janeiro\b/i, iso3: 'BRA' },
+  { pattern: /\bmexico city\b|\bguadalajara\b|\bmonterrey\b/i, iso3: 'MEX' },
+  { pattern: /\b(dubai|abu dhabi)\b/i, iso3: 'ARE' },
+  { pattern: /\b(riyadh|jeddah)\b/i, iso3: 'SAU' },
+  { pattern: /\b(jakarta|bali)\b/i, iso3: 'IDN' },
+  { pattern: /\bkuala lumpur\b/i, iso3: 'MYS' },
+  { pattern: /\b(bangkok)\b/i, iso3: 'THA' },
+  { pattern: /\bho chi minh\b|\bhanoi\b|\bsaigon\b/i, iso3: 'VNM' },
+  { pattern: /\b(manila|cebu)\b/i, iso3: 'PHL' },
+  { pattern: /\b(taipei)\b/i, iso3: 'TWN' },
+  { pattern: /\btel aviv\b|\bjerusalem\b/i, iso3: 'ISR' },
+  { pattern: /\b(istanbul|ankara)\b/i, iso3: 'TUR' },
+  { pattern: /\b(nairobi)\b/i, iso3: 'KEN' },
+  { pattern: /\b(lagos|abuja)\b/i, iso3: 'NGA' },
+  { pattern: /\bjohannesburg\b|\bcape town\b|\bpretoria\b/i, iso3: 'ZAF' },
+  { pattern: /\b(cairo|alexandria)\b/i, iso3: 'EGY' },
+  { pattern: /\b(casablanca|rabat)\b/i, iso3: 'MAR' },
+  { pattern: /\bbogot[aá]\b|\bmedellin\b/i, iso3: 'COL' },
+  { pattern: /\b(santiago)\b/i, iso3: 'CHL' },
+  { pattern: /\b(lima)\b/i, iso3: 'PER' },
+  { pattern: /\bbuenos aires\b/i, iso3: 'ARG' },
+  { pattern: /\b(warsaw|krakow|wroclaw)\b/i, iso3: 'POL' },
+  { pattern: /\b(stockholm|gothenburg)\b/i, iso3: 'SWE' },
+  { pattern: /\b(oslo)\b/i, iso3: 'NOR' },
+  { pattern: /\b(copenhagen)\b/i, iso3: 'DNK' },
+  { pattern: /\b(helsinki)\b/i, iso3: 'FIN' },
+  { pattern: /\b(vienna|salzburg)\b/i, iso3: 'AUT' },
+  { pattern: /\b(zurich|geneva|bern)\b/i, iso3: 'CHE' },
 ];
 
 const REGION_EXPANSIONS: Record<string, string[]> = {
@@ -181,7 +222,7 @@ function detectCountries(text: string): string[] {
 
 function detectEventType(title: string, description: string): EventType {
   const t = `${title} ${description}`.toLowerCase();
-  if (/trade mission|minister\w* leads|delegation|ministerial visit|trade commissioner/.test(t)) return 'mission';
+  if (/\btrade mission\b|minister\w* leads|delegation|ministerial visit|trade commissioner|\bmission to\b|\btrade delegation\b/.test(t)) return 'mission';
   if (/trade show|trade fair|expo|exposition|exhibition|pavilion|showcase|hannover|ces |ceatec|sial/.test(t)) return 'trade-show';
   if (/summit|g7|g20|bilateral meeting|leaders'? meeting/.test(t)) return 'summit';
   if (/conference|forum|symposium|seminar|workshop|webinar/.test(t)) return 'conference';
