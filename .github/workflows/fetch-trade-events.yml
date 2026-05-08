@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -34,4 +36,5 @@ jobs:
           git config user.email "fahadgondal2001@gmail.com"
           git add data/events/events.json
           git diff --staged --quiet || git commit -m "chore: refresh trade events data [$(date -u +%Y-%m-%d)]"
-          git push
+          git pull --rebase origin main
+          git push origin main
