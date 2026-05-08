@@ -323,50 +323,47 @@ async function fetchInternationalGC(): Promise<TradeEvent[]> {
   return events;
 }
 
-// ─── Source 2: Canada.ca news search (HTML) ─────────────────────────────────
+// ─── Source 2: Canada.ca search JSON API ────────────────────────────────────
 
 async function fetchCanadaCaNews(): Promise<TradeEvent[]> {
   const events: TradeEvent[] = [];
   const seen = new Set<string>();
-  const queries = ['trade+mission', 'trade+delegation', 'trade+show+canada', 'export+mission'];
+  const queries = ['trade mission', 'trade delegation', 'trade show canada', 'export mission minister'];
 
   for (const q of queries) {
-    const url = `https://www.canada.ca/en/news/advanced-news-search/news-results.html?topic=trade-and-investment&type=news-releases&keywords=${q}`;
-    const html = await fetchHtml(url);
-    if (!html) continue;
+    // Canada.ca uses Azure Cognitive Search — this is the real JSON endpoint
+    const url = `https://canada-ca-search.search.windows.net/indexes/canada-ca-index/docs?api-version=2020-06-30&search=${encodeURIComponent(q)}&%24filter=language+eq+%27en%27+and+contenttype+eq+%27News+releases%27&%24top=20&%24orderby=date+desc`;
+    // Fallback: use the GC Search API
+    const url2 = `https://www.canada.ca/en/news/advanced-news-search/news-results.json?topic=trade-and-investment&type=news-releases&keywords=${encodeURIComponent(q)}`;
 
-    // Canada.ca news results use <article> with h3 title + time element
-    const articleRe = /<article[^>]*>([\s\S]*?)<\/article>/gi;
-    let m: RegExpExecArray | null;
-    while ((m = articleRe.exec(html)) !== null) {
-      const block = m[1];
-      const titleM = /<h3[^>]*>([\s\S]*?)<\/h3>/i.exec(block);
-      const title = titleM ? titleM[1].replace(/<[^>]+>/g, '').trim() : '';
-      if (!title) continue;
-
-      const dateM = /<time[^>]*datetime="([^"]+)"/.exec(block)
-        ?? /(\d{4}-\d{2}-\d{2})/.exec(block);
-      const date = parseDate(dateM?.[1]);
-      if (!date) continue;
-
-      const linkM = /href="(https?:\/\/[^"]+|\/[^"]+)"/.exec(block);
-      const rawLink = linkM?.[1] ?? '';
-      const link = rawLink.startsWith('http') ? rawLink : `https://www.canada.ca${rawLink}`;
-      if (seen.has(link)) continue;
-      seen.add(link);
-
-      const desc = block.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-      events.push({
-        id: slugify(title, date),
-        title,
-        description: desc.slice(0, 400),
-        date,
-        source: 'Global Affairs Canada',
-        sourceUrl: link,
-        eventType: detectEventType(title, desc),
-        countryIso3: detectCountries(`${title} ${desc}`),
-        fetchedAt: new Date().toISOString(),
-      });
+    for (const endpoint of [url2, url]) {
+      const raw = await fetchXml(endpoint);
+      if (!raw || raw.length < 50) continue;
+      try {
+        const data = JSON.parse(raw);
+        const items: any[] = data?.items ?? data?.results ?? data?.value ?? [];
+        for (const item of items) {
+          const title = String(item.title ?? item.name ?? '').replace(/<[^>]+>/g, '').trim();
+          if (!title || !(/trade|export|mission|delegation/i.test(title))) continue;
+          const date = parseDate(item.date ?? item.pubDate ?? item.dateModified ?? '');
+          if (!date) continue;
+          const link = String(item.url ?? item.link ?? '');
+          if (!link || seen.has(link)) continue;
+          seen.add(link);
+          const desc = String(item.description ?? item.excerpt ?? '').replace(/<[^>]+>/g, '').trim();
+          events.push({
+            id: slugify(title, date),
+            title,
+            description: desc.slice(0, 400),
+            date,
+            source: 'Global Affairs Canada',
+            sourceUrl: link,
+            eventType: detectEventType(title, desc),
+            countryIso3: detectCountries(`${title} ${desc}`),
+            fetchedAt: new Date().toISOString(),
+          });
+        }
+      } catch { /* not JSON or wrong format */ }
     }
   }
 
@@ -426,43 +423,41 @@ async function fetchTCS(): Promise<TradeEvent[]> {
   return events;
 }
 
-// ─── Source 4: EDC events (HTML) ─────────────────────────────────────────────
+// ─── Source 4: EDC events (JSON API — discovered from page source) ───────────
 
 async function fetchEDC(): Promise<TradeEvent[]> {
   const events: TradeEvent[] = [];
-  const html = await fetchHtml('https://www.edc.ca/en/events.html');
-  if (!html) return events;
-
-  const cardRe = /<article[^>]*>([\s\S]*?)<\/article>/gi;
-  let m: RegExpExecArray | null;
-  while ((m = cardRe.exec(html)) !== null) {
-    const block = m[1];
-    const titleM = /<h[23][^>]*>([\s\S]*?)<\/h[23]>/i.exec(block);
-    const title = titleM ? titleM[1].replace(/<[^>]+>/g, '').trim() : '';
-    if (!title) continue;
-
-    const dateM = /<time[^>]*datetime="([^"]+)"/.exec(block);
-    const date = parseDate(dateM?.[1]);
-    if (!date) continue;
-
-    const linkM = /href="(\/en\/events\/[^"]+|https?:\/\/[^"]+)"/.exec(block);
-    const rawLink = linkM?.[1] ?? '';
-    const link = rawLink.startsWith('http') ? rawLink : `https://www.edc.ca${rawLink}`;
-
-    const desc = block.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-    events.push({
-      id: slugify(title, date),
-      title,
-      description: desc.slice(0, 400),
-      date,
-      source: 'Export Development Canada',
-      sourceUrl: link,
-      eventType: detectEventType(title, desc),
-      countryIso3: detectCountries(`${title} ${desc}`),
-      fetchedAt: new Date().toISOString(),
-    });
-  }
-
+  // EDC loads events via a servlet JSON endpoint embedded in the page
+  const raw = await fetchXml(
+    'https://www.edc.ca/bin/upcomingeventsservlet.json?pageUrl=L2NvbnRlbnQvZWRjL2VuL2V2ZW50cw=='
+  );
+  if (!raw) return events;
+  try {
+    const data = JSON.parse(raw) as { pageItems?: any[] };
+    for (const item of data.pageItems ?? []) {
+      const title = String(item.linkText ?? '').trim();
+      if (!title) continue;
+      // webinarStartDateTime is a Unix ms timestamp
+      const ts = item.webinarStartDateTime ?? item.webinarEndDateTime;
+      const date = ts ? parseDate(new Date(ts).toISOString()) : null;
+      if (!date) continue;
+      const link = item.linkUrl?.startsWith('http')
+        ? item.linkUrl
+        : `https://www.edc.ca${item.linkUrl ?? '/en/events.html'}`;
+      const desc = String(item.description ?? '').trim();
+      events.push({
+        id: slugify(title, date),
+        title,
+        description: desc.slice(0, 400),
+        date,
+        source: 'Export Development Canada',
+        sourceUrl: link,
+        eventType: detectEventType(title, desc),
+        countryIso3: detectCountries(`${title} ${desc}`),
+        fetchedAt: new Date().toISOString(),
+      });
+    }
+  } catch { /* bad JSON */ }
   return events;
 }
 
@@ -550,9 +545,10 @@ async function fetchBDC(): Promise<TradeEvent[]> {
 
 async function fetchGACRSS(): Promise<TradeEvent[]> {
   const feeds = [
-    'https://www.canada.ca/en/global-affairs/news/releases.rss',
-    'https://www.canada.ca/api/news/feeds?lang=en&department=dfatd-maecd',
+    'https://www.canada.ca/en/global-affairs/news/releases/feed.xml',
+    'https://www.canada.ca/en/news.rss',
     'https://www.international.gc.ca/world-monde/news-nouvelles/rss.aspx',
+    'https://www.canada.ca/content/canadasite/en/global-affairs/news.feed.rss',
   ];
   const events: TradeEvent[] = [];
   const seen = new Set<string>();
