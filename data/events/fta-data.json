@@ -1,0 +1,288 @@
+{
+  "agreements": [
+    {
+      "id": "cusma",
+      "name": "CUSMA",
+      "fullName": "Canada–United States–Mexico Agreement",
+      "inForce": "2020-07-01",
+      "countries": ["USA", "MEX"],
+      "description": "Modernized replacement for NAFTA governing trade in goods, services, investment, and intellectual property across North America. Covers approximately $1.3T in annual three-way trade.",
+      "tariffCoverage": "~98% of tariff lines eliminated",
+      "covers": ["Goods", "Services", "Investment", "Digital Trade", "Intellectual Property", "Labour", "Environment"],
+      "keyProvisions": [
+        "Tariff-free access on ~98% of goods between the three countries",
+        "Strengthened rules of origin for automotive sector (75% North American content requirement)",
+        "New digital trade chapter prohibiting customs duties on digital products",
+        "Enhanced dairy market access commitments",
+        "Intellectual property protections (copyright extended to life + 70 years)",
+        "Currency transparency and anti-manipulation provisions",
+        "Labour and environment enforcement with trade sanctions",
+        "State-owned enterprise disciplines"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/cusma-aceum/index.aspx"
+    },
+    {
+      "id": "ceta",
+      "name": "CETA",
+      "fullName": "Canada–European Union Comprehensive Economic and Trade Agreement",
+      "inForce": "2017-09-21",
+      "countries": ["AUT","BEL","BGR","CYP","CZE","DEU","DNK","ESP","EST","FIN","FRA","GRC","HRV","HUN","IRL","ITA","LTU","LUX","LVA","MLT","NLD","POL","PRT","ROU","SVK","SVN","SWE"],
+      "description": "Canada's most comprehensive FTA, covering virtually all sectors of the Canadian and EU economies across a combined market of ~470 million people and $1.1T in bilateral trade potential.",
+      "tariffCoverage": "98% of tariffs eliminated immediately; nearly all remaining phased out within 7 years",
+      "covers": ["Goods", "Services", "Investment", "Government Procurement", "Intellectual Property", "Regulatory Cooperation", "Labour", "Environment"],
+      "keyProvisions": [
+        "98% of EU-Canada tariffs eliminated on Day 1; virtually all tariffs eliminated within 7 years",
+        "Enhanced Canadian agricultural access to EU (beef, pork, seafood, wheat, barley)",
+        "Canadian companies eligible for ~€240B in annual EU government procurement contracts",
+        "Mutual recognition of professional qualifications (engineers, architects, accountants)",
+        "Investment protection with reformed investor–state dispute settlement (Investment Court System)",
+        "Geographical indications protection for ~170 European food and drink products",
+        "Regulatory cooperation to reduce non-tariff barriers",
+        "Labour and environment chapters with enforcement mechanisms",
+        "Comprehensive services liberalization including financial services and telecoms"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/ceta-aecg/index.aspx"
+    },
+    {
+      "id": "cptpp",
+      "name": "CPTPP",
+      "fullName": "Comprehensive and Progressive Agreement for Trans-Pacific Partnership",
+      "inForce": "2018-12-30",
+      "countries": ["AUS","BRN","CHL","JPN","MYS","MEX","NZL","PER","SGP","VNM","GBR"],
+      "description": "Eleven-nation (plus UK as of January 2024) Asia-Pacific mega-regional FTA covering 13.5% of global GDP. Provides Canadian exporters preferential access across the fast-growing Pacific Rim.",
+      "tariffCoverage": "95%+ of tariff lines eliminated across member countries",
+      "covers": ["Goods", "Services", "Investment", "Digital Trade", "Intellectual Property", "Government Procurement", "Labour", "Environment", "State-Owned Enterprises"],
+      "keyProvisions": [
+        "Tariff elimination on 95%+ of goods traded between member countries",
+        "Enhanced Canadian access for beef, pork, dairy, and seafood in Japan and other markets",
+        "Investment protection provisions with investor–state dispute settlement",
+        "Digital trade and e-commerce chapter enabling cross-border data flows",
+        "Government procurement access across all member country markets",
+        "Intellectual property protections (with some TPP provisions suspended)",
+        "Labour standards and environment chapter with trade-linked enforcement",
+        "State-owned enterprise disciplines preventing market distortions",
+        "UK accession effective January 15, 2024 expands market coverage significantly"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/cptpp-ptpgp/index.aspx"
+    },
+    {
+      "id": "ckfta",
+      "name": "CKFTA",
+      "fullName": "Canada–Korea Free Trade Agreement",
+      "inForce": "2015-01-01",
+      "countries": ["KOR"],
+      "description": "Canada's first FTA in Asia-Pacific with South Korea's $1.7T economy, the world's 12th largest. Opens one of Asia's most sophisticated manufacturing and consumer markets to Canadian exporters.",
+      "tariffCoverage": "98% of tariff lines eliminated within 10 years",
+      "covers": ["Goods", "Services", "Investment", "Government Procurement", "Intellectual Property"],
+      "keyProvisions": [
+        "Tariff elimination on 98% of goods over a maximum of 10 years",
+        "Enhanced access for Canadian beef, pork, cereals, and seafood",
+        "Elimination of Korean auto tariffs giving Canadian-built vehicles market access",
+        "Services market openings including financial services, telecoms, and professional services",
+        "Government procurement access to Korean central and sub-central procurement",
+        "Intellectual property chapter aligned with international standards",
+        "Investment protection with investor–state dispute settlement"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/korea-coree/index.aspx"
+    },
+    {
+      "id": "cuktca",
+      "name": "CUKTCA",
+      "fullName": "Canada–United Kingdom Trade Continuity Agreement",
+      "inForce": "2021-04-01",
+      "countries": ["GBR"],
+      "description": "Transitional agreement ensuring CETA-equivalent trade terms between Canada and the UK following Brexit. Both countries are negotiating a permanent, modernized FTA.",
+      "tariffCoverage": "Equivalent to CETA — ~98% of tariffs eliminated",
+      "covers": ["Goods", "Services", "Investment", "Government Procurement"],
+      "keyProvisions": [
+        "Maintains CETA tariff schedules — ~98% of goods trade tariff-free",
+        "Preserves preferential market access for Canadian exports to the UK",
+        "Retains services and investment provisions from CETA",
+        "Government procurement access equivalent to CETA provisions",
+        "Transitional arrangement: both countries committed to negotiate a modern, permanent FTA",
+        "Rules of origin adapted for UK–Canada bilateral trade context"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/uk-ru/index.aspx"
+    },
+    {
+      "id": "cufta",
+      "name": "CUFTA",
+      "fullName": "Canada–Ukraine Free Trade Agreement (Modernized)",
+      "inForce": "2017-08-01",
+      "countries": ["UKR"],
+      "description": "Modernized in 2024 to expand beyond goods trade into services, investment, and the digital economy, signalling Canada's long-term commitment to Ukraine's reconstruction and economic recovery.",
+      "tariffCoverage": "Eliminates tariffs on virtually all goods",
+      "covers": ["Goods", "Services", "Investment", "Digital Trade", "Labour", "Environment"],
+      "keyProvisions": [
+        "Eliminates tariffs on virtually all goods traded between Canada and Ukraine",
+        "New services and investment chapters (added in 2024 modernization)",
+        "Digital trade provisions enabling cross-border data flows",
+        "Labour and environment standards aligned with international norms",
+        "Intellectual property protections updated to modern standards",
+        "Provisions supporting Ukraine's post-war reconstruction and EU integration path"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/ukraine/index.aspx"
+    },
+    {
+      "id": "ccfta",
+      "name": "CCFTA",
+      "fullName": "Canada–Chile Free Trade Agreement",
+      "inForce": "1997-07-05",
+      "countries": ["CHL"],
+      "description": "One of Canada's earliest FTAs, providing duty-free or preferential access for goods. Chile is also a CPTPP partner, deepening the bilateral relationship further.",
+      "tariffCoverage": "Duty-free on 97%+ of tariff lines",
+      "covers": ["Goods", "Investment", "Financial Services"],
+      "keyProvisions": [
+        "Duty-free access on 97%+ of tariff lines",
+        "Investment protection with investor–state dispute settlement",
+        "Financial services liberalization",
+        "Labour and environment side agreements",
+        "Note: Chile's CPTPP membership (2018) has superseded many provisions with deeper commitments"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/chile-chili/index.aspx"
+    },
+    {
+      "id": "colfta",
+      "name": "COLFTA",
+      "fullName": "Canada–Colombia Free Trade Agreement",
+      "inForce": "2011-08-15",
+      "countries": ["COL"],
+      "description": "Provides preferential access to one of Latin America's largest economies with 52 million consumers and significant natural resources and manufacturing sectors.",
+      "tariffCoverage": "98% of goods trade liberalized",
+      "covers": ["Goods", "Services", "Investment", "Government Procurement"],
+      "keyProvisions": [
+        "Eliminates tariffs on 98% of goods",
+        "Investment protection with investor–state dispute settlement",
+        "Services and financial services liberalization",
+        "Government procurement access",
+        "Labour and environment cooperation agreements",
+        "Dispute resolution mechanism for trade matters"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/colombia-colombie/index.aspx"
+    },
+    {
+      "id": "cpafta",
+      "name": "CPAFTA",
+      "fullName": "Canada–Panama Free Trade Agreement",
+      "inForce": "2013-04-01",
+      "countries": ["PAN"],
+      "description": "Agreement providing preferential market access to Panama, a key logistics and financial services hub for the Americas.",
+      "tariffCoverage": "Eliminates tariffs on 99% of goods",
+      "covers": ["Goods", "Services", "Investment", "Financial Services", "Government Procurement"],
+      "keyProvisions": [
+        "Eliminates tariffs on 99% of goods",
+        "Financial services chapter reflecting Panama's role as a regional financial centre",
+        "Investment protection with investor–state dispute settlement",
+        "Government procurement access",
+        "Labour and environment cooperation"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/panama/index.aspx"
+    },
+    {
+      "id": "cifta",
+      "name": "CIFTA",
+      "fullName": "Canada–Israel Free Trade Agreement (Updated)",
+      "inForce": "1997-01-01",
+      "countries": ["ISR"],
+      "description": "Canada's first FTA with a Middle Eastern country, updated in 2019 to include agriculture, services, investment, and government procurement — significantly modernizing a 25-year-old relationship.",
+      "tariffCoverage": "Eliminates tariffs on virtually all goods",
+      "covers": ["Goods", "Agriculture", "Services", "Investment", "Government Procurement"],
+      "keyProvisions": [
+        "Eliminates tariffs on virtually all goods",
+        "Enhanced agricultural market access (added 2019 update)",
+        "Services and investment chapters (new in 2019 update)",
+        "Government procurement access to Israeli federal contracts (new in 2019)",
+        "Intellectual property protections",
+        "Dispute resolution mechanism"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/israel/index.aspx"
+    },
+    {
+      "id": "cjfta",
+      "name": "CJFTA",
+      "fullName": "Canada–Jordan Free Trade Agreement",
+      "inForce": "2012-10-01",
+      "countries": ["JOR"],
+      "description": "Agreement providing preferential access to Jordan's growing economy, an important gateway to the broader Middle East market.",
+      "tariffCoverage": "Most tariffs eliminated over 10 years",
+      "covers": ["Goods", "Investment", "Labour", "Environment"],
+      "keyProvisions": [
+        "Eliminates most tariffs within a maximum of 10 years",
+        "Investment protection provisions",
+        "Labour and environment cooperation agreements",
+        "Dispute resolution mechanism"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/jordan-jordanie/index.aspx"
+    },
+    {
+      "id": "chfta",
+      "name": "CHFTA",
+      "fullName": "Canada–Honduras Free Trade Agreement",
+      "inForce": "2014-10-01",
+      "countries": ["HND"],
+      "description": "Agreement providing preferential market access for goods traded between Canada and Honduras.",
+      "tariffCoverage": "Eliminates tariffs on most goods",
+      "covers": ["Goods", "Services", "Investment", "Labour", "Environment"],
+      "keyProvisions": [
+        "Tariff elimination on most goods",
+        "Services and investment provisions",
+        "Labour and environment chapters",
+        "Dispute resolution mechanism"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/honduras/index.aspx"
+    },
+    {
+      "id": "cefta",
+      "name": "Canada–EFTA FTA",
+      "fullName": "Canada–European Free Trade Association Free Trade Agreement",
+      "inForce": "2009-07-01",
+      "countries": ["ISL","LIE","NOR","CHE"],
+      "description": "Agreement with the four EFTA states (Iceland, Liechtenstein, Norway, Switzerland), providing tariff-free access for industrial goods and enhanced access for agricultural products.",
+      "tariffCoverage": "Duty-free on all industrial goods; preferential rates on agriculture",
+      "covers": ["Goods", "Investment", "Services"],
+      "keyProvisions": [
+        "Duty-free access on all industrial goods immediately upon entry into force",
+        "Preferential access for agricultural products (bilateral side agreements with each EFTA state)",
+        "Investment protection provisions",
+        "Services liberalization",
+        "Fisheries chapter relevant to Iceland and Norway"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/efta-aele/index.aspx"
+    },
+    {
+      "id": "cpfta",
+      "name": "CPFTA",
+      "fullName": "Canada–Peru Free Trade Agreement",
+      "inForce": "2009-08-01",
+      "countries": ["PER"],
+      "description": "Agreement with Peru's fast-growing commodity and manufacturing economy. Peru is also a CPTPP partner, reinforcing the bilateral relationship.",
+      "tariffCoverage": "95%+ of tariff lines eliminated",
+      "covers": ["Goods", "Services", "Investment", "Labour", "Environment"],
+      "keyProvisions": [
+        "Eliminates tariffs on 95%+ of goods over time",
+        "Investment protection with investor–state dispute settlement",
+        "Services and financial services chapter",
+        "Labour and environment cooperation",
+        "Note: Peru's CPTPP membership has deepened commitments further"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/peru-perou/index.aspx"
+    },
+    {
+      "id": "ccrfta",
+      "name": "CCRFTA",
+      "fullName": "Canada–Costa Rica Free Trade Agreement",
+      "inForce": "2002-11-01",
+      "countries": ["CRI"],
+      "description": "Bilateral FTA providing preferential access for goods and services between Canada and Costa Rica, one of Central America's most stable and open economies.",
+      "tariffCoverage": "Eliminates tariffs on most goods",
+      "covers": ["Goods", "Services", "Investment"],
+      "keyProvisions": [
+        "Eliminates tariffs on most goods",
+        "Services liberalization",
+        "Investment protection provisions",
+        "Dispute resolution mechanism"
+      ],
+      "website": "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/costarica/index.aspx"
+    }
+  ]
+}

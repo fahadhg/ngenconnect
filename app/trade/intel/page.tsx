@@ -16,6 +16,7 @@ export default function IntelPage() {
           <Link href="/trade" className="text-gray-500 hover:text-gray-900 transition-colors">Industries</Link>
           <Link href="/trade/browse" className="text-gray-500 hover:text-gray-900 transition-colors">Imports</Link>
           <Link href="/trade/exports" className="text-gray-500 hover:text-gray-900 transition-colors">Exports</Link>
+          <Link href="/trade/events" className="text-gray-500 hover:text-gray-900 transition-colors">Events</Link>
           <Link href="/trade/intel" className="text-gray-900 font-semibold">Intel</Link>
         </div>
       </nav>

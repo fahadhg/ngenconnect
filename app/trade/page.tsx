@@ -86,6 +86,7 @@ export default async function TradePage() {
           <Link href="/trade" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Industries</Link>
           <Link href="/trade/browse" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Imports</Link>
           <Link href="/trade/exports" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Exports</Link>
+          <Link href="/trade/events" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Events</Link>
           <Link href="/trade/intel" className="text-gray-600 hover:text-gray-900 transition-colors font-medium">Intel</Link>
         </div>
       </nav>

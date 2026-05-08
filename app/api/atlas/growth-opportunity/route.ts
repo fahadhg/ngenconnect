@@ -68,8 +68,7 @@ export async function GET() {
           pci,
         };
       })
-      .sort((a, b) => b.opportunityDiamonds - a.opportunityDiamonds || b.globalSize - a.globalSize)
-      .slice(0, 50);
+      .sort((a, b) => b.opportunityDiamonds - a.opportunityDiamonds || b.globalSize - a.globalSize);
 
     const totalGlobalSize = opportunities.reduce((s, p) => s + p.globalSize, 0);
 

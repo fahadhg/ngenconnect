@@ -1,0 +1,37 @@
+name: Refresh Trade Events
+
+on:
+  schedule:
+    # Runs on the 1st and 15th of every month at 06:00 UTC
+    - cron: '0 6 1,15 * *'
+  workflow_dispatch: # allow manual trigger from GitHub UI
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run trade events scraper
+        run: npx tsx scripts/fetch-trade-events.ts
+
+      - name: Commit updated events data
+        run: |
+          git config user.name  "Trade Events Bot"
+          git config user.email "fahadgondal2001@gmail.com"
+          git add data/events/events.json
+          git diff --staged --quiet || git commit -m "chore: refresh trade events data [$(date -u +%Y-%m-%d)]"
+          git push
