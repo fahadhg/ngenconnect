@@ -20,6 +20,15 @@ export interface CompanyMetadata {
   lat?: number;
   lng?: number;
   city?: string;
+  // Defence enrichment fields
+  defence_score?: number;
+  defence_tier?: string | null;
+  cgp_registered?: boolean | null;
+  itar_registered?: boolean | null;
+  cmmc_level?: number | null;
+  facility_clearance?: string | null;
+  dnd_approved?: boolean | null;
+  prime_sub_supplier?: boolean | null;
 }
 
 export interface SearchResult {
@@ -35,6 +44,14 @@ export interface SearchResult {
   province: string;
   company_size: string;
   score: number;
+  // Defence enrichment fields
+  defence_score?: number;
+  defence_tier?: string | null;
+  cgp_registered?: boolean | null;
+  itar_registered?: boolean | null;
+  cmmc_level?: number | null;
+  facility_clearance?: string | null;
+  dnd_approved?: boolean | null;
 }
 
 export interface FilterOptions {

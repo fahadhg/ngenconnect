@@ -31,7 +31,8 @@ function parseList(v: unknown): string[] {
 export function searchCompanies(
   queryEmbedding: number[],
   filters: Record<string, string[]> = {},
-  topK = 5
+  topK = 5,
+  defenceMode = false
 ): SearchResult[] {
   const { companies } = loadCompanies();
 
@@ -44,6 +45,9 @@ export function searchCompanies(
       const materials      = parseList(m.materials);
       const hs_slugs       = parseList(m.hs_slugs ?? []);
 
+      // In defence mode, only return companies with a defence signal
+      if (defenceMode && !(m.defence_score && m.defence_score > 0)) return null;
+
       // Apply filters
       if (filters.sectors?.length        && !filters.sectors.some(f        => sectors.includes(f)))        return null;
       if (filters.capabilities?.length   && !filters.capabilities.some(f   => capabilities.includes(f)))   return null;
@@ -54,19 +58,26 @@ export function searchCompanies(
 
       const score = cosineSimilarity(queryEmbedding, c.embedding);
       return {
-        company_name:   m.company_name as string,
-        site:           m.site         as string,
-        homepage:       (m.homepage    as string) || `https://${m.site}`,
-        description:    (m.description as string) || "",
+        company_name:   m.company_name   as string,
+        site:           m.site           as string,
+        homepage:       (m.homepage      as string) || `https://${m.site}`,
+        description:    (m.description   as string) || "",
         sectors,
         capabilities,
         certifications,
         materials,
         hs_slugs,
-        province:       m.province     as string,
-        company_size:   m.company_size as string,
+        province:       m.province       as string,
+        company_size:   m.company_size   as string,
         score,
-      } satisfies SearchResult;
+        defence_score:      m.defence_score      ?? 0,
+        defence_tier:       m.defence_tier       ?? null,
+        cgp_registered:     m.cgp_registered     ?? null,
+        itar_registered:    m.itar_registered     ?? null,
+        cmmc_level:         m.cmmc_level          ?? null,
+        facility_clearance: m.facility_clearance  ?? null,
+        dnd_approved:       m.dnd_approved        ?? null,
+      } as SearchResult;
     })
     .filter((r): r is SearchResult => r !== null)
     .sort((a, b) => b.score - a.score)

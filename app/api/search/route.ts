@@ -31,11 +31,11 @@ async function embedQuery(query: string): Promise<{ embedding: number[]; tokens:
 
 export async function POST(request: NextRequest) {
   try {
-    const { query, filters = {} } = await request.json();
+    const { query, filters = {}, defenceMode = false } = await request.json();
     if (!query) return NextResponse.json({ error: "Query is required" }, { status: 400 });
 
     const { embedding, tokens: embeddingTokens } = await embedQuery(query);
-    const results = searchCompanies(embedding, filters, 5);
+    const results = searchCompanies(embedding, filters, 5, defenceMode);
     const embeddingCostUsd = (embeddingTokens * EMBEDDING_PRICE_PER_M) / 1_000_000;
 
     return NextResponse.json({
