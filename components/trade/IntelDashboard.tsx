@@ -418,6 +418,8 @@ function ExportIntelModule() {
   const [hsInput, setHsInput]     = useState('');
   const [submitted, setSubmitted] = useState('');
   const [chapterData, setChapterData] = useState<any>(null);
+  const [usitcData, setUsitcData]     = useState<any>(null);
+  const [usitcLoading, setUsitcLoading] = useState(false);
 
   const loadBase = useCallback(async () => {
     setLoading(true);
@@ -432,11 +434,22 @@ function ExportIntelModule() {
 
   const handleSearch = async () => {
     setSubmitted(hsInput);
+    setUsitcData(null);
+    const digits = hsInput.replace(/\./g, '');
+    // StatsCan chapter-level lookup (2-digit)
     try {
-      const digits = hsInput.replace(/\./g, '');
       const res = await fetch(`/api/statcan/exports?hs=${digits}`);
       setChapterData(await res.json());
     } catch { /* ignore */ }
+    // USITC live HTS rate lookup (8-10 digit for best results)
+    if (hsInput.replace(/[.\s]/g, '').length >= 6) {
+      setUsitcLoading(true);
+      try {
+        const res = await fetch(`/api/usitc?hs=${encodeURIComponent(hsInput)}`);
+        setUsitcData(await res.json());
+      } catch { /* ignore */ }
+      setUsitcLoading(false);
+    }
   };
 
   if (loading) return <div className="py-12 text-center text-xs text-ink-faint">Loading…</div>;
@@ -446,6 +459,7 @@ function ExportIntelModule() {
   const rates: any     = chapterData?.partnerRates || data.partnerRates || {};
   const chapterNote: any = chapterData?.chapterNote;
   const chapterPrefix  = submitted ? submitted.replace(/\./g, '').slice(0, 2) : '';
+  const usitcItems: any[] = usitcData?.items?.filter((r: any) => r.general !== null && r.general !== '') ?? [];
 
   const PARTNERS = [
     { code: 'US', name: 'United States',   fta: 'CUSMA' },
@@ -466,11 +480,11 @@ function ExportIntelModule() {
   return (
     <div>
       {/* Search bar */}
-      <div className="flex gap-2 mb-5">
+      <div className="flex gap-2 mb-2">
         <input
           value={hsInput}
           onChange={e => setHsInput(e.target.value)}
-          placeholder="Enter HS chapter (e.g. 73, 84, 87) or HS code prefix…"
+          placeholder="Enter HTS code (e.g. 7208.25.30.00, 8481.20.00, or chapter 84)…"
           className="flex-1 bg-surface-2 border border-border rounded px-3 py-1.5 text-xs text-ink placeholder:text-ink-faint focus:outline-none focus:border-accent/40"
           onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
         />
@@ -478,6 +492,10 @@ function ExportIntelModule() {
           className="text-xs bg-accent/10 border border-accent/20 text-accent px-4 py-1.5 rounded hover:bg-accent/20">
           Analyze
         </button>
+      </div>
+      <div className="text-[10px] text-ink-faint mb-5">
+        Use 8–10 digit HTS codes (e.g. <span className="font-mono">7208.25.30.00</span>) for live US tariff rates from USITC.
+        2-digit chapters work for StatsCan export data only.
       </div>
 
       {/* Chapter note */}
@@ -515,6 +533,73 @@ function ExportIntelModule() {
             })}
           </div>
         </>
+      )}
+
+      {/* USITC Live US Tariff Panel */}
+      {usitcLoading && (
+        <div className="mb-5 p-3 bg-surface-2 rounded-lg border border-border text-xs text-ink-faint">
+          Fetching live US HTS rates from USITC…
+        </div>
+      )}
+      {usitcItems.length > 0 && (
+        <div className="mb-5">
+          <SectionTitle>US HTS Tariff — Live (USITC) · Canada Effective Rates</SectionTitle>
+          <div className="mb-3 p-3 bg-negative/5 border border-negative/20 rounded-lg text-xs">
+            <span className="font-semibold text-negative">⚠ Active tariff regime: </span>
+            <span className="text-ink">
+              Canada IEEPA tariff (+35%) in effect via Executive Order (2025).
+              CUSMA preferential rates suspended — qualifying goods may claim exemption under 9903.01.14.
+            </span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs border-collapse zebra-table">
+              <thead>
+                <tr className="border-b border-border">
+                  {['HTS Code', 'Description', 'US MFN rate', 'Column 2', 'Canada effective rate'].map(h => (
+                    <th key={h} className="py-2 px-3 text-[10px] font-medium text-ink-faint uppercase tracking-wider text-left">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {usitcItems.slice(0, 10).map((item: any, i: number) => {
+                  const surchargesCA = item.surcharges?.filter((s: any) => s.affectsCanada) ?? [];
+                  return (
+                    <tr key={i} className="border-b border-border hover:bg-surface-2 transition-colors">
+                      <td className="py-2 px-3 font-mono text-[11px]">{item.htsno}</td>
+                      <td className="py-2 px-3 max-w-[200px]">
+                        <span className="line-clamp-2">{item.description}</span>
+                      </td>
+                      <td className="py-2 px-3 font-mono font-semibold">
+                        <span className={item.generalPct === 0 ? 'text-positive' : item.generalPct != null ? 'text-warn' : 'text-ink-faint'}>
+                          {item.general ?? '—'}
+                        </span>
+                      </td>
+                      <td className="py-2 px-3 font-mono text-ink-muted">{item.col2 ?? '—'}</td>
+                      <td className="py-2 px-3 text-[11px]">
+                        <div className="text-negative font-medium leading-tight mb-1">
+                          {item.canadaEffectiveNote.split('.')[0]}
+                        </div>
+                        {surchargesCA.map((s: any, si: number) => (
+                          <span key={si} className={clsx(
+                            'inline-block text-[9px] px-1 py-0.5 rounded mr-1 mt-0.5 border font-mono',
+                            s.severity === 'high'   ? 'bg-negative/10 text-negative border-negative/20' :
+                            s.severity === 'medium' ? 'bg-warn/10 text-warn border-warn/20' :
+                            'bg-accent/10 text-accent border-accent/20'
+                          )}>
+                            {s.code} {s.rate}
+                          </span>
+                        ))}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-2 text-[10px] text-ink-faint">
+            Source: USITC HTS Online (hts.usitc.gov) — live, no API key · Tariff schedule 2026 Rev 10
+          </div>
+        </div>
       )}
 
       {/* Top export destinations */}
