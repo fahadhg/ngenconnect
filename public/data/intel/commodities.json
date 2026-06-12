@@ -1,0 +1,75 @@
+{
+  "metals": [
+    {
+      "commodity": "Copper (LME)",
+      "unit": "USD per metric ton",
+      "latest": 9420,
+      "latestDate": "2025-05",
+      "mom": -1.4,
+      "yoy": 6.1,
+      "series": [
+        { "date": "2024-06", "value": 9610 },
+        { "date": "2024-07", "value": 9360 },
+        { "date": "2024-08", "value": 8890 },
+        { "date": "2024-09", "value": 9240 },
+        { "date": "2024-10", "value": 9510 },
+        { "date": "2024-11", "value": 9020 },
+        { "date": "2024-12", "value": 8980 },
+        { "date": "2025-01", "value": 9120 },
+        { "date": "2025-02", "value": 9280 },
+        { "date": "2025-03", "value": 9650 },
+        { "date": "2025-04", "value": 9560 },
+        { "date": "2025-05", "value": 9420 }
+      ],
+      "source": "static"
+    },
+    {
+      "commodity": "Aluminum (LME)",
+      "unit": "USD per metric ton",
+      "latest": 2420,
+      "latestDate": "2025-05",
+      "mom": -2.8,
+      "yoy": -3.4,
+      "series": [
+        { "date": "2024-06", "value": 2506 },
+        { "date": "2024-07", "value": 2340 },
+        { "date": "2024-08", "value": 2280 },
+        { "date": "2024-09", "value": 2470 },
+        { "date": "2024-10", "value": 2580 },
+        { "date": "2024-11", "value": 2620 },
+        { "date": "2024-12", "value": 2540 },
+        { "date": "2025-01", "value": 2560 },
+        { "date": "2025-02", "value": 2620 },
+        { "date": "2025-03", "value": 2680 },
+        { "date": "2025-04", "value": 2490 },
+        { "date": "2025-05", "value": 2420 }
+      ],
+      "source": "static"
+    },
+    {
+      "commodity": "Steel HRC (US Midwest)",
+      "unit": "USD per short ton",
+      "latest": 810,
+      "latestDate": "2025-05",
+      "mom": -1.2,
+      "yoy": 18.4,
+      "series": [
+        { "date": "2024-06", "value": 684 },
+        { "date": "2024-07", "value": 658 },
+        { "date": "2024-08", "value": 624 },
+        { "date": "2024-09", "value": 618 },
+        { "date": "2024-10", "value": 640 },
+        { "date": "2024-11", "value": 665 },
+        { "date": "2024-12", "value": 700 },
+        { "date": "2025-01", "value": 740 },
+        { "date": "2025-02", "value": 762 },
+        { "date": "2025-03", "value": 820 },
+        { "date": "2025-04", "value": 820 },
+        { "date": "2025-05", "value": 810 }
+      ],
+      "source": "static"
+    }
+  ],
+  "source": "Static snapshot — June 2025. Set ALPHA_VANTAGE_KEY env var to enable live prices.",
+  "generated": "2025-06"
+}

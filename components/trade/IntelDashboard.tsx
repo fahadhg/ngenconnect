@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import clsx from 'clsx';
-import { Factory, Users, Package, Globe2 } from 'lucide-react';
+import { Factory, Users, Package, Globe2, TrendingUp } from 'lucide-react';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 const fmtB = (v: number | null | undefined) => {
@@ -574,12 +574,196 @@ function ExportIntelModule() {
   );
 }
 
+// ─── Module 5: Commodities ────────────────────────────────────────────────────
+function CommoditiesModule() {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/commodities');
+      setData(await res.json());
+    } catch { /* ignore */ }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  if (loading) return <div className="py-12 text-center text-xs text-ink-faint">Loading…</div>;
+  if (!data) return null;
+
+  const metals: any[] = data.metals || [];
+  const isLive = metals.some((m: any) => m.source === 'Alpha Vantage (live)');
+  const noKey  = data._noKey === true;
+
+  const priceColor = (v: number | null) => {
+    if (v == null) return 'text-ink-muted';
+    // Rising commodity prices = cost pressure for manufacturers (negative signal)
+    return v > 5 ? 'text-negative' : v < -5 ? 'text-positive' : 'text-warn';
+  };
+
+  const priceArrow = (v: number | null) => {
+    if (v == null) return null;
+    return v > 0 ? '▲' : v < 0 ? '▼' : '—';
+  };
+
+  return (
+    <div>
+      {/* No-key banner */}
+      {noKey && (
+        <div className="mb-5 p-3 bg-accent/5 border border-accent/20 rounded-lg text-xs">
+          <span className="font-semibold text-accent">Live prices disabled — </span>
+          <span className="text-ink">
+            Add <code className="font-mono bg-surface-2 px-1 rounded">ALPHA_VANTAGE_KEY</code> to
+            your environment to enable real-time LME copper &amp; aluminum prices.
+            Get a free key at{' '}
+            <a href="https://www.alphavantage.co/support/#api-key"
+               className="underline text-accent" target="_blank" rel="noreferrer">
+              alphavantage.co
+            </a>.
+          </span>
+        </div>
+      )}
+
+      {/* Price cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        {metals.map((m: any, i: number) => {
+          const isStatic = m.source === 'static' || m.source === 'static-fallback';
+          return (
+            <div key={i} className="p-4 bg-surface-2 rounded-xl border border-border">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-semibold text-ink">{m.commodity}</span>
+                {isStatic
+                  ? <Badge label="STATIC" color="yellow" />
+                  : <Badge label="LIVE" color="green" />
+                }
+              </div>
+
+              {/* Main price */}
+              <div className="mb-1">
+                <span className="font-mono text-2xl font-bold">
+                  {m.latest != null ? `$${Number(m.latest).toLocaleString()}` : '—'}
+                </span>
+              </div>
+              <div className="text-[10px] text-ink-faint mb-3">{m.unit} · {m.latestDate}</div>
+
+              {/* Change badges */}
+              <div className="flex gap-3">
+                <div>
+                  <div className="text-[9px] text-ink-faint uppercase tracking-wider mb-0.5">MoM</div>
+                  <div className={clsx('font-mono text-xs font-semibold flex items-center gap-0.5', priceColor(m.mom))}>
+                    {priceArrow(m.mom)} {m.mom != null ? `${Math.abs(m.mom).toFixed(1)}%` : '—'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[9px] text-ink-faint uppercase tracking-wider mb-0.5">YoY</div>
+                  <div className={clsx('font-mono text-xs font-semibold flex items-center gap-0.5', priceColor(m.yoy))}>
+                    {priceArrow(m.yoy)} {m.yoy != null ? `${Math.abs(m.yoy).toFixed(1)}%` : '—'}
+                  </div>
+                </div>
+              </div>
+
+              {/* 12-month price chart */}
+              {m.series?.length > 1 && (
+                <div className="mt-4">
+                  <div className="text-[9px] text-ink-faint mb-1.5">12-month price trend</div>
+                  <MiniSparkline series={m.series} />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Price history table */}
+      <SectionTitle>Monthly Price History</SectionTitle>
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs border-collapse zebra-table">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="py-2 px-3 text-[10px] font-medium text-ink-faint uppercase tracking-wider text-left">Month</th>
+              {metals.map((m: any) => (
+                <th key={m.commodity} className="py-2 px-3 text-[10px] font-medium text-ink-faint uppercase tracking-wider text-right">
+                  {m.commodity.split(' ')[0]}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {buildMonthRows(metals).map((row: any, i: number) => (
+              <tr key={i} className="border-b border-border hover:bg-surface-2 transition-colors">
+                <td className="py-2 px-3 font-mono text-ink-muted">{row.date}</td>
+                {metals.map((m: any) => (
+                  <td key={m.commodity} className="py-2 px-3 font-mono text-right">
+                    {row.values[m.commodity] != null
+                      ? `$${Number(row.values[m.commodity]).toLocaleString()}`
+                      : <span className="text-ink-faint">—</span>
+                    }
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <DataBanner
+        source={isLive ? data.source : 'Static snapshot · Set ALPHA_VANTAGE_KEY for live data'}
+        generated={data.generated}
+      />
+    </div>
+  );
+}
+
+function MiniSparkline({ series }: { series: { date: string; value: number }[] }) {
+  const vals = series.map(p => p.value);
+  const min  = Math.min(...vals);
+  const max  = Math.max(...vals);
+  const range = max - min || 1;
+
+  return (
+    <div className="flex items-end gap-px h-8">
+      {series.map((p, i) => {
+        const h = ((p.value - min) / range) * 100;
+        const isLast = i === series.length - 1;
+        return (
+          <div
+            key={p.date}
+            title={`${p.date}: $${p.value.toLocaleString()}`}
+            className={clsx('flex-1 rounded-sm transition-all', isLast ? 'bg-accent' : 'bg-accent/30')}
+            style={{ height: `${Math.max(h, 8)}%` }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function buildMonthRows(metals: any[]): { date: string; values: Record<string, number | null> }[] {
+  const allDates = new Set<string>();
+  for (const m of metals) {
+    for (const p of m.series ?? []) allDates.add(p.date);
+  }
+  const dates = [...allDates].sort((a, b) => b.localeCompare(a)).slice(0, 12);
+
+  return dates.map(date => {
+    const values: Record<string, number | null> = {};
+    for (const m of metals) {
+      const pt = m.series?.find((p: any) => p.date === date);
+      values[m.commodity] = pt?.value ?? null;
+    }
+    return { date, values };
+  });
+}
+
 // ─── Layout ───────────────────────────────────────────────────────────────────
 const MODULES = [
-  { id: 'mfg',    label: 'Mfg Health',    icon: Factory, sub: 'Sales · Capacity utilization' },
-  { id: 'labour', label: 'Labour',         icon: Users, sub: 'Vacancies · Employment' },
-  { id: 'costs',  label: 'Input Costs',   icon: Package, sub: 'IPPI · RMPI · Alerts' },
-  { id: 'export', label: 'Export Intel',  icon: Globe2, sub: 'Partners · Tariff rates' },
+  { id: 'mfg',         label: 'Mfg Health',    icon: Factory,     sub: 'Sales · Capacity utilization' },
+  { id: 'labour',      label: 'Labour',         icon: Users,       sub: 'Vacancies · Employment' },
+  { id: 'costs',       label: 'Input Costs',   icon: Package,     sub: 'IPPI · RMPI · Alerts' },
+  { id: 'export',      label: 'Export Intel',  icon: Globe2,      sub: 'Partners · Tariff rates' },
+  { id: 'commodities', label: 'Commodities',   icon: TrendingUp,  sub: 'Copper · Aluminum · Steel' },
 ] as const;
 
 export default function IntelDashboard() {
@@ -632,10 +816,11 @@ export default function IntelDashboard() {
           </div>
         </div>
 
-        {active === 'mfg'    && <MfgHealthModule />}
-        {active === 'labour' && <LabourModule />}
-        {active === 'costs'  && <InputCostModule />}
-        {active === 'export' && <ExportIntelModule />}
+        {active === 'mfg'         && <MfgHealthModule />}
+        {active === 'labour'      && <LabourModule />}
+        {active === 'costs'       && <InputCostModule />}
+        {active === 'export'      && <ExportIntelModule />}
+        {active === 'commodities' && <CommoditiesModule />}
       </div>
 
       {/* Footer */}
