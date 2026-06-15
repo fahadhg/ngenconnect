@@ -1,6 +1,17 @@
 {
   "events": [
     {
+      "id": "2026-07-16-how-to-find-buyers-in-new-markets",
+      "title": "How to find buyers in new markets",
+      "description": "Discover how Canadian exporters find international buyers, understand demand and meet buyer expectations in new markets.",
+      "date": "2026-07-16",
+      "source": "Export Development Canada",
+      "sourceUrl": "https://www.edc.ca/en/events/webinar/2026-find-buyers-in-new-markets.html",
+      "eventType": "trade-show",
+      "countryIso3": [],
+      "fetchedAt": "2026-06-15T12:14:20.616Z"
+    },
+    {
       "id": "2026-03-23-b7-2026-mission-to-brussels-and-paris",
       "title": "B7 2026 Mission to Brussels and Paris",
       "description": "Join the Canadian Chamber in Brussels and Paris for a mission focused on strengthening Canada–Europe collaboration in critical minerals, energy, and artificial intelligence.",
@@ -12,7 +23,7 @@
         "BEL",
         "FRA"
       ],
-      "fetchedAt": "2026-06-01T11:35:01.896Z"
+      "fetchedAt": "2026-06-15T12:14:20.695Z"
     },
     {
       "id": "2026-03-19-mission-to-japan",
@@ -25,8 +36,8 @@
       "countryIso3": [
         "JPN"
       ],
-      "fetchedAt": "2026-06-01T11:35:01.898Z"
+      "fetchedAt": "2026-06-15T12:14:20.695Z"
     }
   ],
-  "lastUpdated": "2026-06-01T11:35:50.554Z"
+  "lastUpdated": "2026-06-15T12:14:54.670Z"
 }
