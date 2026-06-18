@@ -74,6 +74,17 @@ function FindSuppliersButton({ section }: { section: HSSection }) {
   );
 }
 
+interface LiveBurden { ieepa: { pct: number; code?: string } | null; s232Steel: { pct: number } | null; s232Alum: { pct: number } | null }
+
+function usExportBadge(chapter: number, burden: LiveBurden | null): { label: string; severity: 'high' | 'medium' } {
+  const ieepa = burden?.ieepa?.pct ?? 35;
+  const steel = burden?.s232Steel?.pct ?? 25;
+  const alum  = burden?.s232Alum?.pct  ?? 10;
+  if (chapter === 72 || chapter === 73) return { label: `${ieepa + steel}%+ US`, severity: 'high' };
+  if (chapter === 76)                   return { label: `${ieepa + alum}%+ US`,  severity: 'high' };
+  return { label: `${ieepa}% US`, severity: 'medium' };
+}
+
 export default function IndustryDetail({ section, codes, importData, usRates, surtaxData }: Props) {
   const [q, setQ] = useState('');
   const [chapterFilter, setChapterFilter] = useState('all');
@@ -83,6 +94,9 @@ export default function IndustryDetail({ section, codes, importData, usRates, su
   const [detailHS, setDetailHS] = useState<string | null>(null);
   const [wl, setWl] = useState<string[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [usitcDetail, setUsitcDetail] = useState<any>(null);
+  const [usitcDetailLoading, setUsitcDetailLoading] = useState(false);
+  const [liveburden, setLiveBurden] = useState<LiveBurden | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -91,6 +105,24 @@ export default function IndustryDetail({ section, codes, importData, usRates, su
   useEffect(() => {
     if (mounted) try { localStorage.setItem('tm-wl2', JSON.stringify(wl)); } catch { }
   }, [wl, mounted]);
+
+  useEffect(() => {
+    fetch('/api/usitc/canada-burden')
+      .then(r => r.json())
+      .then(setLiveBurden)
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!detailHS) { setUsitcDetail(null); return; }
+    setUsitcDetailLoading(true);
+    setUsitcDetail(null);
+    fetch(`/api/usitc?hs=${encodeURIComponent(detailHS)}`)
+      .then(r => r.json())
+      .then(d => setUsitcDetail(d))
+      .catch(() => setUsitcDetail(null))
+      .finally(() => setUsitcDetailLoading(false));
+  }, [detailHS]);
 
   const toggle = (hs: string) => setWl(p => p.includes(hs) ? p.filter(h => h !== hs) : [...p, hs]);
 
@@ -247,13 +279,14 @@ export default function IndustryDetail({ section, codes, importData, usRates, su
 
       {/* HS codes table */}
       <div className="bg-surface-1 border border-border rounded-lg overflow-hidden mb-4">
-        <div className="grid grid-cols-[140px_1fr_80px_90px_130px_60px] gap-0 px-4 py-2 border-b border-border bg-surface-2/50 text-[10px] text-ink-faint uppercase tracking-wider">
+        <div className="grid grid-cols-[140px_1fr_80px_90px_130px_60px_72px] gap-0 px-4 py-2 border-b border-border bg-surface-2/50 text-[10px] text-ink-faint uppercase tracking-wider">
           <span>HS Code</span>
           <span>Description</span>
           <span className="text-right">MFN</span>
           <span className="text-right">Best FTA</span>
           <span className="text-right">Top Source</span>
-          <span className="text-right">Surtax</span>
+          <span className="text-right">CA Surtax</span>
+          <span className="text-right">US Export</span>
         </div>
         {paged.length === 0 && (
           <div className="px-4 py-8 text-center text-sm text-ink-faint">No codes match your filters.</div>
@@ -266,11 +299,12 @@ export default function IndustryDetail({ section, codes, importData, usRates, su
           const surtaxAll = findSurtax(surtaxData, item.h, 'ALL');
           const hasSurtax = !!(surtaxUS || surtaxCN || surtaxAll);
           const topSource = imp?.c?.[0];
+          const usBadge = usExportBadge(item.c, liveburden);
           return (
             <button
               key={item.h}
               onClick={() => setDetailHS(item.h)}
-              className="w-full grid grid-cols-[140px_1fr_80px_90px_130px_60px] gap-0 px-4 py-2.5 border-b border-border/50 hover:bg-surface-2 transition-colors text-left group"
+              className="w-full grid grid-cols-[140px_1fr_80px_90px_130px_60px_72px] gap-0 px-4 py-2.5 border-b border-border/50 hover:bg-surface-2 transition-colors text-left group"
             >
               <span className="font-mono text-xs text-accent group-hover:underline">{item.h}</span>
               <span className="text-xs text-ink-muted truncate pr-2">{item.d}</span>
@@ -295,6 +329,14 @@ export default function IndustryDetail({ section, codes, importData, usRates, su
                     +{(surtaxUS || surtaxCN || surtaxAll)!.rate}%
                   </span>
                 )}
+              </span>
+              <span className="flex justify-end items-center">
+                <span className={clsx(
+                  'text-[10px] font-medium px-1.5 py-0.5 rounded',
+                  usBadge.severity === 'high' ? 'bg-negative/10 text-negative' : 'bg-warn/10 text-warn'
+                )}>
+                  {usBadge.label}
+                </span>
               </span>
             </button>
           );
@@ -419,6 +461,70 @@ export default function IndustryDetail({ section, codes, importData, usRates, su
                       </div>}
                     </div>
                   )}
+                </div>
+
+                {/* US Export Tariffs — live USITC */}
+                <div>
+                  <h3 className="text-sm font-medium mb-2">US export tariffs — IEEPA &amp; Section 232</h3>
+                  {usitcDetailLoading && (
+                    <div className="text-xs text-ink-faint">Loading live US tariff data…</div>
+                  )}
+                  {!usitcDetailLoading && (() => {
+                    const items: any[] = usitcDetail?.items?.filter((r: any) => r.general !== null) ?? [];
+                    const badge = usExportBadge(item.c, liveburden);
+                    return (
+                      <>
+                        <div className={clsx(
+                          'mb-2 px-3 py-2 rounded text-xs',
+                          badge.severity === 'high' ? 'bg-negative/8 border border-negative/20' : 'bg-warn/8 border border-warn/20'
+                        )}>
+                          <div className={clsx('font-semibold mb-0.5', badge.severity === 'high' ? 'text-negative' : 'text-warn')}>
+                            Effective US tariff on Canadian exports: {badge.label.replace(' US', '')}
+                          </div>
+                          <div className="text-ink-muted leading-relaxed">
+                            {(() => {
+                              const ieepa = liveburden?.ieepa?.pct ?? 35;
+                              const ieepaCo = liveburden?.ieepa?.code ?? '9903.01.10';
+                              const steel  = liveburden?.s232Steel?.pct ?? 25;
+                              const alum   = liveburden?.s232Alum?.pct  ?? 10;
+                              if (item.c === 72 || item.c === 73)
+                                return `MFN base +${ieepa}% IEEPA (Canada) +${steel}% Section 232 (steel). CUSMA preferences suspended; exemption claim available via 9903.01.14.`;
+                              if (item.c === 76)
+                                return `MFN base +${ieepa}% IEEPA (Canada) +${alum}% Section 232 (aluminum). CUSMA preferences suspended; exemption claim available via 9903.01.14.`;
+                              return `MFN base +${ieepa}% IEEPA (Canada, ${ieepaCo}). CUSMA preferential rates suspended by Executive Order; qualifying goods may claim exemption via 9903.01.14.`;
+                            })()}
+                          </div>
+                        </div>
+                        {items.length > 0 && (
+                          <div className="space-y-2">
+                            {items.slice(0, 3).map((r: any, i: number) => {
+                              const surCA = r.surcharges?.filter((s: any) => s.affectsCanada) ?? [];
+                              return (
+                                <div key={i} className="p-2.5 bg-surface-1 border border-border rounded text-xs">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <span className="font-mono text-accent text-[11px]">{r.htsno}</span>
+                                    <span className="font-mono font-semibold text-negative">{r.canadaEffectiveNote.split('.')[0]}</span>
+                                  </div>
+                                  <div className="text-ink-faint mb-1 line-clamp-1">{r.description}</div>
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-ink-muted">MFN: <span className="font-mono">{r.general ?? '—'}</span></span>
+                                    <span className="text-ink-muted">Col 2: <span className="font-mono">{r.col2 ?? '—'}</span></span>
+                                    {surCA.map((s: any, si: number) => (
+                                      <span key={si} className={clsx(
+                                        'inline-block text-[9px] px-1 py-0.5 rounded border font-mono',
+                                        s.severity === 'high' ? 'bg-negative/10 text-negative border-negative/20' : 'bg-warn/10 text-warn border-warn/20'
+                                      )}>{s.code} {s.rate}</span>
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                            <div className="text-[10px] text-ink-faint">Source: USITC HTS Online (hts.usitc.gov) — live</div>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                 </div>
 
                 {/* Import data */}

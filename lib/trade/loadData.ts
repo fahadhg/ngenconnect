@@ -31,12 +31,24 @@ async function fetchLiveStatsCan() {
   return null;
 }
 
+async function fetchLiveSurtaxData() {
+  try {
+    const res = await fetch('/api/cbsa/surtaxes', { next: { revalidate: 86400 } });
+    if (res.ok) return res.json();
+  } catch {}
+  return null;
+}
+
 export async function loadAllData() {
   const d = path.join(process.cwd(), 'public', 'data');
-  
-  // Attempt to fetch live StatsCan data (client-side will use cached version)
-  const liveData = typeof window !== 'undefined' ? await fetchLiveStatsCan() : null;
-  
+
+  // Attempt to fetch live data sources in parallel
+  const isClient = typeof window !== 'undefined';
+  const [liveData, liveSurtaxes] = await Promise.all([
+    isClient ? fetchLiveStatsCan() : Promise.resolve(null),
+    isClient ? fetchLiveSurtaxData() : Promise.resolve(null),
+  ]);
+
   const [t, i, u, s, sec, mfgHealth, labour, inputCosts] = await Promise.all([
     fs.readFile(path.join(d, 'tariff.json'), 'utf-8'),
     fs.readFile(path.join(d, 'imports.json'), 'utf-8'),
@@ -52,7 +64,7 @@ export async function loadAllData() {
     tariffData: JSON.parse(t) as TariffItem[],
     importData: JSON.parse(i) as ImportOverlay,
     usRates: JSON.parse(u) as USRatesOverlay,
-    surtaxData: JSON.parse(s) as SurtaxOverlay,
+    surtaxData: (liveSurtaxes ?? JSON.parse(s)) as SurtaxOverlay,
     sections: JSON.parse(sec) as HSSection[],
     // Intel modules (fallback to local if live API unavailable)
     mfgHealth: liveData?.mfgHealth || JSON.parse(mfgHealth),

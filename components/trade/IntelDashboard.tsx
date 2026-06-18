@@ -63,7 +63,7 @@ function DataBanner({ source, generated }: { source?: string; generated?: string
 }
 
 // ─── Module 1: Manufacturing Health ──────────────────────────────────────────
-function MfgHealthModule() {
+function MfgHealthModule({ fred }: { fred: any }) {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -86,6 +86,9 @@ function MfgHealthModule() {
   const totalRow = sales.find((r: any) => r.naics === '31-33');
   const sectors = sales.filter((r: any) => r.naics !== '31-33');
 
+  const prod = fred?.production;
+  const conf = fred?.confidence;
+
   return (
     <div>
       {/* Summary cards */}
@@ -103,14 +106,44 @@ function MfgHealthModule() {
           <div className="text-xs text-ink-faint">{cap[0]?.period}</div>
         </div>
         <div className="p-3 bg-surface-2 rounded-lg border border-border">
-          <div className="text-[10px] text-ink-faint mb-1">Top sector</div>
-          <div className="text-sm font-semibold">Food mfg</div>
-          <div className="font-mono text-xs text-ink-muted">{fmtB((sectors.find((r: any) => r.naics === '311')?.value || 0) * 1e6)}/mo</div>
+          <div className="text-[10px] text-ink-faint mb-1">Output growth (YoY)</div>
+          {prod ? (
+            <>
+              <div className={clsx('font-mono text-lg font-bold', yoyColor(prod.yoy))}>
+                {prod.yoy != null ? fmtPct(prod.yoy) : '—'}
+              </div>
+              <div className="text-xs text-ink-faint">{prod.period} · OECD</div>
+            </>
+          ) : (
+            <>
+              <div className="font-mono text-lg font-bold text-ink-muted">—</div>
+              <div className="text-xs text-ink-faint">FRED not configured</div>
+            </>
+          )}
         </div>
         <div className="p-3 bg-surface-2 rounded-lg border border-border">
-          <div className="text-[10px] text-ink-faint mb-1">Period</div>
-          <div className="text-sm font-semibold">{totalRow?.period}</div>
-          <div className="text-xs text-ink-faint">Seasonally adj.</div>
+          <div className="text-[10px] text-ink-faint mb-1">Business confidence</div>
+          {conf ? (
+            <>
+              <div className={clsx('font-mono text-lg font-bold',
+                conf.signal === 'expanding' ? 'text-positive' :
+                conf.signal === 'contracting' ? 'text-negative' : 'text-ink-muted')}>
+                {conf.value > 0 ? '+' : ''}{conf.value}
+              </div>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <Badge
+                  label={conf.signal === 'expanding' ? 'EXPANDING' : conf.signal === 'contracting' ? 'CONTRACTING' : 'NEUTRAL'}
+                  color={conf.signal === 'expanding' ? 'green' : conf.signal === 'contracting' ? 'red' : 'yellow'}
+                />
+              </div>
+              <div className="text-[10px] text-ink-faint mt-0.5">{conf.period}</div>
+            </>
+          ) : (
+            <>
+              <div className="font-mono text-lg font-bold text-ink-muted">—</div>
+              <div className="text-xs text-ink-faint">FRED not configured</div>
+            </>
+          )}
         </div>
       </div>
 
@@ -180,7 +213,7 @@ function MfgHealthModule() {
 }
 
 // ─── Module 2: Labour ─────────────────────────────────────────────────────────
-function LabourModule() {
+function LabourModule({ fred }: { fred: any }) {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [province, setProvince] = useState('All');
@@ -226,25 +259,48 @@ function LabourModule() {
       )}
 
       {/* Summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
-        <div className="p-3 bg-surface-2 rounded-lg border border-border">
-          <div className="text-[10px] text-ink-faint mb-1">Total mfg vacancies (CA)</div>
-          <div className="font-mono text-lg font-bold">{totalVac.toLocaleString()}</div>
-          <div className="text-xs text-ink-faint">{data.vacancies?.[0]?.period}</div>
-        </div>
-        <div className="p-3 bg-surface-2 rounded-lg border border-border">
-          <div className="text-[10px] text-ink-faint mb-1">Mfg employment</div>
-          <div className="font-mono text-lg font-bold">
-            {employment.find((e: any) => e.naics === '31-33')?.employed?.toFixed(0)}K
+      {(() => {
+        const indeed = fred?.indeedJobs;
+        return (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+            <div className="p-3 bg-surface-2 rounded-lg border border-border">
+              <div className="text-[10px] text-ink-faint mb-1">Total mfg vacancies (CA)</div>
+              <div className="font-mono text-lg font-bold">{totalVac.toLocaleString()}</div>
+              <div className="text-xs text-ink-faint">{data.vacancies?.[0]?.period}</div>
+            </div>
+            <div className="p-3 bg-surface-2 rounded-lg border border-border">
+              <div className="text-[10px] text-ink-faint mb-1">Mfg employment</div>
+              <div className="font-mono text-lg font-bold">
+                {employment.find((e: any) => e.naics === '31-33')?.employed?.toFixed(0)}K
+              </div>
+              <div className="text-xs text-ink-faint">employees</div>
+            </div>
+            <div className="p-3 bg-surface-2 rounded-lg border border-border">
+              <div className="text-[10px] text-ink-faint mb-1">Flagged roles</div>
+              <div className="font-mono text-lg font-bold text-warn">{flags.length}</div>
+              <div className="text-xs text-ink-faint">high-stress specialties</div>
+            </div>
+            <div className="p-3 bg-surface-2 rounded-lg border border-border">
+              <div className="text-[10px] text-ink-faint mb-1">Hiring signal (Indeed)</div>
+              {indeed ? (
+                <>
+                  <div className={clsx('font-mono text-lg font-bold',
+                    indeed.vsBaseline >= 0 ? 'text-positive' : 'text-negative')}>
+                    {indeed.vsBaseline >= 0 ? '+' : ''}{indeed.vsBaseline}%
+                  </div>
+                  <div className="text-[10px] text-ink-faint mt-0.5">vs Feb 2020 baseline</div>
+                  <div className="text-[10px] text-ink-faint">{indeed.period}</div>
+                </>
+              ) : (
+                <>
+                  <div className="font-mono text-lg font-bold text-ink-muted">—</div>
+                  <div className="text-xs text-ink-faint">FRED not configured</div>
+                </>
+              )}
+            </div>
           </div>
-          <div className="text-xs text-ink-faint">employees</div>
-        </div>
-        <div className="p-3 bg-surface-2 rounded-lg border border-border">
-          <div className="text-[10px] text-ink-faint mb-1">Flagged roles</div>
-          <div className="font-mono text-lg font-bold text-warn">{flags.length}</div>
-          <div className="text-xs text-ink-faint">high-stress specialties</div>
-        </div>
-      </div>
+        );
+      })()}
 
       {/* Province filter */}
       <div className="flex gap-1.5 mb-4 flex-wrap">
@@ -307,7 +363,7 @@ function LabourModule() {
 }
 
 // ─── Module 3: Input Costs ────────────────────────────────────────────────────
-function InputCostModule() {
+function InputCostModule({ fred }: { fred: any }) {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -406,6 +462,40 @@ function InputCostModule() {
         })}
       </div>
 
+      {/* FRED sector price indices */}
+      {fred?.available && fred?.sectorPrices?.length > 0 && (
+        <>
+          <SectionTitle>Sector Price Index — Canadian Goods Exported to US (BLS, 2012=100)</SectionTitle>
+          <div className="overflow-x-auto mb-5">
+            <table className="w-full text-xs border-collapse zebra-table">
+              <thead>
+                <tr className="border-b border-border">
+                  {['Sector', 'Index', 'MoM', 'YoY', 'Period'].map(h => (
+                    <th key={h} className="py-2 px-3 text-[10px] font-medium text-ink-faint uppercase tracking-wider text-left">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {fred.sectorPrices.map((s: any, i: number) => (
+                  <tr key={i} className="border-b border-border hover:bg-surface-2 transition-colors">
+                    <td className="py-2 px-3 font-medium">{s.sector}</td>
+                    <td className="py-2 px-3 font-mono">{s.index}</td>
+                    <td className={clsx('py-2 px-3 font-mono font-medium', yoyColor(s.mom))}>
+                      {s.mom != null ? fmtPct(s.mom) : '—'}
+                    </td>
+                    <td className={clsx('py-2 px-3 font-mono font-medium', yoyColor(s.yoy))}>
+                      {s.yoy != null ? fmtPct(s.yoy) : '—'}
+                    </td>
+                    <td className="py-2 px-3 text-ink-faint font-mono">{s.period}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[10px] text-ink-faint mb-4">Source: BLS U.S. Import &amp; Export Price Indexes — prices paid by US buyers for goods originating from Canada, by NAICS sector. Reflects Canadian export pricing trends. Updated monthly.</p>
+        </>
+      )}
+
       <DataBanner source={data.source} generated={data.generated} />
     </div>
   );
@@ -420,6 +510,7 @@ function ExportIntelModule() {
   const [chapterData, setChapterData] = useState<any>(null);
   const [usitcData, setUsitcData]     = useState<any>(null);
   const [usitcLoading, setUsitcLoading] = useState(false);
+  const [canadaBurden, setCanadaBurden] = useState<any>(null);
 
   const loadBase = useCallback(async () => {
     setLoading(true);
@@ -431,6 +522,9 @@ function ExportIntelModule() {
   }, []);
 
   useEffect(() => { loadBase(); }, [loadBase]);
+  useEffect(() => {
+    fetch('/api/usitc/canada-burden').then(r => r.json()).then(setCanadaBurden).catch(() => {});
+  }, []);
 
   const handleSearch = async () => {
     setSubmitted(hsInput);
@@ -441,8 +535,8 @@ function ExportIntelModule() {
       const res = await fetch(`/api/statcan/exports?hs=${digits}`);
       setChapterData(await res.json());
     } catch { /* ignore */ }
-    // USITC live HTS rate lookup (8-10 digit for best results)
-    if (hsInput.replace(/[.\s]/g, '').length >= 6) {
+    // USITC live HTS rate lookup (4+ digits for chapter lookups, 8-10 for leaf nodes)
+    if (hsInput.replace(/[.\s]/g, '').length >= 4) {
       setUsitcLoading(true);
       try {
         const res = await fetch(`/api/usitc?hs=${encodeURIComponent(hsInput)}`);
@@ -547,7 +641,7 @@ function ExportIntelModule() {
           <div className="mb-3 p-3 bg-negative/5 border border-negative/20 rounded-lg text-xs">
             <span className="font-semibold text-negative">⚠ Active tariff regime: </span>
             <span className="text-ink">
-              Canada IEEPA tariff (+35%) in effect via Executive Order (2025).
+              Canada IEEPA tariff (+{canadaBurden?.ieepa?.pct ?? 35}%) in effect via Executive Order ({canadaBurden?.ieepa?.code ?? '9903.01.10'}).
               CUSMA preferential rates suspended — qualifying goods may claim exemption under 9903.01.14.
             </span>
           </div>
@@ -853,8 +947,13 @@ const MODULES = [
 
 export default function IntelDashboard() {
   const [active, setActive] = useState<string>('mfg');
+  const [fred, setFred] = useState<any>(null);
   const current = MODULES.find(m => m.id === active)!;
   const CurrentIcon = current.icon;
+
+  useEffect(() => {
+    fetch('/api/fred/manufacturing').then(r => r.json()).then(setFred).catch(() => {});
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
@@ -901,16 +1000,16 @@ export default function IntelDashboard() {
           </div>
         </div>
 
-        {active === 'mfg'         && <MfgHealthModule />}
-        {active === 'labour'      && <LabourModule />}
-        {active === 'costs'       && <InputCostModule />}
+        {active === 'mfg'         && <MfgHealthModule fred={fred} />}
+        {active === 'labour'      && <LabourModule fred={fred} />}
+        {active === 'costs'       && <InputCostModule fred={fred} />}
         {active === 'export'      && <ExportIntelModule />}
         {active === 'commodities' && <CommoditiesModule />}
       </div>
 
       {/* Footer */}
       <div className="mt-6 text-xs text-ink-faint text-center">
-        <p className="leading-relaxed">StatsCan tables: 16-10-0117-01 · 16-10-0014-01 · 14-10-0325-01 · 18-10-0034-01 · 18-10-0267-01 · 12-10-0011-01</p>
+        <p className="leading-relaxed">StatsCan: 16-10-0117-01 · 16-10-0014-01 · 14-10-0325-01 · 18-10-0034-01 · 18-10-0267-01 · 12-10-0011-01 · FRED/OECD: CANPROMANMISMEI · CANBSCICP02STSAQ · IHLIDXCATPPRMA</p>
       </div>
     </div>
   );

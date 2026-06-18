@@ -60,7 +60,7 @@ export function searchCompanies(
       return {
         company_name:   m.company_name   as string,
         site:           m.site           as string,
-        homepage:       (m.homepage      as string) || `https://${m.site}`,
+        homepage:       `https://${m.site}`,
         description:    (m.description   as string) || "",
         sectors,
         capabilities,
@@ -95,7 +95,7 @@ export function loadCompaniesForMap() {
       return {
         company_name: m.company_name as string,
         site:         m.site         as string,
-        homepage:     (m.homepage    as string) || `https://${m.site}`,
+        homepage:     `https://${m.site}`,
         province:     m.province     as string,
         city:         m.city         as string | undefined,
         lat:          m.lat          as number,
@@ -105,6 +105,52 @@ export function loadCompaniesForMap() {
       };
     })
     .filter((c): c is NonNullable<typeof c> => c !== null);
+}
+
+export function findCompaniesByName(query: string, defenceMode = false): SearchResult[] {
+  const { companies } = loadCompanies();
+  const queryLower = query.toLowerCase();
+
+  return companies
+    .filter((c) => {
+      const name = ((c.metadata.company_name as string) || "").toLowerCase();
+      const site = ((c.metadata.site as string) || "").toLowerCase();
+      if (defenceMode && !(c.metadata.defence_score && (c.metadata.defence_score as number) > 0)) return false;
+      const nameHit = name.length > 3 && queryLower.includes(name);
+      const siteHit = site.length > 3 && queryLower.includes(site);
+      return nameHit || siteHit;
+    })
+    .sort((a, b) => {
+      // Prefer longer / more specific name matches to reduce false positives
+      const lenA = ((a.metadata.company_name as string) || "").length;
+      const lenB = ((b.metadata.company_name as string) || "").length;
+      return lenB - lenA;
+    })
+    .slice(0, 5)
+    .map((c) => {
+      const m = c.metadata;
+      return {
+        company_name:       m.company_name       as string,
+        site:               m.site               as string,
+        homepage:           `https://${m.site}`,
+        description:        (m.description as string) || "",
+        sectors:            parseList(m.sectors),
+        capabilities:       parseList(m.capabilities),
+        certifications:     parseList(m.certifications),
+        materials:          parseList(m.materials),
+        hs_slugs:           parseList(m.hs_slugs ?? []),
+        province:           m.province           as string,
+        company_size:       m.company_size        as string,
+        score:              0,   // sentinel: name/site match, not semantic similarity
+        defence_score:      m.defence_score      ?? 0,
+        defence_tier:       m.defence_tier       ?? null,
+        cgp_registered:     m.cgp_registered     ?? null,
+        itar_registered:    m.itar_registered     ?? null,
+        cmmc_level:         m.cmmc_level          ?? null,
+        facility_clearance: m.facility_clearance  ?? null,
+        dnd_approved:       m.dnd_approved        ?? null,
+      } as SearchResult;
+    });
 }
 
 export function getFilterOptions(): FilterOptions {
