@@ -29,12 +29,16 @@ interface FilterOptions {
   company_sizes: string[];
 }
 
+interface QuestionCard { q: string; opts: string[] }
+
 interface Message {
   role: "user" | "assistant";
   content: string;
   companies?: SearchResult[];
   model?: string;
   phase?: "questions" | "analysis" | "rfp";
+  questionCards?: QuestionCard[];
+  webResearch?: number;
 }
 
 interface UsageStat {
@@ -49,13 +53,21 @@ interface UsageStat {
 }
 
 const PRICING_TABLE = [
-  { model: "Claude Sonnet 4.6", input: "$3.00", output: "$15.00" },
-  { model: "GPT-4.1",           input: "$2.00", output: "$8.00"  },
-  { model: "GPT-4.1 Mini",      input: "$0.40", output: "$1.60"  },
-  { model: "DeepSeek V3",       input: "$0.27", output: "$1.10"  },
-  { model: "Gemini 2.5 Flash",  input: "$0.075",output: "$0.30"  },
-  { model: "Gemini Embedding",  input: "$0.025",output: "—"      },
+  { model: "Claude Sonnet 4.6",  input: "$3.00",  output: "$15.00" },
+  { model: "Claude Haiku 4.5",   input: "$0.80",  output: "$4.00"  },
+  { model: "Cohere Command R+",  input: "$2.50",  output: "$10.00" },
+  { model: "Gemini 2.0 Flash",   input: "$0.10",  output: "$0.40"  },
+  { model: "GPT-4.1",            input: "$2.00",  output: "$8.00"  },
+  { model: "DeepSeek V3",        input: "$0.27",  output: "$1.10"  },
+  { model: "Cohere Embed v4",    input: "$0.10",  output: "—"      },
 ];
+
+const CLIENT_PRICING: Record<string, { input: number; output: number }> = {
+  "command-r-plus-08-2024":    { input: 2.5,  output: 10.0 },
+  "claude-sonnet-4-6":         { input: 3.0,  output: 15.0 },
+  "claude-haiku-4-5-20251001": { input: 0.80, output: 4.0  },
+  "gemini-2.0-flash":          { input: 0.10, output: 0.40 },
+};
 
 export default function Page() {
   return (
@@ -79,6 +91,7 @@ function Home() {
   const [statsHydrated, setStatsHydrated] = useState(false);
   const [slugStats, setSlugStats] = useState<Record<string, SlugSummary>>({});
   const [awaitingFollowUp, setAwaitingFollowUp] = useState(false);
+  const [inConversation, setInConversation] = useState(false);
   const [pendingCompanies, setPendingCompanies] = useState<SearchResult[]>([]);
   const [pendingQuery, setPendingQuery] = useState("");
   const [storedFollowUpQuestions, setStoredFollowUpQuestions] = useState("");
@@ -171,13 +184,56 @@ function Home() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  async function handleSearch(searchQuery: string) {
+  // Client-side N/A line stripper (mirrors server stripNALines)
+  function clientStripNALines(text: string): string {
+    const naVal = /^n\/a$/i;
+    return text.split("\n").map(line => {
+      const t = line.trim();
+      if (t.includes("|") && !t.startsWith("|")) {
+        const kept = t.split("|").map(p => p.trim()).filter(p => {
+          const v = p.replace(/^[\w\s\/()]+:\s*/i, "").trim();
+          return !naVal.test(v) && v !== "";
+        });
+        return kept.length === 0 ? "" : kept.join(" | ");
+      }
+      const v = t.replace(/^[\w\s\/()]+:\s*/i, "").trim();
+      return naVal.test(v) ? "" : line;
+    }).filter((l, i, a) => l.trim() !== "" || (i > 0 && a[i - 1].trim() !== "")).join("\n");
+  }
+
+  // Consume an SSE stream from /api/chat, calling onChunk for each text delta.
+  // Returns { inputTokens, outputTokens } from the done event.
+  async function consumeSSE(
+    res: Response,
+    onChunk: (text: string) => void
+  ): Promise<{ inputTokens: number; outputTokens: number }> {
+    const reader = res.body!.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let inputTokens = 0, outputTokens = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        try {
+          const ev = JSON.parse(line.slice(6));
+          if (ev.t)    onChunk(ev.t);
+          if (ev.done) { inputTokens = ev.in || 0; outputTokens = ev.out || 0; }
+        } catch { /* ignore */ }
+      }
+    }
+    return { inputTokens, outputTokens };
+  }
+
+  async function handleSearch(searchQuery: string): Promise<void> {
     if (!searchQuery.trim() || loading) return;
 
-    // If we're mid-conversation waiting for answers, route to final analysis
-    if (awaitingFollowUp) {
-      return handleFinalAnalysis(searchQuery);
-    }
+    if (awaitingFollowUp) return handleFinalAnalysis(searchQuery);
+    if (inConversation)   return handleConversationFollowUp(searchQuery);
 
     setLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: searchQuery }]);
@@ -194,6 +250,50 @@ function Home() {
       if (searchData.error) throw new Error(searchData.error);
 
       const foundCompanies: SearchResult[] = searchData.results ?? [];
+
+      // Named-company fast path: skip clarifying questions and stream a direct deep profile
+      if (searchData.isDirectNameMatch && foundCompanies.length >= 1) {
+        const companyName = foundCompanies[0].company_name;
+        setPendingCompanies(foundCompanies);
+        setPendingQuery(searchQuery);
+        setStoredFollowUpQuestions(`Direct company lookup: ${companyName}`);
+        setLoading(false);
+        setMessages(prev => [...prev, {
+          role: "assistant",
+          content: "",
+          companies: foundCompanies,
+          model: "Cohere Command R+",
+          phase: "analysis",
+        }]);
+        let accumulated = "";
+        const directRes = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: searchQuery,
+            companies: foundCompanies,
+            filters,
+            mode: "final_analysis",
+            defenceMode,
+            followUpQuestions: `Direct company lookup for: ${companyName}`,
+            userAnswers: `Please provide a comprehensive company profile for ${companyName}.`,
+          }),
+        });
+        if (directRes.headers.get("content-type")?.includes("text/event-stream")) {
+          await consumeSSE(directRes, chunk => {
+            accumulated += chunk;
+            setMessages(prev => { const m = [...prev]; m[m.length - 1] = { ...m[m.length - 1], content: accumulated }; return m; });
+          });
+          const cleaned = clientStripNALines(accumulated);
+          setMessages(prev => { const m = [...prev]; m[m.length - 1] = { ...m[m.length - 1], content: cleaned }; return m; });
+        } else {
+          const d = await directRes.json();
+          const txt = d.summary || d.error || "No profile generated.";
+          setMessages(prev => { const m = [...prev]; m[m.length - 1] = { ...m[m.length - 1], content: txt }; return m; });
+        }
+        setInConversation(true);
+        return;
+      }
 
       // Step 2: LLM reviews candidates and asks targeted follow-up questions
       const chatRes = await fetch("/api/chat", {
@@ -212,11 +312,13 @@ function Home() {
       const chatData = await chatRes.json();
 
       const questionsText = chatData.summary || chatData.error || "No questions generated.";
+      // rawQuestions includes the full Q/OPTS text so final_analysis has proper context
+      const rawQuestions  = chatData.rawQuestions || questionsText;
 
       // Save state for the follow-up turn
       setPendingCompanies(foundCompanies);
       setPendingQuery(searchQuery);
-      setStoredFollowUpQuestions(questionsText);
+      setStoredFollowUpQuestions(rawQuestions);
       setAwaitingFollowUp(true);
 
       setMessages((prev) => [
@@ -226,6 +328,7 @@ function Home() {
           content: questionsText,
           model: chatData.model,
           phase: "questions",
+          questionCards: chatData.questionCards || [],
         },
       ]);
 
@@ -272,38 +375,96 @@ function Home() {
           followUpQuestions: storedFollowUpQuestions,
         }),
       });
-      const chatData = await chatRes.json();
 
       setAwaitingFollowUp(false);
+      setInConversation(true);
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: chatData.summary || chatData.error || "No analysis generated.",
-          companies: pendingCompanies,
-          model: chatData.model,
-          phase: "analysis",
-        },
-      ]);
-
-      setUsageStats((prev) => [
-        {
-          id: Date.now(),
-          query: `[Refined] ${pendingQuery}`,
-          model: chatData.model || "Unknown",
-          inputTokens: chatData.inputTokens || 0,
-          outputTokens: chatData.outputTokens || 0,
-          embeddingTokens: 0,
-          llmCostUsd: chatData.costUsd || 0,
-          embeddingCostUsd: 0,
-        },
-        ...prev,
-      ]);
+      if (chatRes.headers.get("content-type")?.includes("text/event-stream")) {
+        const modelName    = chatRes.headers.get("x-model") || "Cohere Command R+";
+        const modelId      = chatRes.headers.get("x-model-id") || "";
+        const webResearch  = parseInt(chatRes.headers.get("x-web-research") || "0", 10);
+        // Seed empty message, then stream chunks into it
+        setMessages(prev => [...prev, { role: "assistant", content: "", companies: pendingCompanies, model: modelName, phase: "analysis", webResearch }]);
+        setLoading(false);
+        let accumulated = "";
+        const { inputTokens, outputTokens } = await consumeSSE(chatRes, chunk => {
+          accumulated += chunk;
+          setMessages(prev => { const m = [...prev]; m[m.length - 1] = { ...m[m.length - 1], content: accumulated }; return m; });
+        });
+        // Post-process once stream is complete
+        const cleaned = clientStripNALines(accumulated);
+        setMessages(prev => { const m = [...prev]; m[m.length - 1] = { ...m[m.length - 1], content: cleaned }; return m; });
+        const p = CLIENT_PRICING[modelId] ?? { input: 0, output: 0 };
+        setUsageStats(prev => [{ id: Date.now(), query: `[Refined] ${pendingQuery}`, model: modelName, inputTokens, outputTokens, embeddingTokens: 0, llmCostUsd: (inputTokens * p.input + outputTokens * p.output) / 1_000_000, embeddingCostUsd: 0 }, ...prev]);
+      } else {
+        const chatData = await chatRes.json();
+        setMessages(prev => [...prev, { role: "assistant", content: chatData.summary || chatData.error || "No analysis generated.", companies: pendingCompanies, model: chatData.model, phase: "analysis" }]);
+        setUsageStats(prev => [{ id: Date.now(), query: `[Refined] ${pendingQuery}`, model: chatData.model || "Unknown", inputTokens: chatData.inputTokens || 0, outputTokens: chatData.outputTokens || 0, embeddingTokens: 0, llmCostUsd: chatData.costUsd || 0, embeddingCostUsd: 0 }, ...prev]);
+        setLoading(false);
+      }
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : "Something went wrong";
       setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${errorMsg}` }]);
-    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleConversationFollowUp(userMessage: string): Promise<void> {
+    if (!userMessage.trim() || loading) return;
+
+    // Detect new search intent: long message with search keywords not referencing an existing company
+    const NEW_SEARCH_RE = /\b(find|search|look for|show me|i need|looking for|different province|different region|another|instead|alternative|other companies|new search)\b/i;
+    const refsExistingCompany = pendingCompanies.some(c =>
+      userMessage.toLowerCase().includes(c.company_name.toLowerCase().split(" ")[0].toLowerCase())
+    );
+    if (NEW_SEARCH_RE.test(userMessage) && !refsExistingCompany && userMessage.length > 20) {
+      setInConversation(false);
+      return handleSearch(userMessage);
+    }
+
+    setLoading(true);
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    setQuery("");
+
+    try {
+      const chatRes = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: pendingQuery,
+          companies: pendingCompanies,
+          filters,
+          mode: "conversation",
+          defenceMode,
+          userMessage,
+          history: messages.slice(-20).map(m => ({ role: m.role, content: m.content })),
+        }),
+      });
+
+      if (chatRes.headers.get("content-type")?.includes("text/event-stream")) {
+        const modelName   = chatRes.headers.get("x-model") || "Cohere Command R+";
+        const modelId     = chatRes.headers.get("x-model-id") || "";
+        const webResearch = parseInt(chatRes.headers.get("x-web-research") || "0", 10);
+        setMessages(prev => [...prev, { role: "assistant", content: "", companies: pendingCompanies, model: modelName, phase: "analysis", webResearch }]);
+        setLoading(false);
+        let accumulated = "";
+        const { inputTokens, outputTokens } = await consumeSSE(chatRes, chunk => {
+          accumulated += chunk;
+          setMessages(prev => { const m = [...prev]; m[m.length - 1] = { ...m[m.length - 1], content: accumulated }; return m; });
+        });
+        const cleaned = clientStripNALines(accumulated);
+        setMessages(prev => { const m = [...prev]; m[m.length - 1] = { ...m[m.length - 1], content: cleaned }; return m; });
+        const p = CLIENT_PRICING[modelId] ?? { input: 0, output: 0 };
+        setUsageStats(prev => [{ id: Date.now(), query: userMessage, model: modelName, inputTokens, outputTokens, embeddingTokens: 0, llmCostUsd: (inputTokens * p.input + outputTokens * p.output) / 1_000_000, embeddingCostUsd: 0 }, ...prev]);
+      } else {
+        const chatData = await chatRes.json();
+        setMessages(prev => [...prev, { role: "assistant", content: chatData.summary || chatData.error || "No response generated.", companies: pendingCompanies, model: chatData.model, phase: "analysis" }]);
+        setUsageStats(prev => [{ id: Date.now(), query: userMessage, model: chatData.model || "Unknown", inputTokens: chatData.inputTokens || 0, outputTokens: chatData.outputTokens || 0, embeddingTokens: 0, llmCostUsd: chatData.costUsd || 0, embeddingCostUsd: 0 }, ...prev]);
+        setLoading(false);
+      }
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "Something went wrong";
+      setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${errorMsg}` }]);
       setLoading(false);
     }
   }
@@ -551,6 +712,13 @@ function Home() {
                           </div>
                           <div className="px-5 py-4">
                             <MarkdownText text={msg.content} companies={msg.companies} />
+                            {msg.phase === "questions" && msg.questionCards && msg.questionCards.length > 0 && (
+                              <QuestionCards
+                                cards={msg.questionCards}
+                                onSubmit={handleFinalAnalysis}
+                                disabled={loading || !awaitingFollowUp}
+                              />
+                            )}
                           </div>
                         </div>
 
@@ -568,14 +736,14 @@ function Home() {
                               Generate RFP
                             </button>
                             <button
-                              onClick={() => handleSearch("Show me similar companies in a different province")}
+                              onClick={() => { setInConversation(false); handleSearch("Show me similar companies in a different province"); }}
                               disabled={loading}
                               className="text-xs font-medium px-3 py-2 bg-white border border-gray-200 rounded-full text-gray-600 hover:border-ngen-orange hover:text-ngen-orange hover:bg-ngen-orange/5 transition-all duration-150 disabled:opacity-40"
                             >
                               Similar companies, different province
                             </button>
                             <button
-                              onClick={() => { setAwaitingFollowUp(false); setQuery(""); }}
+                              onClick={() => { setAwaitingFollowUp(false); setInConversation(false); setQuery(""); }}
                               disabled={loading}
                               className="text-xs font-medium px-3 py-2 bg-white border border-gray-200 rounded-full text-gray-500 hover:border-gray-400 hover:text-gray-800 transition-all duration-150 disabled:opacity-40"
                             >
@@ -679,7 +847,7 @@ function Home() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder={awaitingFollowUp ? "Type your answers here..." : "Describe what you're looking for..."}
+                placeholder={awaitingFollowUp ? "Type your answers here..." : inConversation ? "Ask a follow-up question..." : "Describe what you're looking for..."}
                 className={`flex-1 px-4 py-2.5 bg-gray-50 border rounded-xl text-sm focus:outline-none focus:ring-2 transition placeholder:text-gray-400 ${awaitingFollowUp ? "border-ngen-orange/40 focus:ring-ngen-orange/20 focus:border-ngen-orange" : "border-gray-200 focus:ring-ngen-red/20 focus:border-ngen-red/40"}`}
                 disabled={loading}
               />
@@ -754,9 +922,80 @@ function InlineText({ text, companies }: { text: string; companies?: SearchResul
   );
 }
 
-/* ── Markdown Text renderer ─────────────────────────────────────────────────── */
-function MarkdownText({ text, companies }: { text: string; companies?: SearchResult[] }) {
-  const lines = text.split("\n");
+/* ── Interactive question cards ─────────────────────────────────────────────── */
+function QuestionCards({
+  cards,
+  onSubmit,
+  disabled,
+}: {
+  cards: QuestionCard[];
+  onSubmit: (answers: string) => void;
+  disabled: boolean;
+}) {
+  const [selections, setSelections] = useState<string[]>(cards.map(() => ""));
+  const allSelected = selections.every(s => s !== "");
+
+  const toggle = (qi: number, opt: string) => {
+    setSelections(prev => {
+      const next = [...prev];
+      next[qi] = prev[qi] === opt ? "" : opt;
+      return next;
+    });
+  };
+
+  const handleSubmit = () => {
+    if (!allSelected || disabled) return;
+    const answers = cards.map((c, i) => `${c.q}: ${selections[i]}`).join("\n");
+    onSubmit(answers);
+  };
+
+  return (
+    <div className="mt-4 space-y-4">
+      {cards.map((card, qi) => (
+        <div key={qi}>
+          <p className="text-sm font-semibold text-gray-800 mb-2">
+            <span className="text-ngen-orange mr-1">{qi + 1}.</span>{card.q}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {card.opts.map((opt, oi) => (
+              <button
+                key={oi}
+                onClick={() => toggle(qi, opt)}
+                disabled={disabled}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all duration-150 ${
+                  selections[qi] === opt
+                    ? "bg-ngen-orange text-white border-ngen-orange shadow-sm"
+                    : "bg-white text-gray-600 border-gray-200 hover:border-ngen-orange hover:text-ngen-orange"
+                } disabled:opacity-40 disabled:cursor-not-allowed`}
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+      <button
+        onClick={handleSubmit}
+        disabled={!allSelected || disabled}
+        className={`mt-1 inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-150 shadow-sm ${
+          allSelected && !disabled
+            ? "bg-ngen-orange text-white hover:bg-orange-600 hover:shadow-md"
+            : "bg-gray-100 text-gray-400 cursor-not-allowed"
+        }`}
+      >
+        {disabled ? "Loading…" : "Get Matches"}
+        {!disabled && (
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        )}
+      </button>
+    </div>
+  );
+}
+
+/* ── Markdown lines renderer (shared) ──────────────────────────────────────── */
+function renderLines(lines: string[], companies: SearchResult[] | undefined, baseKey: string): React.ReactNode[] {
   const elements: React.ReactNode[] = [];
   let bulletBuffer: { depth: number; text: string }[] = [];
   let keyIdx = 0;
@@ -764,7 +1003,7 @@ function MarkdownText({ text, companies }: { text: string; companies?: SearchRes
   const flushBullets = () => {
     if (bulletBuffer.length === 0) return;
     elements.push(
-      <ul key={`ul-${keyIdx++}`} className="my-2 space-y-1.5">
+      <ul key={`${baseKey}-ul-${keyIdx++}`} className="my-2 space-y-1.5">
         {bulletBuffer.map((b, j) => (
           <li key={j} style={{ paddingLeft: `${b.depth * 16}px` }} className="flex items-start gap-2 text-sm text-gray-700 leading-relaxed">
             <span className="text-ngen-orange mt-[3px] flex-shrink-0 text-[9px]">▶</span>
@@ -776,13 +1015,31 @@ function MarkdownText({ text, companies }: { text: string; companies?: SearchRes
     bulletBuffer = [];
   };
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  for (const line of lines) {
     const trimmed = line.trim();
 
-    if (!trimmed) {
+    if (!trimmed || trimmed === "---") {
       flushBullets();
-      elements.push(<div key={keyIdx++} className="h-1" />);
+      if (trimmed === "---") elements.push(<hr key={`${baseKey}-hr-${keyIdx++}`} className="border-gray-100 my-3" />);
+      else elements.push(<div key={`${baseKey}-sp-${keyIdx++}`} className="h-1" />);
+      continue;
+    }
+
+    // Table row
+    if (trimmed.startsWith("|")) {
+      flushBullets();
+      if (trimmed.replace(/[\s|:-]/g, "").length === 0) continue; // separator row
+      const cells = trimmed.split("|").slice(1, -1).map(c => c.trim());
+      const isHeader = elements.length > 0;
+      elements.push(
+        <tr key={`${baseKey}-tr-${keyIdx++}`} className={isHeader ? "border-t border-gray-100" : "bg-gray-50"}>
+          {cells.map((cell, ci) => (
+            <td key={ci} className="px-2 py-1.5 text-xs text-gray-700 border border-gray-100 align-top">
+              <InlineText text={cell} companies={companies} />
+            </td>
+          ))}
+        </tr>
+      );
       continue;
     }
 
@@ -791,14 +1048,14 @@ function MarkdownText({ text, companies }: { text: string; companies?: SearchRes
       flushBullets();
       const content = trimmed.replace(/^#{1,3}\s+/, "");
       elements.push(
-        <h4 key={keyIdx++} className="font-bold text-gray-900 text-sm mt-4 mb-1.5 border-b border-gray-100 pb-1">
+        <h4 key={`${baseKey}-h-${keyIdx++}`} className="font-bold text-gray-900 text-sm mt-4 mb-1.5 border-b border-gray-100 pb-1">
           <InlineText text={content} companies={companies} />
         </h4>
       );
       continue;
     }
 
-    // Bullet items: -, *, •, ►, ▶ at start (with optional indent)
+    // Bullet items
     const bulletMatch = line.match(/^(\s*)([-*•►▶]|\d+\.)\s+(.*)/);
     if (bulletMatch) {
       const depth = Math.floor(bulletMatch[1].length / 2);
@@ -806,17 +1063,128 @@ function MarkdownText({ text, companies }: { text: string; companies?: SearchRes
       continue;
     }
 
-    // Plain paragraph
     flushBullets();
     elements.push(
-      <p key={keyIdx++} className="text-sm text-gray-700 leading-relaxed">
+      <p key={`${baseKey}-p-${keyIdx++}`} className="text-sm text-gray-700 leading-relaxed">
         <InlineText text={trimmed} companies={companies} />
       </p>
     );
   }
 
   flushBullets();
-  return <div className="space-y-1">{elements}</div>;
+
+  // Wrap consecutive <tr> elements in a <table>
+  const wrapped: React.ReactNode[] = [];
+  let tableBuffer: React.ReactNode[] = [];
+  for (const el of elements) {
+    const elType = (el as React.ReactElement)?.type;
+    if (elType === "tr") {
+      tableBuffer.push(el);
+    } else {
+      if (tableBuffer.length > 0) {
+        wrapped.push(
+          <div key={`tbl-wrap-${wrapped.length}`} className="overflow-x-auto my-3">
+            <table className="w-full border-collapse text-xs">
+              <tbody>{tableBuffer}</tbody>
+            </table>
+          </div>
+        );
+        tableBuffer = [];
+      }
+      wrapped.push(el);
+    }
+  }
+  if (tableBuffer.length > 0) {
+    wrapped.push(
+      <div key={`tbl-wrap-${wrapped.length}`} className="overflow-x-auto my-3">
+        <table className="w-full border-collapse text-xs">
+          <tbody>{tableBuffer}</tbody>
+        </table>
+      </div>
+    );
+  }
+
+  return wrapped;
+}
+
+/* ── Collapsible company section ────────────────────────────────────────────── */
+function CompanySection({ pct, name, url, tagline, bodyLines, companies, idx }: {
+  pct: number; name: string; url: string; tagline: string;
+  bodyLines: string[]; companies?: SearchResult[]; idx: number;
+}) {
+  const [open, setOpen] = useState(false);
+  const scoreColor = pct >= 80 ? "text-emerald-600" : pct >= 65 ? "text-amber-600" : "text-gray-500";
+
+  return (
+    <div className="border border-gray-100 rounded-lg overflow-hidden mb-2">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center gap-2 px-3 py-2.5 bg-gray-50 hover:bg-orange-50 text-left transition-colors"
+      >
+        <span className={`font-bold text-sm tabular-nums flex-shrink-0 ${scoreColor}`}>{pct}%</span>
+        <span className="text-[9px] text-gray-400 flex-shrink-0">{open ? "▼" : "▶"}</span>
+        <a
+          href={url} target="_blank" rel="noopener noreferrer"
+          onClick={e => e.stopPropagation()}
+          className="font-semibold text-sm text-ngen-orange hover:underline flex-shrink-0"
+        >{name}</a>
+        <span className="text-xs text-gray-500 truncate">— {tagline}</span>
+      </button>
+      {open && (
+        <div className="px-3 py-2 border-t border-gray-100 bg-white">
+          {renderLines(bodyLines, companies, `co-${idx}`)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Markdown Text renderer ─────────────────────────────────────────────────── */
+// Pattern: "XX% · [Company Name](URL) — tagline" (company section header)
+const COMPANY_HEADER_RE = /^(\d+)%\s*[·•·]\s*\[(.+?)\]\((.+?)\)\s*[—–-]\s*(.+)/;
+
+function MarkdownText({ text, companies }: { text: string; companies?: SearchResult[] }) {
+  type Seg =
+    | { type: "company"; pct: number; name: string; url: string; tagline: string; body: string[] }
+    | { type: "other"; lines: string[] };
+
+  const segments: Seg[] = [];
+  let current: Seg = { type: "other", lines: [] };
+
+  for (const line of text.split("\n")) {
+    const m = line.trim().match(COMPANY_HEADER_RE);
+    if (m) {
+      segments.push(current);
+      current = { type: "company", pct: parseInt(m[1]), name: m[2], url: m[3], tagline: m[4], body: [] };
+    } else if (current.type === "company") {
+      // A `##` heading that is NOT a company header ends the company section
+      if (/^#{1,3}\s/.test(line.trim()) && !line.trim().match(COMPANY_HEADER_RE)) {
+        segments.push(current);
+        current = { type: "other", lines: [line] };
+      } else {
+        current.body.push(line);
+      }
+    } else {
+      current.lines.push(line);
+    }
+  }
+  segments.push(current);
+
+  return (
+    <div className="space-y-1">
+      {segments.map((seg, i) =>
+        seg.type === "company" ? (
+          <CompanySection
+            key={i} idx={i}
+            pct={seg.pct} name={seg.name} url={seg.url} tagline={seg.tagline}
+            bodyLines={seg.body} companies={companies}
+          />
+        ) : (
+          <div key={i}>{renderLines(seg.lines, companies, `seg-${i}`)}</div>
+        )
+      )}
+    </div>
+  );
 }
 
 
