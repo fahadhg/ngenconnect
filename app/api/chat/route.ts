@@ -44,23 +44,24 @@ Rules:
 - Open with 1–2 sentences acknowledging the user's clarified requirements and summarizing the capability search you ran (e.g., "Based on your Ontario/QC preference and MIL-STD-810G requirements, I ran a targeted discovery across NGen members for precision injection molding, MIL-grade coatings, and defence assembly."). Follow immediately with: "Note: NGen Connect supports capability discovery, not supplier qualification or procurement."
 - For each match, use EXACTLY this format — no prose paragraphs, no numbered lists:
 
-XX% · Company Name — one-line tagline describing their core strength
+XX% · [Company Name](URL) — one-line tagline describing their core strength
 
-Key Capabilities:
-• [specific capability from the data]
-• [specific capability from the data]
-• [additional capabilities as warranted — 3 to 5 bullets total]
+XX% match — [1–2 sentences directly connecting the score to the user's specific requirements: quote or echo their stated certifications, materials, tolerances, processes, and volumes. E.g., "Explicit 5-axis airfoil milling under the Precinmac platform, AS9100 listed, and airfoil geometry directly aligns with 150 mm span × 60 mm chord blades at ±0.0005″ true position."]
 
-Relevance to your build:
-[2–3 sentences explaining why this company fits the original query AND the user's clarified requirements. Be specific: cite certifications (e.g., AS9100D, ISO 9001:2015), materials (e.g., titanium, Inconel 718), capabilities, location, and volume fit.]
+Key Capabilities and Fit:
+• [capability that directly addresses a stated requirement — echo the user's spec, standard, tolerance, or volume where relevant; 1–2 sentences per bullet]
+• [next capability tied to the user's stated needs]
+• [3–5 bullets total; each bullet should connect data to requirement, not just list what the company does]
 
-Considerations:
-[1–2 sentences flagging any gaps, unverified certifications, or capabilities not explicitly stated in the data. Be honest — e.g., "ISO Class 8 cleanroom not specified — verify facility class before engagement." or "NADCAP certification not on record — confirm directly."]
+Gaps/risks versus your brief:
+• [specific gap with actionable guidance — e.g., "NADCAP non-conventional not on record — confirm before committing EDM work" or "Titanium experience not explicitly stated in database — verify directly"]
+• [1–2 bullets max; be honest about every unknown]
 
 Website: [URL]
 
 - For XX%, use the "Match score" value provided in the company data (e.g., "Match score: 82%" → display as "82%").
-- Integrity requires explicit caveats: if a certification or capability is not confirmed in the data, say so in Considerations — never assume it exists.
+- Integrity requires explicit caveats: if a certification or capability is not confirmed in the data, say so in Gaps/risks — never assume it exists.
+- Bullets must be dense and specific: quote or paraphrase the user's exact specs (numbers, standards, alloy grades, tolerances, volumes). Generic bullets like "has aerospace experience" are not acceptable — every bullet must connect data to requirement.
 - After all company matches, add this line: "To formalize your shortlist into a structured brief, click **Generate RFP** below."
 - Web search: You have access to real-time web search. Use it for: (1) general context not in the company data — e.g., certification standards, regulatory specifications, industry requirements; (2) verifying a specific certification, capability, or fact for a named company when the database record is missing, uncertain, or being questioned by the user — go directly to the company's homepage URL (provided in the data) to fetch it, or search "site:[domain] [topic]" to pull company-specific results — do not do a generic web search that returns industry-wide content. Clearly label what is database-sourced vs. web-verified. Do not wholesale replace database profiles with web content. Cite the URL when you find something. If the company's site returns nothing on the specific fact, say so honestly and proceed from the data you have.
 - Close with: "NGen Connect is a discovery platform. Results are based on vendor-provided information and have not been verified by NGen."`;
@@ -75,7 +76,9 @@ Rules:
 - Open with 1–2 sentences acknowledging the user's requirements and summarizing the compliance-focused search you ran. Follow immediately with: "Note: NGen Connect supports capability discovery, not supplier qualification or procurement. All compliance statuses must be independently verified before engagement."
 - For each match, use EXACTLY this format:
 
-XX% · Company Name — one-line tagline describing their core defence capability
+XX% · [Company Name](URL) — one-line tagline describing their core defence capability
+
+XX% match — [1–2 sentences directly connecting the score to the user's specific requirements: echo their stated compliance needs (CGP, ITAR, CMMC level), certifications, materials, and programme context. Be specific.]
 
 Compliance Status:
 • CGP Registered: [YES / NO / Unknown — verify]
@@ -84,21 +87,20 @@ Compliance Status:
 • Facility Clearance: [level or "Not on record"]
 • DND Approved Vendor: [YES / NO / Unknown]
 
-Key Capabilities:
-• [specific capability from the data]
-• [specific capability from the data]
-• [additional capabilities as warranted — 3 to 5 bullets total]
+Key Capabilities and Fit:
+• [capability that directly addresses a stated requirement — echo the user's spec, standard, or material where relevant; 1–2 sentences per bullet]
+• [next capability tied to the user's stated needs]
+• [3–5 bullets total; each bullet must connect data to requirement]
 
-Relevance to your requirement:
-[2–3 sentences explaining why this company fits the original query AND the user's clarified requirements. Cite specific certifications, materials, capabilities, and compliance signals from the data.]
-
-Considerations:
-[1–2 sentences flagging compliance gaps, unverified certifications, or capabilities not confirmed in the data. E.g., "CMMC Level 2 not on record — must be confirmed before any CUI-handling engagement." Be honest about every unknown.]
+Gaps/risks versus your brief:
+• [specific compliance or capability gap with actionable guidance — e.g., "CMMC Level 2 not on record — must be confirmed before any CUI-handling engagement"]
+• [1–2 bullets max; flag every unknown explicitly]
 
 Website: [URL]
 
 - For XX%, use the "Match score" value provided in the company data.
 - Integrity is paramount: explicitly flag every compliance status that is Unknown or not on record.
+- Bullets must be dense and specific: quote or paraphrase the user's exact specs, standards, and programme details. Generic bullets are not acceptable.
 - After all matches, add: "Click **Generate Defence RFP** below to create a document with ITAR flow-down clauses and CGP handling requirements pre-filled."
 - Web search: You have access to real-time web search. Use it for: (1) general context — e.g., CGP/ITAR/CMMC regulatory details, DND procurement rules, or defence standards; (2) verifying a specific certification, compliance status, or capability for a named company when the database record is missing, uncertain, or being questioned — go directly to the company's homepage URL (provided in the data) to fetch it, or search "site:[domain] [topic]" to pull company-specific results — do not do a generic web search that returns industry-wide content. Clearly label what is database-sourced vs. web-verified. Do not wholesale replace database profiles with web content. Cite the URL when you find something. If the company's site returns nothing on the specific fact, say so honestly.
 - Close with: "NGen Connect is a discovery platform. Results are based on vendor-provided information and have not been verified by NGen."`;
@@ -224,13 +226,20 @@ function buildContextPrompt(query: string, companies: SearchResult[], filters: R
       const base =
         `[${i + 1}] ${c.company_name} (${c.homepage})\n` +
         `   ${scoreLabel}\n` +
-        `   Sectors: ${c.sectors.join(", ") || "N/A"}\n` +
-        `   Capabilities: ${c.capabilities.join(", ") || "N/A"}\n` +
-        `   Certifications: ${c.certifications.join(", ") || "N/A"}\n` +
+        `   Location: ${c.city ? c.city + ", " : ""}${c.province}\n` +
+        `   Type: ${c.company_type || "N/A"} | Model: ${c.business_model || "N/A"} | Size: ${c.headcount_range || "N/A"}\n` +
+        `   Industries: ${c.industries_served.join(", ") || "N/A"}\n` +
+        `   Capabilities: ${(c.capabilities_enhanced.length ? c.capabilities_enhanced : c.capabilities).join(", ") || "N/A"}\n` +
+        `   Products: ${c.products.join(", ") || "N/A"}\n` +
+        `   Technology: ${c.technology.join(", ") || "N/A"}\n` +
         `   Materials: ${c.materials.join(", ") || "N/A"}\n` +
-        `   Province: ${c.province}\n` +
-        `   Size: ${c.company_size}\n` +
-        `   Description: ${c.description || "N/A"}`;
+        `   Equipment: ${c.equipment.join(", ") || "N/A"}\n` +
+        `   Certifications: ${c.certifications.join(", ") || "N/A"}\n` +
+        `   Certifications NOT found: ${c.certifications_not_found.join(", ") || "none checked"}\n` +
+        `   Key Customers: ${c.key_customers.join(", ") || "N/A"}\n` +
+        `   Export Compliance: ${c.export_compliance.join(", ") || "N/A"}\n` +
+        `   Capacity: ${c.capacity || "N/A"}\n` +
+        `   Summary: ${c.summary || c.tagline || "N/A"}`;
 
       if (!defenceMode) return base;
 

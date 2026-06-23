@@ -9,6 +9,7 @@
     "seed": "node --env-file=.env.local scripts/seed-supabase.mjs"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.59.0",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.105.3",
     "@types/leaflet": "^1.9.21",

@@ -1,71 +1,50 @@
-export interface CompanyRecord {
-  id: string;
-  embedding: number[];
-  metadata: CompanyMetadata;
-  document: string;
-}
-
-export interface CompanyMetadata {
-  company_name: string;
-  site: string;
-  homepage: string;
-  description: string;
-  sectors: string;
-  capabilities: string;
-  certifications: string;
-  materials: string;
-  province: string;
-  company_size: string;
-  hs_slugs?: string[] | string;
-  lat?: number;
-  lng?: number;
-  city?: string;
-  // Defence enrichment fields
-  defence_score?: number;
-  defence_tier?: string | null;
-  cgp_registered?: boolean | null;
-  itar_registered?: boolean | null;
-  cmmc_level?: number | null;
-  facility_clearance?: string | null;
-  dnd_approved?: boolean | null;
-  prime_sub_supplier?: boolean | null;
-}
-
 export interface SearchResult {
-  company_name: string;
-  site: string;
-  homepage: string;
-  description: string;
-  sectors: string[];
-  capabilities: string[];
-  certifications: string[];
-  materials: string[];
-  hs_slugs: string[];
-  province: string;
-  company_size: string;
-  score: number;
-  // Defence enrichment fields
-  defence_score?: number;
-  defence_tier?: string | null;
-  cgp_registered?: boolean | null;
-  itar_registered?: boolean | null;
-  cmmc_level?: number | null;
-  facility_clearance?: string | null;
-  dnd_approved?: boolean | null;
+  company_name:          string;
+  site:                  string;
+  homepage:              string;
+  city:                  string;
+  province:              string;
+  tagline:               string;
+  summary:               string;
+  company_type:          string;
+  business_model:        string;
+  headcount_range:       string;
+  founded_year:          number | null;
+  capabilities:          string[];
+  capabilities_enhanced: string[];
+  specializations:       string[];
+  products:              string[];
+  technology:            string[];
+  equipment:             string[];
+  materials:             string[];
+  certifications:        string[];
+  certifications_not_found: string[];
+  industries_served:     string[];
+  key_customers:         string[];
+  export_compliance:     string[];
+  capacity:              string;
+  score:                 number;
 }
 
 export interface FilterOptions {
-  sectors: string[];
-  capabilities: string[];
+  provinces:      string[];
+  company_types:  string[];
   certifications: string[];
-  materials: string[];
-  hs_slugs: string[];
-  provinces: string[];
-  company_sizes: string[];
+  industries:     string[];
+  materials:      string[];
+  headcount_ranges: string[];
 }
 
+// Legacy — kept for backward compat with filterMap.ts
 export interface CompanyIndex {
-  companies: CompanyRecord[];
+  companies:      CompanyRecord[];
   filter_options: FilterOptions;
-  total: number;
+  total:          number;
+}
+
+export interface CompanyRecord {
+  id:        string;
+  embedding: number[];
+  metadata:  Record<string, unknown>;
+  document:  string;
 }
