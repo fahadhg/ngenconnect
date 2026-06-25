@@ -161,6 +161,53 @@ async function rerankWithCohere(query: string, candidates: SearchResult[]): Prom
   }));
 }
 
+const SELECT_FIELDS = "company_name,site,homepage,city,province,tagline,summary,company_type,business_model,headcount_range,founded_year,capabilities,capabilities_enhanced,specializations,products,technology,equipment,materials,certifications,certifications_not_found,industries_served,key_customers,export_compliance,capacity";
+
+const normalizeStr = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+// Split a query like "MayaHtt" or "maya-htt" into ["maya", "htt"]
+function queryTokens(query: string): string[] {
+  return query
+    .replace(/([a-z])([A-Z])/g, "$1 $2")   // camelCase split
+    .split(/[\s\-_]+/)
+    .map(t => t.toLowerCase())
+    .filter(t => t.length >= 3);
+}
+
+async function directNameLookup(
+  supabase: ReturnType<typeof supabaseClient>,
+  query: string
+): Promise<SearchResult[]> {
+  const tokens = queryTokens(query);
+  if (!tokens.length) return [];
+
+  const normQuery = normalizeStr(query);
+  const seen = new Set<string>();
+  const matches: SearchResult[] = [];
+
+  // Run one ilike per token, collect candidates, then filter by normalized name match
+  for (const token of tokens) {
+    const { data } = await supabase
+      .from("companies")
+      .select(SELECT_FIELDS)
+      .ilike("company_name", `%${token}%`)
+      .limit(20);
+
+    for (const row of data || []) {
+      const normName = normalizeStr(row.company_name || "");
+      const key = normName;
+      if (seen.has(key)) continue;
+      // Accept if the normalized names overlap meaningfully
+      if (normName.includes(normQuery) || normQuery.includes(normName) ||
+          normName.startsWith(normQuery.slice(0, 4))) {
+        seen.add(key);
+        matches.push(mapRow({ ...row, score: 1 }));
+      }
+    }
+  }
+  return matches;
+}
+
 function mapRow(row: Record<string, unknown>): SearchResult {
   return {
     company_name:             (row.company_name          as string) || "",
@@ -196,11 +243,29 @@ export async function POST(request: NextRequest) {
     const { query, filters = {} } = await request.json();
     if (!query) return NextResponse.json({ error: "Query is required" }, { status: 400 });
 
+    const supabase = supabaseClient();
+
+    // Direct name lookup: catches queries like "MayaHtt" → "Maya HTT" before vector search
+    if (query.trim().split(/\s+/).length <= 6) {
+      const nameHits = await directNameLookup(supabase, query);
+      if (nameHits.length > 0) {
+        return NextResponse.json({
+          results: nameHits,
+          total: nameHits.length,
+          isDirectNameMatch: true,
+          embeddingTokens: 0,
+          embeddingCostUsd: 0,
+          embeddingModel: COHERE_EMBED_MODEL,
+          rerankModel: null,
+          hydeDocument: null,
+          hydeTiers: 1,
+        });
+      }
+    }
+
     // HyDE: generate 1 or 2 synthetic supplier profiles (2 for supply-chain queries)
     // and embed each as a document so it sits in the same vector space as stored embed_texts.
     const hydeDocs = await generateHyDE(query);
-
-    const supabase = supabaseClient();
 
     // Embed all HyDE docs in parallel, then run a pgvector search per doc.
     const searchParams = {
@@ -268,7 +333,6 @@ export async function POST(request: NextRequest) {
     // Named-company fast path: if the query is short (≤5 words) and one or more
     // company names closely match, return ONLY those companies so the UI doesn't
     // dilute the result with semantically similar but unrelated companies.
-    const normalizeStr = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
     const normalizedQuery = normalizeStr(query);
     if (query.trim().split(/\s+/).length <= 5) {
       const nameMatches = reranked.filter(r => {
