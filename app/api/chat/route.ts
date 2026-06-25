@@ -67,8 +67,12 @@ You have gathered clarifying information from the user. Now deliver a precise, d
 
 Rules:
 - ONLY use the company data provided. Never invent companies, capabilities, certifications, or materials.
-- Select 4–6 companies that best match requirements. Match score is a starting signal — exclude poor fits, include strong ones regardless of rank.
-- If "LOW CONFIDENCE" appears in the data: be honest, explain the gap, suggest refinements. Do not force-fit poor matches.
+- ALWAYS profile a minimum of 4 companies. Never stop at 2 or 3. If the pool lacks 4 exact-match companies, include the next-best candidates using this priority order:
+  1. Exact match in requested region — profile normally
+  2. Exact match outside requested region — profile with a "⚠ Outside requested region ([Province]) — verify if geography is flexible" tag on the match line
+  3. Adjacent/logical match — a company that does something closely related (e.g., armored vehicle components but not full fabrication; PCB testing but not assembly; same materials/processes in a different application) — profile with a "↔ Adjacent capability — [one sentence explaining the logical connection to the requirement]" tag on the match line. Include these because buyers often discover relevant suppliers they hadn't considered.
+- Match score is a starting signal — reorder based on fit. Poor fits (fundamentally wrong industry, wrong process, wrong scale) may be excluded but only if 4+ stronger candidates remain.
+- If "LOW CONFIDENCE" appears in the data: be honest, explain the gap, flag what needs verification.
 - Integrity: if a certification or capability is not confirmed in the data, flag it explicitly. Never assume it exists.
 - Bullets must be specific: echo the user's exact specs, standards, tolerances, volumes. Generic bullets are not acceptable.
 
@@ -126,7 +130,12 @@ You have gathered clarifying information. Now deliver a compliance-focused match
 
 Rules:
 - ONLY use the company data provided. Never invent companies, certifications, or compliance statuses.
-- You have been provided the full candidate pool. Apply consultative judgment to select the 3 to 8 companies that best satisfy the user's compliance and capability requirements. Match score is a starting signal — exclude poor fits even if ranked high; surface a lower-ranked candidate if it uniquely meets a stated compliance requirement. If a "LOW CONFIDENCE" note appears, be honest: the database has no strong matches — say so clearly, explain the gap, and suggest search refinements rather than presenting poor fits.
+- ALWAYS profile a minimum of 4 companies. If the pool lacks 4 exact-match companies, include next-best candidates in this priority order:
+  1. Exact capability + compliance match in requested region — profile normally
+  2. Exact match outside requested region — profile with "⚠ Outside requested region ([Province/Country]) — verify if geography is flexible" on the match line
+  3. Adjacent/logical match — a company with closely related capabilities (similar processes, materials, or programme types) that a buyer should know about — profile with "↔ Adjacent capability — [one sentence explaining why this is worth considering]" on the match line
+- Match score is a starting signal. Poor fits (fundamentally wrong process or compliance posture) may be excluded only if 4+ stronger candidates remain.
+- If a "LOW CONFIDENCE" note appears, be honest: explain the gap and suggest search refinements rather than presenting poor fits.
 - Open with 1–2 sentences acknowledging the user's requirements and summarizing the compliance-focused search you ran. Follow immediately with: "Note: NGen Connect supports capability discovery, not supplier qualification or procurement. All compliance statuses must be independently verified before engagement."
 - For each match, use EXACTLY this format:
 
@@ -728,15 +737,33 @@ async function researchWithGemini(
       }
     } catch { /* table may not exist yet, continue to live fetch */ }
 
-    const prompt = `Research the Canadian manufacturer/supplier "${c.company_name}" at ${c.homepage}.
-Report concisely (max 250 words):
-1. Certifications held (ISO, AS9100, NADCAP, ITAR, CGP, IATF 16949, Health Canada GMP, etc.)
-2. Key OEM customers or named partnerships
-3. Materials, technologies, and processes they specialize in
-4. Industries and markets served
-5. Company size, headcount, locations, year founded
-6. Notable awards, programs, or recent news
-Be factual. Skip generic marketing language.`;
+      // Build a list of what's already known so Gemini focuses on gaps
+      const known: string[] = [];
+      const missing: string[] = [];
+      const caps = c.capabilities_enhanced.length ? c.capabilities_enhanced : c.capabilities;
+      if (caps.length)               known.push(`Capabilities: ${caps.slice(0, 6).join(", ")}`);
+      if (c.industries_served.length) known.push(`Industries: ${c.industries_served.join(", ")}`);
+      if (c.certifications.length)   known.push(`Certifications: ${c.certifications.join(", ")}`);
+      else                           missing.push("certifications (ISO, AS9100, NADCAP, ITAR, CGP, IATF 16949, Health Canada GMP, etc.)");
+      if (c.materials.length)        known.push(`Materials: ${c.materials.join(", ")}`);
+      else                           missing.push("materials and raw inputs they work with");
+      if (c.key_customers.length)    known.push(`Key customers: ${c.key_customers.join(", ")}`);
+      else                           missing.push("key customers and OEM relationships (named companies)");
+      if (c.export_compliance.length) known.push(`Export compliance: ${c.export_compliance.join(", ")}`);
+      else                           missing.push("export compliance and controlled goods status (ITAR, CGP, CCATS)");
+      if (c.products.length)         known.push(`Products: ${c.products.slice(0, 4).join(", ")}`);
+      else                           missing.push("specific product lines or part families");
+      if (!c.headcount_range)        missing.push("employee count and number of facilities");
+      if (!c.founded_year)           missing.push("year founded");
+
+      const knownSection  = known.length  ? `\nAlready in our database (do NOT repeat these):\n${known.map(k => `- ${k}`).join("\n")}` : "";
+      const missingSection = missing.length ? `\nCRITICAL — find these specific missing data points:\n${missing.map(m => `- ${m}`).join("\n")}` : "";
+
+      const prompt = `You are researching "${c.company_name}" (${c.homepage}), a Canadian manufacturer/supplier, to fill gaps in our company database.
+${knownSection}
+${missingSection}
+
+Search their website, press releases, LinkedIn, industry directories, and news sources. Report ONLY what you find for the missing items above. Be specific and factual — include exact certification names, real customer names, actual product names. Skip anything already listed above. Max 400 words.`;
 
     try {
       const res = await fetch(
@@ -748,7 +775,7 @@ Be factual. Skip generic marketing language.`;
           body: JSON.stringify({
             contents: [{ role: "user", parts: [{ text: prompt }] }],
             tools: [{ google_search: {} }],  // snake_case required by v1beta
-            generationConfig: { temperature: 0.1, maxOutputTokens: 600 },
+            generationConfig: { temperature: 0.1, maxOutputTokens: 1500 },
           }),
         }
       );
@@ -882,14 +909,13 @@ export async function POST(request: NextRequest) {
     } else if (mode === "conversation") {
       systemPrompt = CONVERSATION_SYSTEM;
       const contextBlock = buildContextPrompt(query, companies, filters, defenceMode, 8, research);
-      // Last 20 messages from the client, converted to LLM-compatible roles
       const historyMsgs: ChatMessage[] = (history as { role: string; content: string }[])
         .slice(-20)
         .map(m => ({ role: m.role as "user" | "assistant", content: m.content }));
+      // Merge context into the user question to avoid consecutive user messages (Cohere requires strict alternation)
       messages = [
-        { role: "user", content: contextBlock },
         ...historyMsgs,
-        { role: "user", content: (userMessage as string) + "\n\nAnswer directly. Do NOT ask any clarifying questions." },
+        { role: "user", content: `${userMessage as string}\n\nAnswer directly. Do NOT ask any clarifying questions.\n\n[Supplier context for reference]:\n${contextBlock}` },
       ];
     } else {
       // generate_rfp
