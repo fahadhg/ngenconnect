@@ -1,0 +1,3890 @@
+[
+  {
+    "id": "www.biotech.ca",
+    "site": "www.biotech.ca",
+    "old_name": "BIOTECanada",
+    "new_name": "BIOTECanada",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.inertiapd.com",
+    "site": "www.inertiapd.com",
+    "old_name": "Design Toi! Inc.",
+    "new_name": "Inertia Product Development",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "bjtake.com",
+    "site": "bjtake.com",
+    "old_name": "5th Street Lighting",
+    "new_name": "BJ Take Lighting",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.nsboats.com",
+    "site": "www.nsboats.com",
+    "old_name": "A.L. LeBlanc Ltd.",
+    "new_name": "Nova Scotia Boatbuilders Association",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "thecultivatedb.ca",
+    "site": "thecultivatedb.ca",
+    "old_name": "n!Biomachines",
+    "new_name": "n!Biomachines",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.abctechnologies.com",
+    "site": "www.abctechnologies.com",
+    "old_name": "ABCZ LTD.",
+    "new_name": "ABC Technologies",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.buildsmartr.com",
+    "site": "www.buildsmartr.com",
+    "old_name": "Buildster Inc.",
+    "new_name": "Build Smartr",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.canhealth.com",
+    "site": "www.canhealth.com",
+    "old_name": "Canadian Healthcare Technology",
+    "new_name": "Canadian Healthcare Technology",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.cfertech.com",
+    "site": "www.cfertech.com",
+    "old_name": "Unknown",
+    "new_name": "C-FER Technologies",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "ingeno.ca",
+    "site": "ingeno.ca",
+    "old_name": "Aptology",
+    "new_name": "Ingeno",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "britishvolt.com",
+    "site": "britishvolt.com",
+    "old_name": "1Win",
+    "new_name": "Britishvolt",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "store.lci1.com",
+    "site": "store.lci1.com",
+    "old_name": "Lippert",
+    "new_name": "Lippert",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "bmaconventions.com",
+    "site": "bmaconventions.com",
+    "old_name": "BMAQ Inc.",
+    "new_name": "BMA Conventions",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.phaseshift.ai",
+    "site": "www.phaseshift.ai",
+    "old_name": "Toronto Company Ltd.",
+    "new_name": "Phase Shift",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.laplaces.ai",
+    "site": "www.laplaces.ai",
+    "old_name": "AI-FORCE INC.",
+    "new_name": "Maneva",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.bepwr.ca",
+    "site": "www.bepwr.ca",
+    "old_name": "Business and Education Partnership of Waterloo Region",
+    "new_name": "Be Powered",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.dicentral.com",
+    "site": "www.dicentral.com",
+    "old_name": "TrueCommerce",
+    "new_name": "TrueCommerce",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "aleo-solutions.com",
+    "site": "aleo-solutions.com",
+    "old_name": "AL\u00c9O Canada",
+    "new_name": "AL\u00c9O Canada",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "cuzzetto.com",
+    "site": "cuzzetto.com",
+    "old_name": "Ontario Trillium Foundation (OTF)",
+    "new_name": "Cuzzetto",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "passivdom.com",
+    "site": "passivdom.com",
+    "old_name": "Haus & Holmes Limited",
+    "new_name": "haus me",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.staffingcall.com",
+    "site": "www.staffingcall.com",
+    "old_name": "ClickFunnels",
+    "new_name": "ClickFunnels",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.goldpak.com",
+    "site": "www.goldpak.com",
+    "old_name": "Goldrich Printpak Inc.",
+    "new_name": "Goldrich Printpak Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.sabrelimited.com",
+    "site": "www.sabrelimited.com",
+    "old_name": "Business Central Experts Inc.",
+    "new_name": "Sabre Limited",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.conceptfixtures.com",
+    "site": "www.conceptfixtures.com",
+    "old_name": "CSF International",
+    "new_name": "CSF International",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "bosinnovations.com",
+    "site": "bosinnovations.com",
+    "old_name": "Industrial Automation Intelligence Inc.",
+    "new_name": "BOS Innovations Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "spiricept.com",
+    "site": "spiricept.com",
+    "old_name": "HOMEH INC.",
+    "new_name": "Spiricept",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.longwoods.com",
+    "site": "www.longwoods.com",
+    "old_name": "Unknown",
+    "new_name": "Longwoods Publishing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "malleum.com",
+    "site": "malleum.com",
+    "old_name": "CybersecurityXperts Inc.",
+    "new_name": "Malleum",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.lafarge.ca",
+    "site": "www.lafarge.ca",
+    "old_name": "Amrize",
+    "new_name": "Amrize",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "cybereco.ca",
+    "site": "cybereco.ca",
+    "old_name": "CYBERDEFENSE.AI",
+    "new_name": "Cybereco",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "investinhamilton.ca",
+    "site": "investinhamilton.ca",
+    "old_name": "Business Advisory Group (BAG)",
+    "new_name": "Invest in Hamilton",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.canadiandefencereview.com",
+    "site": "www.canadiandefencereview.com",
+    "old_name": "Protocase Inc.",
+    "new_name": "Canadiandefencereview",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "sasktel.net",
+    "site": "sasktel.net",
+    "old_name": "Unknown",
+    "new_name": "SaskTel",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.cityofnorthbay.ca",
+    "site": "www.cityofnorthbay.ca",
+    "old_name": "Unknown",
+    "new_name": "City of North Bay",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.usask.ca",
+    "site": "www.usask.ca",
+    "old_name": "University of Saskatchewan",
+    "new_name": "University of Saskatchewan",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.solidxperts.com",
+    "site": "www.solidxperts.com",
+    "old_name": "SolidXperience Inc.",
+    "new_name": "Solidxperts",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "flexitallic.com",
+    "site": "flexitallic.com",
+    "old_name": "Flexitel Inc.",
+    "new_name": "Flexitallic",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "bronswerkgroup.com",
+    "site": "bronswerkgroup.com",
+    "old_name": "Bronwerk Marine Inc.",
+    "new_name": "Bronswerkgroup",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.biomb.ca",
+    "site": "www.biomb.ca",
+    "old_name": "The Canadian Alliance for Skills and Training in Life Sciences (CASTL)",
+    "new_name": "Bioscience Association Manitoba",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.pacgeo.com",
+    "site": "www.pacgeo.com",
+    "old_name": "Pacific Geomatics",
+    "new_name": "Pacific Geomatics",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.fieldaero.com",
+    "site": "www.fieldaero.com",
+    "old_name": "HOMEH INC.",
+    "new_name": "Field Aero",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.fdindustrial.com",
+    "site": "www.fdindustrial.com",
+    "old_name": "JV Driver Inc.",
+    "new_name": "Fluor Driver",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "automobotics.com",
+    "site": "automobotics.com",
+    "old_name": "Access-equip Inc.",
+    "new_name": "Automobotics",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "blockscalesolutions.com",
+    "site": "blockscalesolutions.com",
+    "old_name": "Arwana189",
+    "new_name": "Blockscalesolutions",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "ctacnc.ca",
+    "site": "ctacnc.ca",
+    "old_name": "Protocase Inc.",
+    "new_name": "CTA CNC",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "polarsapphire.com",
+    "site": "polarsapphire.com",
+    "old_name": "ALEXISTOGEL",
+    "new_name": "Polarsapphire",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "alphalabs.ca",
+    "site": "alphalabs.ca",
+    "old_name": "Alphalist Inc.",
+    "new_name": "Alpha Diagnostic Imaging",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.surgmed.com",
+    "site": "www.surgmed.com",
+    "old_name": "Batrik Medical Manufacturing",
+    "new_name": "Advanced Surgi-Pharm Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "sites.google.com",
+    "site": "sites.google.com",
+    "old_name": "Saturn Sales and Service Inc.",
+    "new_name": "Saturn Sales and Service Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "autoliv.com",
+    "site": "autoliv.com",
+    "old_name": "AutoLife Inc.",
+    "new_name": "Autoliv Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.shaddari.com",
+    "site": "www.shaddari.com",
+    "old_name": "Precision Edge Solutions Ltd.",
+    "new_name": "Shaddari Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.laplacerobotics.com",
+    "site": "www.laplacerobotics.com",
+    "old_name": "Maneva",
+    "new_name": "Maneva",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.demirengineering.com",
+    "site": "www.demirengineering.com",
+    "old_name": "Advanced Material Group AMG Inc.",
+    "new_name": "Demir Engineering",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.smilesonica.com",
+    "site": "www.smilesonica.com",
+    "old_name": "Aevo System",
+    "new_name": "Aevo System",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.vitesco-technologies.com",
+    "site": "www.vitesco-technologies.com",
+    "old_name": "Schaeffler Group USA Inc.",
+    "new_name": "Schaeffler Group USA Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.electrameccanica.com",
+    "site": "www.electrameccanica.com",
+    "old_name": "Xos, Inc.",
+    "new_name": "ElectraMeccanica",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.yorkmetalproducts.com",
+    "site": "www.yorkmetalproducts.com",
+    "old_name": "Leaders de Demain Inc.",
+    "new_name": "York Metal Products",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.urtechmfg.com",
+    "site": "www.urtechmfg.com",
+    "old_name": "Furtech Solutions Inc.",
+    "new_name": "URtech Manufacturing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "plantiq.ca",
+    "site": "plantiq.ca",
+    "old_name": "Genba",
+    "new_name": "Genba",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "metalzr.com",
+    "site": "metalzr.com",
+    "old_name": "Del Metals",
+    "new_name": "Metalzr",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "anchordanly.com",
+    "site": "anchordanly.com",
+    "old_name": "Unknown",
+    "new_name": "Anchor Danly",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.amrikart.com",
+    "site": "www.amrikart.com",
+    "old_name": "G2Metric",
+    "new_name": "G2METRIC",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "voltacharging.com",
+    "site": "voltacharging.com",
+    "old_name": "JOLT",
+    "new_name": "JOLT",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.trepanfils.com",
+    "site": "www.trepanfils.com",
+    "old_name": "Trepanix Inc.",
+    "new_name": "TREPANFILS",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.ovensa.com",
+    "site": "www.ovensa.com",
+    "old_name": "GoDaddy",
+    "new_name": "Ovensa",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "integrys.com",
+    "site": "integrys.com",
+    "old_name": "Integris Group Inc.",
+    "new_name": "Integrys Limited",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "deafassistant.com",
+    "site": "deafassistant.com",
+    "old_name": "BeAware",
+    "new_name": "BeAware",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "engsci.utoronto.ca",
+    "site": "engsci.utoronto.ca",
+    "old_name": "Unknown",
+    "new_name": "University of Toronto Engineering Science",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "automotive.arcelormittal.com",
+    "site": "automotive.arcelormittal.com",
+    "old_name": "ArcelorMittal",
+    "new_name": "ArcelorMittal",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.infosecglobal.com",
+    "site": "www.infosecglobal.com",
+    "old_name": "Keyfactor",
+    "new_name": "InfoSec Global",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "skyhawk.co",
+    "site": "skyhawk.co",
+    "old_name": "FOCUS",
+    "new_name": "FOCUS",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "kingsds.network",
+    "site": "kingsds.network",
+    "old_name": "Distributed Compute Labs",
+    "new_name": "Kings Distributed Systems",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "cleano2.ca",
+    "site": "cleano2.ca",
+    "old_name": "CarbinX Holdings Corp.",
+    "new_name": "CleanO2",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.racerinternational.com",
+    "site": "www.racerinternational.com",
+    "old_name": "OLLO4D",
+    "new_name": "Racerinternational",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.actia.ca",
+    "site": "www.actia.ca",
+    "old_name": "Canada Revenue Agency",
+    "new_name": "ACTIA",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "dynaindustrial.com",
+    "site": "dynaindustrial.com",
+    "old_name": "Integrated Engineering & Inspection Solutions Inc.",
+    "new_name": "DynaIndustrial",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.robboxtools.com",
+    "site": "www.robboxtools.com",
+    "old_name": "Takeoff Inc.",
+    "new_name": "Robbox Tools",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "medrepair.ca",
+    "site": "medrepair.ca",
+    "old_name": "CELL2N CANADA INC.",
+    "new_name": "CELL2N CANADA INC.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "velocityincubator.com",
+    "site": "velocityincubator.com",
+    "old_name": "Service DoDo",
+    "new_name": "02AI",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.luxcom.com",
+    "site": "www.luxcom.com",
+    "old_name": "Protocase Inc.",
+    "new_name": "Luxcom Technologies Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.glasoceanelectric.com",
+    "site": "www.glasoceanelectric.com",
+    "old_name": "Performarine",
+    "new_name": "Glas Ocean Electric",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.thinklaser.com",
+    "site": "www.thinklaser.com",
+    "old_name": "Unknown",
+    "new_name": "Think Laser",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.lasersedgedesign.com",
+    "site": "www.lasersedgedesign.com",
+    "old_name": "American Line Express Inc.",
+    "new_name": "Laser's Edge Design",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.hjmachinep.com",
+    "site": "www.hjmachinep.com",
+    "old_name": "AdvancedQ Inc.",
+    "new_name": "Innostrat",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.compositeskn.org",
+    "site": "www.compositeskn.org",
+    "old_name": "CKN Knowledge in Practice Centre",
+    "new_name": "CKN Knowledge in Practice Centre",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.bccrc.ca",
+    "site": "www.bccrc.ca",
+    "old_name": "Experiential Experts Inc.",
+    "new_name": "BC Cancer",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "ntint.com",
+    "site": "ntint.com",
+    "old_name": "Novatek International",
+    "new_name": "Novatek International",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.grapheneenterprise.ca",
+    "site": "www.grapheneenterprise.ca",
+    "old_name": "GIT Coatings",
+    "new_name": "GIT Coatings",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.mainware.com",
+    "site": "www.mainware.com",
+    "old_name": "Mainwavez Inc.",
+    "new_name": "MAINWARE",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "canadianarmytoday.com",
+    "site": "canadianarmytoday.com",
+    "old_name": "AirBoss of America Corp.",
+    "new_name": "AirBoss of America Corp.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "sraacademy.ca",
+    "site": "sraacademy.ca",
+    "old_name": "Digital Era Media Inc.",
+    "new_name": "SRA Academy",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "synode.ai",
+    "site": "synode.ai",
+    "old_name": "Clear view construction services Inc.",
+    "new_name": "Synode",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.imperialoil.ca",
+    "site": "www.imperialoil.ca",
+    "old_name": "Imperialiti Group Inc.",
+    "new_name": "Imperial Oil Limited",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.novaresp.com",
+    "site": "www.novaresp.com",
+    "old_name": "NovaReels Inc.",
+    "new_name": "NovaResp",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.lifesci-key.com",
+    "site": "www.lifesci-key.com",
+    "old_name": "LSK Technologies",
+    "new_name": "LSK Technologies",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.schleuniger.com",
+    "site": "www.schleuniger.com",
+    "old_name": "Komax",
+    "new_name": "Komax AG",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.elphic.com",
+    "site": "www.elphic.com",
+    "old_name": "Inpho",
+    "new_name": "Inpho",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.millmarkrep.com",
+    "site": "www.millmarkrep.com",
+    "old_name": "Millennium Marketing Inc.",
+    "new_name": "Millennium Marketing Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "entrepreneurship.uwo.ca",
+    "site": "entrepreneurship.uwo.ca",
+    "old_name": "Ivey Business School Foundation",
+    "new_name": "Western University",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.innovativetentproducts.com",
+    "site": "www.innovativetentproducts.com",
+    "old_name": "Body Blisse Cosmetic Surgery Aftercare",
+    "new_name": "Body Blisse",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.vrtaonline.com",
+    "site": "www.vrtaonline.com",
+    "old_name": "InspireTech",
+    "new_name": "InspireTech",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.skelliga.com",
+    "site": "www.skelliga.com",
+    "old_name": "Aga Seliga-Moloney Consultations",
+    "new_name": "Skelliga",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "aerlyte.com",
+    "site": "aerlyte.com",
+    "old_name": "GoDaddy",
+    "new_name": "Aerlyte",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "makerwiz.com",
+    "site": "makerwiz.com",
+    "old_name": "SPACE SYSTEMS & TECH CORP.",
+    "new_name": "Makerwiz",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.sixthwave.com",
+    "site": "www.sixthwave.com",
+    "old_name": "Advanced Mineral Separations",
+    "new_name": "Advanced Mineral Separations",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "metal7.com",
+    "site": "metal7.com",
+    "old_name": "Groupe M7",
+    "new_name": "ENDURIDE",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "ottawawebdesign.ca",
+    "site": "ottawawebdesign.ca",
+    "old_name": "Igniterr Solutions Inc.",
+    "new_name": "Ignite Web Solutions",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.canadianhealthcare-agency.com",
+    "site": "www.canadianhealthcare-agency.com",
+    "old_name": "Experience This Next Inc.",
+    "new_name": "Canadian Healthcare Agency",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "ascentsystems.ca",
+    "site": "ascentsystems.ca",
+    "old_name": "Rise Above GTA inc.",
+    "new_name": "Ascent Systems",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "artik.tech",
+    "site": "artik.tech",
+    "old_name": "ARLYX Technologies",
+    "new_name": "ARLYX Technologies",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "soloxr.com",
+    "site": "soloxr.com",
+    "old_name": "The Digital Branch Ltd.",
+    "new_name": "SOLOXR CORP",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.shepherd.ca",
+    "site": "www.shepherd.ca",
+    "old_name": "good natured Products",
+    "new_name": "Good Natured Products",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.prescriptioncompounding.ca",
+    "site": "www.prescriptioncompounding.ca",
+    "old_name": "Nanogram Pharmacy",
+    "new_name": "Nanogram Pharmacy",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.fbc-abc.com",
+    "site": "www.fbc-abc.com",
+    "old_name": "Food and Beverage Canada",
+    "new_name": "Food and Beverage Canada",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.starch.ca",
+    "site": "www.starch.ca",
+    "old_name": "Under Construction Company Ltd.",
+    "new_name": "Starch",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.minesupplyco.com",
+    "site": "www.minesupplyco.com",
+    "old_name": "Accutron Instruments",
+    "new_name": "Mine Supply Co",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "notablelife.com",
+    "site": "notablelife.com",
+    "old_name": "ANJU Restaurant",
+    "new_name": "Notable Life",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.castanalytics.ca",
+    "site": "www.castanalytics.ca",
+    "old_name": "Canada Company Services Inc.",
+    "new_name": "Cast Analytics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "investinholland.com",
+    "site": "investinholland.com",
+    "old_name": "NFIA",
+    "new_name": "NFIA",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "polycofloors.com",
+    "site": "polycofloors.com",
+    "old_name": "POLYCOMTEC INC.",
+    "new_name": "PolyCo",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "atamedical.ca",
+    "site": "atamedical.ca",
+    "old_name": "\u00c9tudes Architectural Solutions",
+    "new_name": "\u00c9tudes",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.autometricstech.com",
+    "site": "www.autometricstech.com",
+    "old_name": "Autometta Inc.",
+    "new_name": "AutoMetrics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.patkau.ca",
+    "site": "www.patkau.ca",
+    "old_name": "Air Canada",
+    "new_name": "Patkau Architects",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "tillerengineering.com",
+    "site": "tillerengineering.com",
+    "old_name": "Innovative Tech Services Inc.",
+    "new_name": "Tiller Engineering",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "innovationfactory.ca",
+    "site": "innovationfactory.ca",
+    "old_name": "20/20 OptimEyes Technologies",
+    "new_name": "Innovation Factory",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.3dmodelingengineering.com",
+    "site": "www.3dmodelingengineering.com",
+    "old_name": "Elokay Inc.",
+    "new_name": "3dmodelingengineering",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.safetycultureworks.com",
+    "site": "www.safetycultureworks.com",
+    "old_name": "Sayle Group Inc.",
+    "new_name": "Sayle Group",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "susgrainable.ca",
+    "site": "susgrainable.ca",
+    "old_name": "American Line Express Inc.",
+    "new_name": "Susgrainable",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.daymak.com",
+    "site": "www.daymak.com",
+    "old_name": "Avvenire Electric Vehicle International Corp.",
+    "new_name": "Avvenire Electric Vehicle International Corp.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.peregrineglove.com",
+    "site": "www.peregrineglove.com",
+    "old_name": "Iron Will Innovations Canada Inc.",
+    "new_name": "Iron Will Innovations Canada Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "makesens.ca",
+    "site": "makesens.ca",
+    "old_name": "Advanced Material Group AMG Inc.",
+    "new_name": "Make Sens",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.electromate.com",
+    "site": "www.electromate.com",
+    "old_name": "Access-equip Inc.",
+    "new_name": "Electromate",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "investalberta.ca",
+    "site": "investalberta.ca",
+    "old_name": "Amazon Web Services",
+    "new_name": "Invest Alberta Corporation",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.illuminex.ai",
+    "site": "www.illuminex.ai",
+    "old_name": "Illuminate Arts Inc.",
+    "new_name": "Illuminex",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.vintonprecisiontool.com",
+    "site": "www.vintonprecisiontool.com",
+    "old_name": "Unknown",
+    "new_name": "23andMe",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.resrep.com",
+    "site": "www.resrep.com",
+    "old_name": "Resolution Reprographics Ltd.",
+    "new_name": "Resolution Reprographics Ltd",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "findersroute.com",
+    "site": "findersroute.com",
+    "old_name": "KY",
+    "new_name": "Findersroute",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.countygp.ab.ca",
+    "site": "www.countygp.ab.ca",
+    "old_name": "Agricultural Services Board",
+    "new_name": "County of Grande Prairie",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "q-pros.com",
+    "site": "q-pros.com",
+    "old_name": "QUALITY TERM PROFESSIONALS INC.",
+    "new_name": "Q-Pros",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.thetatts.com",
+    "site": "www.thetatts.com",
+    "old_name": "Precision Continental Inc.",
+    "new_name": "THETA TTS",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.cmsmontera.com",
+    "site": "www.cmsmontera.com",
+    "old_name": "Monterex Corp.",
+    "new_name": "Montera Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.computan.com",
+    "site": "www.computan.com",
+    "old_name": "CompTech Services",
+    "new_name": "Computan",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.saadene.com",
+    "site": "www.saadene.com",
+    "old_name": "Acceleware | Kis\u00e2stw\u00eaw",
+    "new_name": "Acceleware | Kis\u00e2stw\u00eaw",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.pacetechnologies.com",
+    "site": "www.pacetechnologies.com",
+    "old_name": "PACEM INC.",
+    "new_name": "Pace Technologies Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.canadorecollege.ca",
+    "site": "www.canadorecollege.ca",
+    "old_name": "Innovation Centre for Advanced Manufacturing and Prototyping (ICAMP)",
+    "new_name": "Canadore College",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "trilliummfg.ca",
+    "site": "trilliummfg.ca",
+    "old_name": "MacLean Engineering & Marketing",
+    "new_name": "Trillium Manufacturing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "orthoinno.com",
+    "site": "orthoinno.com",
+    "old_name": "Orthopaedic Innovation Centre",
+    "new_name": "Orthoinno",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "mabaso.com",
+    "site": "mabaso.com",
+    "old_name": "MICHAEL GAON SERVICES INC.",
+    "new_name": "Mabaso",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.quickqr.ca",
+    "site": "www.quickqr.ca",
+    "old_name": "J K Computers Inc.",
+    "new_name": "J K Computers Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "altairengineering.ca",
+    "site": "altairengineering.ca",
+    "old_name": "Siemens",
+    "new_name": "Altair Engineering",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "frontec.atco.com",
+    "site": "frontec.atco.com",
+    "old_name": "ATCO Two Rivers Lodge",
+    "new_name": "ATCO Frontec",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.quantizedtech.com",
+    "site": "www.quantizedtech.com",
+    "old_name": "Quantum Cognition Inc.",
+    "new_name": "Quantized Technologies Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "onbcanada.ca",
+    "site": "onbcanada.ca",
+    "old_name": "BioScript Solutions",
+    "new_name": "BioScript Solutions",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.argenteuil.qc.ca",
+    "site": "www.argenteuil.qc.ca",
+    "old_name": "Jean-Jacques Campeau inc.",
+    "new_name": "MRC d'Argenteuil",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "contact-software.com",
+    "site": "contact-software.com",
+    "old_name": "LIFECYCLE IP MANAGEMENT INC.",
+    "new_name": "CONTACT Software",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.3dbiofibr.com",
+    "site": "www.3dbiofibr.com",
+    "old_name": "IFI 3D Technologies Corp.",
+    "new_name": "3DBioFibR",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "deepsense.ai",
+    "site": "deepsense.ai",
+    "old_name": "DeepSeek AI Limited",
+    "new_name": "deepsense.ai",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.improving.com",
+    "site": "www.improving.com",
+    "old_name": "ImprovX Inc.",
+    "new_name": "Improving",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.penguinasi.com",
+    "site": "www.penguinasi.com",
+    "old_name": "AG-I MotorTec Inc.",
+    "new_name": "AG-I MotorTec Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "mindsneurology.com",
+    "site": "mindsneurology.com",
+    "old_name": "The Mississauga Institute of Neurological Disorders and Stroke",
+    "new_name": "The Mississauga Institute of Neurological Disorders and Stroke",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "meagercreek.ca",
+    "site": "meagercreek.ca",
+    "old_name": "Access Communications Co-operative",
+    "new_name": "Meagercreek",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.solidcadworks.com",
+    "site": "www.solidcadworks.com",
+    "old_name": "PAFI Kabupaten Kenyam",
+    "new_name": "SOLID CAD WORKS",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "eccomfg.com",
+    "site": "eccomfg.com",
+    "old_name": "ECCONZ INC.",
+    "new_name": "ECCO",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "agriolabs.ca",
+    "site": "agriolabs.ca",
+    "old_name": "Chicken-road-slot.com",
+    "new_name": "Agriolabs",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "wfsinc.com",
+    "site": "wfsinc.com",
+    "old_name": "BRC Gas Equipment",
+    "new_name": "Wfsinc",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.peergroup.com",
+    "site": "www.peergroup.com",
+    "old_name": "PEERZZ Inc.",
+    "new_name": "Peergroup",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.getfreepoint.com",
+    "site": "www.getfreepoint.com",
+    "old_name": "ShiftWorx",
+    "new_name": "6S Software Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.havelaarcanada.com",
+    "site": "www.havelaarcanada.com",
+    "old_name": "eLeapPower Ltd.",
+    "new_name": "Havelaarcanada",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.sysnergie.ca",
+    "site": "www.sysnergie.ca",
+    "old_name": "Sysnerd Inc.",
+    "new_name": "SysNergie",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "nuformex.com",
+    "site": "nuformex.com",
+    "old_name": "Nuformat Inc.",
+    "new_name": "Nuformex",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.globalheattransfer.com",
+    "site": "www.globalheattransfer.com",
+    "old_name": "Forum Energy Technologies, Inc.",
+    "new_name": "FET | GHT (Global Heat Transfer)",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "competitivegreentechnologies.com",
+    "site": "competitivegreentechnologies.com",
+    "old_name": "BioBLAKR",
+    "new_name": "Competitive Green Technologies",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "granularconsulting.ca",
+    "site": "granularconsulting.ca",
+    "old_name": "Granularity Ltd.",
+    "new_name": "Granular",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.ecotechquebec.com",
+    "site": "www.ecotechquebec.com",
+    "old_name": "Protocase Inc.",
+    "new_name": "Ecotechquebec",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.greenwin.ca",
+    "site": "www.greenwin.ca",
+    "old_name": "Greenwalnut Inc.",
+    "new_name": "Greenwin Corp.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.vestechpro.com",
+    "site": "www.vestechpro.com",
+    "old_name": "Protocase Inc.",
+    "new_name": "Vestechpro",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "altran.com",
+    "site": "altran.com",
+    "old_name": "Capgemini",
+    "new_name": "Capgemini",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "getcracking.ca",
+    "site": "getcracking.ca",
+    "old_name": "Egg Farmers of Ontario",
+    "new_name": "Egg Farmers of Ontario",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "synapseconsortium.com",
+    "site": "synapseconsortium.com",
+    "old_name": "Able Innovations Inc.",
+    "new_name": "Able Innovations Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.smpcanada.com",
+    "site": "www.smpcanada.com",
+    "old_name": "Richmond Hill BP Holdings Inc.",
+    "new_name": "SMP Canada",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.hanwha.com",
+    "site": "www.hanwha.com",
+    "old_name": "Protocase Inc.",
+    "new_name": "Hanwha",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "kupol.ca",
+    "site": "kupol.ca",
+    "old_name": "Ara 3D Inc.",
+    "new_name": "Kupol",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.synthesize.health",
+    "site": "www.synthesize.health",
+    "old_name": "Synthesis Systems Inc.",
+    "new_name": "Synthesize",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.ranglar.com",
+    "site": "www.ranglar.com",
+    "old_name": "Ranglani Tech Inc.",
+    "new_name": "Ranglar Manufacturing Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "catalystrms.com",
+    "site": "catalystrms.com",
+    "old_name": "Custom Health",
+    "new_name": "Custom Health",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.anstetics.com",
+    "site": "www.anstetics.com",
+    "old_name": "Integrated General Manufacturing Services Incorporated",
+    "new_name": "Anstetics Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "northamgroup.com",
+    "site": "northamgroup.com",
+    "old_name": "Great Northern Brands Limited",
+    "new_name": "Northam Group",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.powerundercontrol.com",
+    "site": "www.powerundercontrol.com",
+    "old_name": "Synchro Engineering Limited",
+    "new_name": "Synchro Engineering Limited",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "canheat.ca",
+    "site": "canheat.ca",
+    "old_name": "CanHealth International",
+    "new_name": "CanHeat",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "cebeauce.com",
+    "site": "cebeauce.com",
+    "old_name": "Umano Medical",
+    "new_name": "Conseil \u00e9conomique de Beauce",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.genre.com",
+    "site": "www.genre.com",
+    "old_name": "General Reinsurance Program",
+    "new_name": "Genre",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "ashored.ca",
+    "site": "ashored.ca",
+    "old_name": "Atlantic Canada Holdings Inc.",
+    "new_name": "Ashored Innovation",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "cleanconduit.com",
+    "site": "cleanconduit.com",
+    "old_name": "Canadian CleanTech Solutions Inc.",
+    "new_name": "Clean Conduit",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.greenlightinnovation.com",
+    "site": "www.greenlightinnovation.com",
+    "old_name": "Greenline Innovations Inc.",
+    "new_name": "Greenlight",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "fleetfellow.com",
+    "site": "fleetfellow.com",
+    "old_name": "QuoteTurn",
+    "new_name": "FleetFellow",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "brianbuss1.wixsite.com",
+    "site": "brianbuss1.wixsite.com",
+    "old_name": "BWB Consulting Services Inc.",
+    "new_name": "BWB Consulting Services Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.atasd.ca",
+    "site": "www.atasd.ca",
+    "old_name": "Unknown",
+    "new_name": "Interconn Development Ltd.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "reseau.uquebec.ca",
+    "site": "reseau.uquebec.ca",
+    "old_name": "Universit\u00e9 du Qu\u00e9bec",
+    "new_name": "Universit\u00e9 du Qu\u00e9bec",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.ambartec.de",
+    "site": "www.ambartec.de",
+    "old_name": "AmbartEX Technologies Inc.",
+    "new_name": "AMBARtec",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.automatecanada.ca",
+    "site": "www.automatecanada.ca",
+    "old_name": "Asamaka Industries Ltd",
+    "new_name": "Automate Canada",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.luminartech.com",
+    "site": "www.luminartech.com",
+    "old_name": "MicroVision",
+    "new_name": "MicroVision",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "leyton.com",
+    "site": "leyton.com",
+    "old_name": "Canada Company Services Inc.",
+    "new_name": "Leyton",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "simplybuck.com",
+    "site": "simplybuck.com",
+    "old_name": "Saint Michael Foods",
+    "new_name": "BUCK Buckwheat Products",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "rippleswinery.com",
+    "site": "rippleswinery.com",
+    "old_name": "Our Spaces Incorporated",
+    "new_name": "Ripples Winery & New Wave Distilling",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.fidelitymachine.com",
+    "site": "www.fidelitymachine.com",
+    "old_name": "AdvancedQ Inc.",
+    "new_name": "Fidelity Manufacturing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "blackberry.certicom.com",
+    "site": "blackberry.certicom.com",
+    "old_name": "Certicom",
+    "new_name": "Certicom",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.harbour-tech.com",
+    "site": "www.harbour-tech.com",
+    "old_name": "ATMIS",
+    "new_name": "ATMIS",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.investquebec.com",
+    "site": "www.investquebec.com",
+    "old_name": "INVESTISSEMENTS BC5 INC.",
+    "new_name": "Investissement Qu\u00e9bec",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.northstar-robotics.com",
+    "site": "www.northstar-robotics.com",
+    "old_name": "Autonomous ID Corporation",
+    "new_name": "Northstar Robotics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "mscac.utoronto.ca",
+    "site": "mscac.utoronto.ca",
+    "old_name": "Master of Science in Applied Computing",
+    "new_name": "Master of Science in Applied Computing",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "transfo.ai",
+    "site": "transfo.ai",
+    "old_name": "Intelligence Inc.",
+    "new_name": "transfo.ai",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "business.linkedin.com",
+    "site": "business.linkedin.com",
+    "old_name": "LinkedIn Ads",
+    "new_name": "LinkedIn",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "blackcontrols.com",
+    "site": "blackcontrols.com",
+    "old_name": "Automatai Integrations Corp.",
+    "new_name": "Blackcontrols",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.investinontario.com",
+    "site": "www.investinontario.com",
+    "old_name": "Unknown",
+    "new_name": "Invest Ontario",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.reseaucmi.org",
+    "site": "www.reseaucmi.org",
+    "old_name": "Community Circle",
+    "new_name": "Community Circle",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.hockeystick.co",
+    "site": "www.hockeystick.co",
+    "old_name": "Founder in Residence",
+    "new_name": "Founder in Residence",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "richmondhill.ca",
+    "site": "richmondhill.ca",
+    "old_name": "Large Appliance Pickup Services",
+    "new_name": "City of Richmond Hill",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.studioathletica.com",
+    "site": "www.studioathletica.com",
+    "old_name": "Push Pounds Sports Medicine",
+    "new_name": "Push Pounds Sports Medicine",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.testia.com",
+    "site": "www.testia.com",
+    "old_name": "Unknown",
+    "new_name": "Testia",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "onesiliconchipphotonics.com",
+    "site": "onesiliconchipphotonics.com",
+    "old_name": "OSCP",
+    "new_name": "One Silicon Chip Photonics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.baymain.com",
+    "site": "www.baymain.com",
+    "old_name": "Baystream",
+    "new_name": "Baystream",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.giffincanada.com",
+    "site": "www.giffincanada.com",
+    "old_name": "90 years",
+    "new_name": "Giffin",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "brainstation.io",
+    "site": "brainstation.io",
+    "old_name": "Brainstorm Education Inc.",
+    "new_name": "BrainStation",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.spbes.com",
+    "site": "www.spbes.com",
+    "old_name": "Safe Betting Apps",
+    "new_name": "Spbes",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "kwiknreadymovers.com",
+    "site": "kwiknreadymovers.com",
+    "old_name": "Moving Way Inc.",
+    "new_name": "Kwik N Ready Movers",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "nikolamotor.com",
+    "site": "nikolamotor.com",
+    "old_name": "Hyroad Energy",
+    "new_name": "Hyroad Energy",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "forgelabs.com",
+    "site": "forgelabs.com",
+    "old_name": "Industrial Plankton Inc.",
+    "new_name": "Forge Labs",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "carbinminerals.ca",
+    "site": "carbinminerals.ca",
+    "old_name": "Arca Climate Technologies, Inc.",
+    "new_name": "Arca Climate Technologies, Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "viridiparente.com",
+    "site": "viridiparente.com",
+    "old_name": "Viridian Systems & Solutions Ltd.",
+    "new_name": "Viridiparente",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "mercedesandsingh.com",
+    "site": "mercedesandsingh.com",
+    "old_name": "DESIGN LIFE BUILD. Inc.",
+    "new_name": "Mercedes + Singh",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.oxmed.ca",
+    "site": "www.oxmed.ca",
+    "old_name": "Oxbury Medical Clinic",
+    "new_name": "Oxbury Medical Clinic",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "gayotech.com",
+    "site": "gayotech.com",
+    "old_name": "Gayome Technical",
+    "new_name": "Gayome Technical",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.abmunis.ca",
+    "site": "www.abmunis.ca",
+    "old_name": "Alberta Municipalities",
+    "new_name": "Alberta Municipalities",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "paperexcellence.com",
+    "site": "paperexcellence.com",
+    "old_name": "Domtar",
+    "new_name": "Domtar",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.cbinsights.com",
+    "site": "www.cbinsights.com",
+    "old_name": "Center Point Manufacturing",
+    "new_name": "CB Insights",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "advancedta.com",
+    "site": "advancedta.com",
+    "old_name": "ATAD Solutions Corp.",
+    "new_name": "Advanced TA",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "ottawaconstructionnews.com",
+    "site": "ottawaconstructionnews.com",
+    "old_name": "Cleland Jardine Engineering Ltd.",
+    "new_name": "Cleland Jardine Engineering Ltd",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.aoms-tech.com",
+    "site": "www.aoms-tech.com",
+    "old_name": "Brickeye",
+    "new_name": "Brickeye",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "glphi-tech.com",
+    "site": "glphi-tech.com",
+    "old_name": "GLPRB Inc.",
+    "new_name": "Glphi Tech",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.nexusenergytech.com",
+    "site": "www.nexusenergytech.com",
+    "old_name": "NXL Technologies",
+    "new_name": "NXL Technologies",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "cmqtr.qc.ca",
+    "site": "cmqtr.qc.ca",
+    "old_name": "Centre de m\u00e9tallurgie du Qu\u00e9bec",
+    "new_name": "Centre de m\u00e9tallurgie du Qu\u00e9bec",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.canmora.tech",
+    "site": "www.canmora.tech",
+    "old_name": "CT LEAM Systems",
+    "new_name": "CT LEAM",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.comautotech.com",
+    "site": "www.comautotech.com",
+    "old_name": "Commonwealth Automation Technologies, Inc.",
+    "new_name": "Commonwealth Automation Technologies, Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.progressivemachining.ca",
+    "site": "www.progressivemachining.ca",
+    "old_name": "AeroSpect Inc.",
+    "new_name": "Progressive Machining",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.fidelitymanufacturinggroup.com",
+    "site": "www.fidelitymanufacturinggroup.com",
+    "old_name": "AdvancedQ Inc.",
+    "new_name": "Fidelity Manufacturing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.humansys.com",
+    "site": "www.humansys.com",
+    "old_name": "Humansist Inc.",
+    "new_name": "HumanSystems Incorporated",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.cloud-grc.com",
+    "site": "www.cloud-grc.com",
+    "old_name": "Cyberstrategiez",
+    "new_name": "Cyberstrategiez",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.generon.com",
+    "site": "www.generon.com",
+    "old_name": "Protocase Inc.",
+    "new_name": "GENERON",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.kwlaw.net",
+    "site": "www.kwlaw.net",
+    "old_name": "Duncan, Linton LLP",
+    "new_name": "Duncan, Linton LLP",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "genesus.com",
+    "site": "genesus.com",
+    "old_name": "True North Genetics",
+    "new_name": "Genesus",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.n-factorial.com",
+    "site": "www.n-factorial.com",
+    "old_name": "n!Biomachines",
+    "new_name": "N-Factorial",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.ironstonepd.com",
+    "site": "www.ironstonepd.com",
+    "old_name": "Avania Inc.",
+    "new_name": "Ironstonepd",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "abrom.ca",
+    "site": "abrom.ca",
+    "old_name": "Abroad Services Group Inc.",
+    "new_name": "ABRO Manufacturing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.titantrailers.com",
+    "site": "www.titantrailers.com",
+    "old_name": "Customizations Canada Inc.",
+    "new_name": "Titan Trailers Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.telops.com",
+    "site": "www.telops.com",
+    "old_name": "Exosens",
+    "new_name": "Exosens",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "corporate.evonik.us",
+    "site": "corporate.evonik.us",
+    "old_name": "Evonik Cyro LLC, 10X Technology LLC",
+    "new_name": "Evonik Cyro LLC",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.tube-fab.com",
+    "site": "www.tube-fab.com",
+    "old_name": "Unknown",
+    "new_name": "Tube Fab",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.inspiretalentconsulting.com",
+    "site": "www.inspiretalentconsulting.com",
+    "old_name": "HOMEH INC.",
+    "new_name": "Inspire Talent Consulting",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "arbec.ca",
+    "site": "arbec.ca",
+    "old_name": "Unknown",
+    "new_name": "Produits Forestiers Arbec Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.omafra.gov.on.ca",
+    "site": "www.omafra.gov.on.ca",
+    "old_name": "Ministry of Agriculture and Food",
+    "new_name": "Ministry of Agriculture and Food",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "saskpolytech.ca",
+    "site": "saskpolytech.ca",
+    "old_name": "Saskatchewan Polytechnic",
+    "new_name": "Saskatchewan Polytechnic",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "epiqmachinery.com",
+    "site": "epiqmachinery.com",
+    "old_name": "Machines Roger International Inc.",
+    "new_name": "EPIQ Machinery",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.motiflabs.ca",
+    "site": "www.motiflabs.ca",
+    "old_name": "Organigram Global",
+    "new_name": "Organigram",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.pawsandpeoplechiro.com",
+    "site": "www.pawsandpeoplechiro.com",
+    "old_name": "Whitby Chiropractic Centre",
+    "new_name": "Whitby Chiropractic Centre",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "geoslam.com",
+    "site": "geoslam.com",
+    "old_name": "FARO",
+    "new_name": "FARO",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.lavaltool.net",
+    "site": "www.lavaltool.net",
+    "old_name": "Lavalex Inc.",
+    "new_name": "Laval",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "grizzl-e.com",
+    "site": "grizzl-e.com",
+    "old_name": "United Chargers Inc.",
+    "new_name": "United Chargers Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.ironcap.ca",
+    "site": "www.ironcap.ca",
+    "old_name": "01 Quantum",
+    "new_name": "01 Quantum",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "lavalpoincon.com",
+    "site": "lavalpoincon.com",
+    "old_name": "LPMG Incorporated",
+    "new_name": "Laval Poin\u00e7on",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "innorobix.com",
+    "site": "innorobix.com",
+    "old_name": "Innorom Inc.",
+    "new_name": "Innorobix",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.fayezspa.com",
+    "site": "www.fayezspa.com",
+    "old_name": "AlumierMD",
+    "new_name": "AlumierMD",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "ericaleeconsulting.com",
+    "site": "ericaleeconsulting.com",
+    "old_name": "Onward Business Mechanics",
+    "new_name": "Onward Business Mechanics",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "cuttingtoolpickers.com",
+    "site": "cuttingtoolpickers.com",
+    "old_name": "CTS Industrial Supply",
+    "new_name": "CTS Industrial Supply",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.voyav.com",
+    "site": "www.voyav.com",
+    "old_name": "Voyageur Aviation Corp",
+    "new_name": "Voyageur Aviation",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "expertfile.com",
+    "site": "expertfile.com",
+    "old_name": "Unknown",
+    "new_name": "ExpertFile",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.chsltd.com",
+    "site": "www.chsltd.com",
+    "old_name": "CHSK Group Inc.",
+    "new_name": "Chsltd",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "qbotech.com",
+    "site": "qbotech.com",
+    "old_name": "Industrial-Strength Data Systems Inc.",
+    "new_name": "QBO Tech",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "medoptimal.ca",
+    "site": "medoptimal.ca",
+    "old_name": "Kruger Products",
+    "new_name": "Med Optimal",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "trajectore.ca",
+    "site": "trajectore.ca",
+    "old_name": "Asset Management Girard Inc.",
+    "new_name": "Trajectore",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.industrio.ai",
+    "site": "www.industrio.ai",
+    "old_name": "Industrial AirQ Services Limited",
+    "new_name": "Industrio",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.echem.ca",
+    "site": "www.echem.ca",
+    "old_name": "Central Foam Systems \u2013 Epsilon Chemicals Ltd.",
+    "new_name": "E-Chem",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.accu-thread.ca",
+    "site": "www.accu-thread.ca",
+    "old_name": "ATI Machining Inc.",
+    "new_name": "ATI Machining Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.automotivepolicy.ca",
+    "site": "www.automotivepolicy.ca",
+    "old_name": "Access-equip Inc.",
+    "new_name": "Automotivepolicy",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.designfusion.com",
+    "site": "www.designfusion.com",
+    "old_name": "null",
+    "new_name": "Designfusion",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.gardnerdenver.com",
+    "site": "www.gardnerdenver.com",
+    "old_name": "Unknown",
+    "new_name": "Gardner Denver",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "gmrresources.com",
+    "site": "gmrresources.com",
+    "old_name": "GoDaddy",
+    "new_name": "Gmrresources",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "stalbert.ca",
+    "site": "stalbert.ca",
+    "old_name": "The Botanical Arts City",
+    "new_name": "City of St. Albert",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.protocase.com",
+    "site": "www.protocase.com",
+    "old_name": "Protocean Inc.",
+    "new_name": "Protocase",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "stlengineering.net",
+    "site": "stlengineering.net",
+    "old_name": "Structure Media Inc.",
+    "new_name": "STL Engineering",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.feddevontario.gc.ca",
+    "site": "www.feddevontario.gc.ca",
+    "old_name": "Transport Canada",
+    "new_name": "Feddevontario",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.tecci.org",
+    "site": "www.tecci.org",
+    "old_name": "Telangana Chambers of Commerce and Industry",
+    "new_name": "TECCI",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "montem-resources.com",
+    "site": "montem-resources.com",
+    "old_name": "Evolve Power Limited",
+    "new_name": "Evolve Power Limited",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.avcorp.com",
+    "site": "www.avcorp.com",
+    "old_name": "Latecoere",
+    "new_name": "Avcorp",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.thefutureisunlimited.ca",
+    "site": "www.thefutureisunlimited.ca",
+    "old_name": "Invest Mississauga",
+    "new_name": "Thefutureisunlimited",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.openbox.ca",
+    "site": "www.openbox.ca",
+    "old_name": "Meyer",
+    "new_name": "openbox.ca",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "everwindfuels.com",
+    "site": "everwindfuels.com",
+    "old_name": "EverWill Solutions Inc.",
+    "new_name": "EverWind",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "studio63.ca",
+    "site": "studio63.ca",
+    "old_name": "Automotive Finco Corp.",
+    "new_name": "Studio63",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "shawncasemore.com",
+    "site": "shawncasemore.com",
+    "old_name": "KEYNOTE SEARCH INC.",
+    "new_name": "Shawn Casemore",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "martinrea.com",
+    "site": "martinrea.com",
+    "old_name": "MARTINTEK INC.",
+    "new_name": "Martinrea",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.artaflex.com",
+    "site": "www.artaflex.com",
+    "old_name": "Integrated Green Technologies INC.",
+    "new_name": "Artaflex",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "blackberry.qnx.com",
+    "site": "blackberry.qnx.com",
+    "old_name": "QNX",
+    "new_name": "BlackBerry QNX",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.dwcanada.com",
+    "site": "www.dwcanada.com",
+    "old_name": "DW Product Development",
+    "new_name": "DW Product Development",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.askpodiatrist.ca",
+    "site": "www.askpodiatrist.ca",
+    "old_name": "Klayman Orthotic and Laser Foot Clinic",
+    "new_name": "Andrew S Klayman B.Sc.,D.P.M. Podiatrist",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "nrlawyers.com",
+    "site": "nrlawyers.com",
+    "old_name": "Neuberger & Partners",
+    "new_name": "Neuberger & Partners",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.rimot.io",
+    "site": "www.rimot.io",
+    "old_name": "BlueGrid Insights",
+    "new_name": "BlueGrid",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "brnkl.io",
+    "site": "brnkl.io",
+    "old_name": "Unknown",
+    "new_name": "BRNKL",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.sodil.ca",
+    "site": "www.sodil.ca",
+    "old_name": "Lanaudi\u00e8re International",
+    "new_name": "LANAUDI\u00c8RE INTERNATIONAL",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "rigidrobotics.com",
+    "site": "rigidrobotics.com",
+    "old_name": "Unknown",
+    "new_name": "Rigid Robotics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "emersoncanada.ca",
+    "site": "emersoncanada.ca",
+    "old_name": "CORPORATEK INC.",
+    "new_name": "Emerson",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "healthsign.com",
+    "site": "healthsign.com",
+    "old_name": "HealthSnap Incorporated",
+    "new_name": "Healthsign",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.venturelab.ca",
+    "site": "www.venturelab.ca",
+    "old_name": "Accelerate AI",
+    "new_name": "VentureLab",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.havelaar.com",
+    "site": "www.havelaar.com",
+    "old_name": "Vanbreda Risk & Benefits Nederland",
+    "new_name": "Havelaar",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.steelcraftinc.com",
+    "site": "www.steelcraftinc.com",
+    "old_name": "Arrow Machine and Fabrication Group",
+    "new_name": "Steelcraft Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.abdynamics.com",
+    "site": "www.abdynamics.com",
+    "old_name": "Unknown",
+    "new_name": "AB Dynamics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "provost.mcmaster.ca",
+    "site": "provost.mcmaster.ca",
+    "old_name": "McMaster University",
+    "new_name": "McMaster University",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "ioteedom.com",
+    "site": "ioteedom.com",
+    "old_name": "Access-equip Inc.",
+    "new_name": "Ioteedom",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "verticalmag.com",
+    "site": "verticalmag.com",
+    "old_name": "Intermountain Turbine Services",
+    "new_name": "Vertical Magazine",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.datacm.com",
+    "site": "www.datacm.com",
+    "old_name": "DCM",
+    "new_name": "DCM",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "celestica.com",
+    "site": "celestica.com",
+    "old_name": "Celestium Tech Holdings Inc.",
+    "new_name": "Celestica",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "skyhive.io",
+    "site": "skyhive.io",
+    "old_name": "Cornerstone",
+    "new_name": "Cornerstone OnDemand",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "portal.glmconseil.com",
+    "site": "portal.glmconseil.com",
+    "old_name": "GLM Conseil",
+    "new_name": "GLM Conseil",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.aiscorp.com",
+    "site": "www.aiscorp.com",
+    "old_name": "Unknown",
+    "new_name": "Aegis Industrial Software Corporation",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.gtmaf.com",
+    "site": "www.gtmaf.com",
+    "old_name": "GT Machining & Fabricating Ltd.",
+    "new_name": "GT Machining & Fabricating Ltd.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.itsupport.ca",
+    "site": "www.itsupport.ca",
+    "old_name": "C.I.M. Solutions Inc.",
+    "new_name": "C.I.M. Solutions Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "veltris.com",
+    "site": "veltris.com",
+    "old_name": "Veltrix Systems Incorporated",
+    "new_name": "Veltris",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.threatiq.io",
+    "site": "www.threatiq.io",
+    "old_name": "Access-equip Inc.",
+    "new_name": "Threatiq",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "biolynx.ca",
+    "site": "biolynx.ca",
+    "old_name": "Chromatographic Specialties Inc.",
+    "new_name": "Chromspec",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "imtcorporation.com",
+    "site": "imtcorporation.com",
+    "old_name": "IMTA Enterprises Incorporated",
+    "new_name": "IMT Corporation",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "marks-clerk.ca",
+    "site": "marks-clerk.ca",
+    "old_name": "Canada Company Services Inc.",
+    "new_name": "Marks & Clerk",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "lafarge.com",
+    "site": "lafarge.com",
+    "old_name": "Holcim",
+    "new_name": "Holcim Ltd",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "bestdefenceconference.com",
+    "site": "bestdefenceconference.com",
+    "old_name": "London Ontario Tamil Sangam of Canada",
+    "new_name": "Bestdefenceconference",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.orangutech.com",
+    "site": "www.orangutech.com",
+    "old_name": "Digital Reformation Inc.",
+    "new_name": "Orangutech",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "setcomcorp.com",
+    "site": "setcomcorp.com",
+    "old_name": "Wireless Deal Inc.",
+    "new_name": "Setcom Systems",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.grafoid.com",
+    "site": "www.grafoid.com",
+    "old_name": "Purafy",
+    "new_name": "Purafy",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.dsavocats.ca",
+    "site": "www.dsavocats.ca",
+    "old_name": "Prelia",
+    "new_name": "Prelia",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.lilyhanai.io",
+    "site": "www.lilyhanai.io",
+    "old_name": "Vertical Tiered Enterprises Inc.",
+    "new_name": "LilyHan AI",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.ammoliteanalytx.com",
+    "site": "www.ammoliteanalytx.com",
+    "old_name": "CybersecurityXperts Inc.",
+    "new_name": "Ammolite Security",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.vexos.com",
+    "site": "www.vexos.com",
+    "old_name": "Electronic Circuit Masters Incorporated",
+    "new_name": "VEXOS",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "traxelectronics.ca",
+    "site": "traxelectronics.ca",
+    "old_name": "TRAXIS INC.",
+    "new_name": "Trax Electronics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.cloudmd.ca",
+    "site": "www.cloudmd.ca",
+    "old_name": "Kii Health",
+    "new_name": "Kii Health",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.sutherland-schultz.com",
+    "site": "www.sutherland-schultz.com",
+    "old_name": "Build Forward Canada Ltd.",
+    "new_name": "Sutherland-Schultz",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "america.bridor.com",
+    "site": "america.bridor.com",
+    "old_name": "Fabridor Inc.",
+    "new_name": "America",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "artisancells.com",
+    "site": "artisancells.com",
+    "old_name": "Kokobet Casino",
+    "new_name": "Kokobet",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.storagepowersolutions.com",
+    "site": "www.storagepowersolutions.com",
+    "old_name": "Myers EPS",
+    "new_name": "Myers Emergency Power Systems",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.automaticcoating.com",
+    "site": "www.automaticcoating.com",
+    "old_name": "Automatos Consulting Inc.",
+    "new_name": "Automatic Coating Limited",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.cancorr.com",
+    "site": "www.cancorr.com",
+    "old_name": "Canada Corrugated Industries Inc",
+    "new_name": "Canada Corrugated Industries Inc",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.waterlooaccountingservices.com",
+    "site": "www.waterlooaccountingservices.com",
+    "old_name": "Accountucator Bookkeeping and Tax Inc.",
+    "new_name": "Waterloo Accounting Services",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.accenture.com",
+    "site": "www.accenture.com",
+    "old_name": "ACCENTFREE INC.",
+    "new_name": "Accenture",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.super3dplus.com",
+    "site": "www.super3dplus.com",
+    "old_name": "Canada 3D Printer",
+    "new_name": "Super3dplus",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "shop3d.ca",
+    "site": "shop3d.ca",
+    "old_name": "3D Printing Network Inc.",
+    "new_name": "Shop3D.ca",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "townofws.ca",
+    "site": "townofws.ca",
+    "old_name": "Stouffville Centre Inc.",
+    "new_name": "Town of Stouffville",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.sickkids.ca",
+    "site": "www.sickkids.ca",
+    "old_name": "Garron Family Cancer Centre",
+    "new_name": "SickKids",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.criaq.aero",
+    "site": "www.criaq.aero",
+    "old_name": "Maturation-Innovation International",
+    "new_name": "CRIAQ",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.eastcut.ca",
+    "site": "www.eastcut.ca",
+    "old_name": "Eastcurve Inc.",
+    "new_name": "Eastcut",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.lgcloutier.com",
+    "site": "www.lgcloutier.com",
+    "old_name": "Fabrication Petite-Nation inc.",
+    "new_name": "LG Cloutier",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.integrate.ai",
+    "site": "www.integrate.ai",
+    "old_name": "HOMEH INC.",
+    "new_name": "Integrate",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "6harmonics.ca",
+    "site": "6harmonics.ca",
+    "old_name": "Emergent Solutions Inc.",
+    "new_name": "Emergent Solutions Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.nwpolytech.ca",
+    "site": "www.nwpolytech.ca",
+    "old_name": "Northwestern Polytechnic",
+    "new_name": "Northern Lakes College",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.crestmold.com",
+    "site": "www.crestmold.com",
+    "old_name": "Canada Company Services Inc.",
+    "new_name": "Crest Mold Technology Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.buckland.com",
+    "site": "www.buckland.com",
+    "old_name": "Bucklaw Holdings Inc.",
+    "new_name": "Buckland Customs",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "kdmco.ca",
+    "site": "kdmco.ca",
+    "old_name": "KDMK CONSTRUCTION INC.",
+    "new_name": "KDM Constructors",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "research.ontariotechu.ca",
+    "site": "research.ontariotechu.ca",
+    "old_name": "Ontario Tech University",
+    "new_name": "Ontario Tech University",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.integran.com",
+    "site": "www.integran.com",
+    "old_name": "Canada Company Services Inc.",
+    "new_name": "Integran",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.dynamicsourcemfg.com",
+    "site": "www.dynamicsourcemfg.com",
+    "old_name": "North American Gears Inc.",
+    "new_name": "Dynamic Source Manufacturing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.meditek.ca",
+    "site": "www.meditek.ca",
+    "old_name": "Meditechx Technologies Inc.",
+    "new_name": "Meditek",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.vetpet.com",
+    "site": "www.vetpet.com",
+    "old_name": "Burloak Animal Hospital",
+    "new_name": "Burloak Animal Hospital",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "lighthouselabs.ca",
+    "site": "lighthouselabs.ca",
+    "old_name": "GlassRatner",
+    "new_name": "Lighthouselabs",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.naturesformulae.com",
+    "site": "www.naturesformulae.com",
+    "old_name": "Natural Health Sense Inc.",
+    "new_name": "Natures Formulae",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.rangerhvac.ca",
+    "site": "www.rangerhvac.ca",
+    "old_name": "Heating & Air Conditioning Products Inc.",
+    "new_name": "Ranger",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "akhurst.com",
+    "site": "akhurst.com",
+    "old_name": "Building Trust Corporation",
+    "new_name": "Akhurst Machinery Group",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.azurdrones.com",
+    "site": "www.azurdrones.com",
+    "old_name": "AZURE DRAGON ENTERPRISES LTD.",
+    "new_name": "Azur Drones",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.cntrline.com",
+    "site": "www.cntrline.com",
+    "old_name": "CenterLine (Windsor) Limited",
+    "new_name": "CenterLine",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.cwbgroup.org",
+    "site": "www.cwbgroup.org",
+    "old_name": "Unknown",
+    "new_name": "CWB Group",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "quali.ai",
+    "site": "quali.ai",
+    "old_name": "Atomek",
+    "new_name": "Atom",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.optimoule.com",
+    "site": "www.optimoule.com",
+    "old_name": "Prexor",
+    "new_name": "PREXOR",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "pharmabest.ca",
+    "site": "pharmabest.ca",
+    "old_name": "Abell Pharmacy",
+    "new_name": "Pharmabest",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "store.jerviswebb.com",
+    "site": "store.jerviswebb.com",
+    "old_name": "Jervis B. Webb Company",
+    "new_name": "Daifuku America",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.liquidfiltration.com",
+    "site": "www.liquidfiltration.com",
+    "old_name": "Industrial Filter Manufacturing Ltd.",
+    "new_name": "IFM",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.storevertical.com",
+    "site": "www.storevertical.com",
+    "old_name": "Automate Inc.",
+    "new_name": "Vidir Solutions",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "elab-extrusion.com",
+    "site": "elab-extrusion.com",
+    "old_name": "KOKOGACOR77",
+    "new_name": "Elab Extrusion",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.finitehelicaldynamics.ca",
+    "site": "www.finitehelicaldynamics.ca",
+    "old_name": "Designo Inc.",
+    "new_name": "Finite Helical Dynamics",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.crossport.ai",
+    "site": "www.crossport.ai",
+    "old_name": "Crosspoint Technologies Limited",
+    "new_name": "crossPORT iX",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "flyyeg.com",
+    "site": "flyyeg.com",
+    "old_name": "Edmonton International Airport",
+    "new_name": "Flyyeg",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "viridisresearch.com",
+    "site": "viridisresearch.com",
+    "old_name": "Viridian Systems & Solutions Ltd.",
+    "new_name": "Viridis",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "giveplasma.ca",
+    "site": "giveplasma.ca",
+    "old_name": "Grifols",
+    "new_name": "Grifols",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.oshawa.ca",
+    "site": "www.oshawa.ca",
+    "old_name": "Unknown",
+    "new_name": "The City of Oshawa",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.candagroup.ca",
+    "site": "www.candagroup.ca",
+    "old_name": "MechaniCar Inc.",
+    "new_name": "C&A Group",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "elbitsystems.com",
+    "site": "elbitsystems.com",
+    "old_name": "Advanced Technology Search Group Inc.",
+    "new_name": "Elbit Systems",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.manufacturing-masters.com",
+    "site": "www.manufacturing-masters.com",
+    "old_name": "Unknown",
+    "new_name": "Manufacturing Masters",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "mechds.ca",
+    "site": "mechds.ca",
+    "old_name": "Mechatronix Solutions & Services Limited",
+    "new_name": "Engineered Robotics and Automation Machinery",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "imperialjanitorialsk.com",
+    "site": "imperialjanitorialsk.com",
+    "old_name": "Saskatoon Tees Inc.",
+    "new_name": "Imperial Janitorial Services Ltd",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "greatpretenders.ca",
+    "site": "greatpretenders.ca",
+    "old_name": "Retail Focus Partners Inc.",
+    "new_name": "Great Pretenders",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "terrellaenergy.com",
+    "site": "terrellaenergy.com",
+    "old_name": "Matthews Engineering",
+    "new_name": "Matthews Engineering",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.weldfab.com",
+    "site": "www.weldfab.com",
+    "old_name": "Unknown",
+    "new_name": "Weldfab Ltd",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "buildresil.com",
+    "site": "buildresil.com",
+    "old_name": "Building Resilience",
+    "new_name": "Building Resilience",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "renewbiotech.ca",
+    "site": "renewbiotech.ca",
+    "old_name": "RBT BioComposites",
+    "new_name": "RBT Biocomposites",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "axeliving.com",
+    "site": "axeliving.com",
+    "old_name": "Ontario Canopy Ltd.",
+    "new_name": "Axe Living",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.allkem.co",
+    "site": "www.allkem.co",
+    "old_name": "Rio Tinto",
+    "new_name": "Rio Tinto",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "panjiva.com",
+    "site": "panjiva.com",
+    "old_name": "Agra Services Brokerage",
+    "new_name": "Panjiva",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "dtconsultinggroup.ca",
+    "site": "dtconsultinggroup.ca",
+    "old_name": "AI & Data Services Inc.",
+    "new_name": "Dtconsultinggroup",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.rapid3d.ca",
+    "site": "www.rapid3d.ca",
+    "old_name": "Advanced Coatings Enterprises Inc.",
+    "new_name": "Rapid3D",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.rrpsys.com",
+    "site": "www.rrpsys.com",
+    "old_name": "Redrock Power Systems Inc.",
+    "new_name": "Redrock Power Systems Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.davie.ca",
+    "site": "www.davie.ca",
+    "old_name": "Cale s\u00e8che Champlain",
+    "new_name": "Davie",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "elmosolutions.com",
+    "site": "elmosolutions.com",
+    "old_name": "CADTALK Software, LLC",
+    "new_name": "CADTALK Software, LLC",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "support.rollsbattery.com",
+    "site": "support.rollsbattery.com",
+    "old_name": "Rolls Battery",
+    "new_name": "Rolls Battery",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "strongprint3d.com",
+    "site": "strongprint3d.com",
+    "old_name": "Strongpoint Group Inc.",
+    "new_name": "StrongPrint3D",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.mahyarasadi.com",
+    "site": "www.mahyarasadi.com",
+    "old_name": "Novarc Technologies",
+    "new_name": "Novarc Technologies",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "scmao.ca",
+    "site": "scmao.ca",
+    "old_name": "National Institute of Supply Chain Leaders (NISCL)",
+    "new_name": "National Institute of Supply Chain Leaders",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.synergymouldworks.com",
+    "site": "www.synergymouldworks.com",
+    "old_name": "SynergyWorks & Supplies Ltd.",
+    "new_name": "Synergy Mouldworks",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.gilmour.ca",
+    "site": "www.gilmour.ca",
+    "old_name": "Empire CPA",
+    "new_name": "Empire CPA",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "zivte.com",
+    "site": "zivte.com",
+    "old_name": "Vall\u00e9e de la Transition \u00c9nerg\u00e9tique",
+    "new_name": "Vall\u00e9e de la Transition \u00c9nerg\u00e9tique",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.firstcobalt.com",
+    "site": "www.firstcobalt.com",
+    "old_name": "HACHIPLAY",
+    "new_name": "Firstcobalt",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "flowconditioner.com",
+    "site": "flowconditioner.com",
+    "old_name": "Canada Pipeline Accessories",
+    "new_name": "Canada Pipeline Accessories",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.ogroupcorp.com",
+    "site": "www.ogroupcorp.com",
+    "old_name": "A Mustard Seed Care",
+    "new_name": "Ogroupcorp",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.health-local.com",
+    "site": "www.health-local.com",
+    "old_name": "Spine Specialist Global",
+    "new_name": "Spine Specialist Global",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.symenv.com",
+    "site": "www.symenv.com",
+    "old_name": "Symbiotic EnviroTek inc.",
+    "new_name": "Symbiotic EnviroTek Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.glinnov.com",
+    "site": "www.glinnov.com",
+    "old_name": "Amara Industries",
+    "new_name": "Amara Industries",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "psygen.ca",
+    "site": "psygen.ca",
+    "old_name": "Unknown",
+    "new_name": "Psygen",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.mit-world.com",
+    "site": "www.mit-world.com",
+    "old_name": "Magnum",
+    "new_name": "Magnum",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.espritdecorps.ca",
+    "site": "www.espritdecorps.ca",
+    "old_name": "Airbus Defence and Space",
+    "new_name": "Esprit de Corps",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.tbnewswatch.com",
+    "site": "www.tbnewswatch.com",
+    "old_name": "Sandvik Mining",
+    "new_name": "tbnewswatch",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "elastomeres.ca",
+    "site": "elastomeres.ca",
+    "old_name": "InnoCaoutchouc360",
+    "new_name": "InnoCaoutchouc360",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.hpditechnology.com",
+    "site": "www.hpditechnology.com",
+    "old_name": "Cespira",
+    "new_name": "Cespira",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.incuvers.com",
+    "site": "www.incuvers.com",
+    "old_name": "DETIK11",
+    "new_name": "Incuvers",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "xiera.ca",
+    "site": "xiera.ca",
+    "old_name": "Access-equip Inc.",
+    "new_name": "Xiera",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "friendlier.com",
+    "site": "friendlier.com",
+    "old_name": "Friendly Pixels Inc.",
+    "new_name": "Friendlier",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.hyperlume.com",
+    "site": "www.hyperlume.com",
+    "old_name": "Credorex Inc.",
+    "new_name": "Credo Semiconductor",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.safetyclothing.com",
+    "site": "www.safetyclothing.com",
+    "old_name": "International Sew-Right Company",
+    "new_name": "Safety Clothing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "korovafeeders.com",
+    "site": "korovafeeders.com",
+    "old_name": "GoDaddy",
+    "new_name": "Korovafeeders",
+    "source": "unknown-fallback",
+    "changed": true
+  },
+  {
+    "id": "www.brokerlink.ca",
+    "site": "www.brokerlink.ca",
+    "old_name": "BrokerLift Inc.",
+    "new_name": "BrokerLink",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.porsche-consulting.com",
+    "site": "www.porsche-consulting.com",
+    "old_name": "ABB Robotics",
+    "new_name": "Porsche Consulting",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.handy.ai",
+    "site": "www.handy.ai",
+    "old_name": "HOMEH INC.",
+    "new_name": "Handy AI",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.grapheneleaderscanada.com",
+    "site": "www.grapheneleaderscanada.com",
+    "old_name": "GLC Inc.",
+    "new_name": "GLC Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "alchemynano.com",
+    "site": "alchemynano.com",
+    "old_name": "Alchemysts Inc.",
+    "new_name": "Alchemy",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "beslogic.com",
+    "site": "beslogic.com",
+    "old_name": "Software Development Knowledge Inc.",
+    "new_name": "BesLogic",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "shipsforcanada.ca",
+    "site": "shipsforcanada.ca",
+    "old_name": "Irving Shipbuilding Inc.",
+    "new_name": "Irving Shipbuilding Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "innovotive.com",
+    "site": "innovotive.com",
+    "old_name": "Innovobot",
+    "new_name": "Innovobot",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "corporate.ford.com",
+    "site": "corporate.ford.com",
+    "old_name": "Ford Motor Company",
+    "new_name": "Ford Motor Company",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "depsregion.com",
+    "site": "depsregion.com",
+    "old_name": "D\u00e9veloppement \u00e9conomique Pierre-De Saurel (D\u00c9PS)",
+    "new_name": "D\u00e9veloppement \u00e9conomique Pierre-De Saurel",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "gopci.ca",
+    "site": "gopci.ca",
+    "old_name": "Paterson Composites Inc.",
+    "new_name": "Paterson Composites Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.plastics.ca",
+    "site": "www.plastics.ca",
+    "old_name": "Chemistry Industry Association of Canada",
+    "new_name": "Chemistry Industry Association of Canada",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "enersion.com",
+    "site": "enersion.com",
+    "old_name": "Zero Emissions Freight Inc.",
+    "new_name": "Enersion",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.mentorworks.ca",
+    "site": "www.mentorworks.ca",
+    "old_name": "Ryan",
+    "new_name": "The Ryan Canadian Government Funding",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.ipocdx.com",
+    "site": "www.ipocdx.com",
+    "old_name": "Fortis Life Sciences",
+    "new_name": "Fortis Life",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "steelworksdesign.com",
+    "site": "steelworksdesign.com",
+    "old_name": "AVIT Solutions Inc.",
+    "new_name": "AVIT Manufacturing",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "homeopportunities.ca",
+    "site": "homeopportunities.ca",
+    "old_name": "Canada Company Services Inc.",
+    "new_name": "Home Opportunities",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.inventsmart.ca",
+    "site": "www.inventsmart.ca",
+    "old_name": "Contact International Inc.",
+    "new_name": "Invent Smart INC",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "cyclecarbone.com",
+    "site": "cyclecarbone.com",
+    "old_name": "Welcome Home Holdings Inc.",
+    "new_name": "Cycle Carbone",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.softdrivecorp.com",
+    "site": "www.softdrivecorp.com",
+    "old_name": "Page Technologies Inc.",
+    "new_name": "SOFTDRIVE CORP",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.advmeas.com",
+    "site": "www.advmeas.com",
+    "old_name": "Advanced Measurements Inc.",
+    "new_name": "Advanced Measurements Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.sarahleebeauty.com",
+    "site": "www.sarahleebeauty.com",
+    "old_name": "SLB Medical Aesthetics",
+    "new_name": "SLB Medical Aesthetics",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.quantwavetech.com",
+    "site": "www.quantwavetech.com",
+    "old_name": "HOMEH INC.",
+    "new_name": "QuantWave",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.marcottesystems.com",
+    "site": "www.marcottesystems.com",
+    "old_name": "Command Alkon",
+    "new_name": "Command Alkon",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "netprocore.com",
+    "site": "netprocore.com",
+    "old_name": "3D Printing Room Inc.",
+    "new_name": "Netprocore",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.posmat.ca",
+    "site": "www.posmat.ca",
+    "old_name": "Positive Materials Inc.",
+    "new_name": "Positive Materials",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "ibattery.tech",
+    "site": "ibattery.tech",
+    "old_name": "LiberTech",
+    "new_name": "LiberTech",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "assemblycorp.ca",
+    "site": "assemblycorp.ca",
+    "old_name": "ASSEMBLE INCORPORATED",
+    "new_name": "Assembly Corp",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "wesolveit4you.com",
+    "site": "wesolveit4you.com",
+    "old_name": "TECCA SOLUTIONS INC.",
+    "new_name": "TEC Business Solutions",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.magna.com",
+    "site": "www.magna.com",
+    "old_name": "Forward Bloc Inc.",
+    "new_name": "Magna International",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "lavalink.com",
+    "site": "lavalink.com",
+    "old_name": "CHARGER HVAC SERVICES CORP.",
+    "new_name": "Lavalink",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "evdirect.ca",
+    "site": "evdirect.ca",
+    "old_name": "Evolute Power",
+    "new_name": "Evolute Power",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.t4plng.com",
+    "site": "www.t4plng.com",
+    "old_name": "CANAGAS",
+    "new_name": "Gas Transport Solutions Inc.",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "aghospital.on.ca",
+    "site": "aghospital.on.ca",
+    "old_name": "Atikokan Health & Community Services",
+    "new_name": "Atikokan Health and Community Services",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.mohawkcollege.ca",
+    "site": "www.mohawkcollege.ca",
+    "old_name": "Additive Manufacturing Innovation Centre (AMIC)",
+    "new_name": "Mohawk College",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.economie.gouv.qc.ca",
+    "site": "www.economie.gouv.qc.ca",
+    "old_name": "Gouvernement du Qu\u00e9bec",
+    "new_name": "Minist\u00e8re de l'\u00c9conomie, de l'Innovation et de l'\u00c9nergie",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.instrumar.com",
+    "site": "www.instrumar.com",
+    "old_name": "Instrumex Inc.",
+    "new_name": "Instrumar",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "mosracks.com",
+    "site": "mosracks.com",
+    "old_name": "MOSH Technologies Inc.",
+    "new_name": "MOS Racks",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.theshellproject.com",
+    "site": "www.theshellproject.com",
+    "old_name": "EggTech Ltd.",
+    "new_name": "EggTech Ltd.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "coracsi.com",
+    "site": "coracsi.com",
+    "old_name": "Unbreaqable Ltd.",
+    "new_name": "CORAcsi",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "eelriverbar.ca",
+    "site": "eelriverbar.ca",
+    "old_name": "Ugpi'Ganjig First Nation",
+    "new_name": "Ugpi'Ganjig First Nation",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.abiomed.com",
+    "site": "www.abiomed.com",
+    "old_name": "HeartRecovery",
+    "new_name": "Heart Recovery at Johnson & Johnson MedTech",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.fairbanksmorsedefense.com",
+    "site": "www.fairbanksmorsedefense.com",
+    "old_name": "FMDA LTD.",
+    "new_name": "Fairbanks Morse Defense",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "kanada.ahk.de",
+    "site": "kanada.ahk.de",
+    "old_name": "Canadian German Chamber of Industry and Commerce Inc.",
+    "new_name": "Canadian German Chamber of Industry and Commerce Inc.",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "peopletail.com",
+    "site": "peopletail.com",
+    "old_name": "Voice Model",
+    "new_name": "Voice Model",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "inmoldelectronics.ca",
+    "site": "inmoldelectronics.ca",
+    "old_name": "e2ip technologies",
+    "new_name": "E2IP",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.foamparts.com",
+    "site": "www.foamparts.com",
+    "old_name": "J&T",
+    "new_name": "J&T Foam",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "whitewhale.ai",
+    "site": "whitewhale.ai",
+    "old_name": "AI Analytics Inc.",
+    "new_name": "White Whale",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "truenorthmaterials.com",
+    "site": "truenorthmaterials.com",
+    "old_name": "NorthSTR Group Inc.",
+    "new_name": "True North Materials",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.precisionnanosystems.com",
+    "site": "www.precisionnanosystems.com",
+    "old_name": "Cytiva",
+    "new_name": "Cytiva",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.cdene.ns.ca",
+    "site": "www.cdene.ns.ca",
+    "old_name": "CD\u00c9N\u00c9",
+    "new_name": "CD\u00c9N\u00c9",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "www.elise.de",
+    "site": "www.elise.de",
+    "old_name": "Synera",
+    "new_name": "Synera",
+    "source": "claude",
+    "changed": false
+  },
+  {
+    "id": "inorun.ca",
+    "site": "inorun.ca",
+    "old_name": "HOMEH Inc.",
+    "new_name": "INORUN",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "www.eyepractice.ca",
+    "site": "www.eyepractice.ca",
+    "old_name": "Dr. Thadshika Parthipan & Associates",
+    "new_name": "Dr. Parthipan & Associates",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "ziotechinc.com",
+    "site": "ziotechinc.com",
+    "old_name": "Unknown",
+    "new_name": "ZioTECH Inc",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "bayofquinte.ca",
+    "site": "bayofquinte.ca",
+    "old_name": "African Arts Institute",
+    "new_name": "Bay of Quinte",
+    "source": "claude",
+    "changed": true
+  },
+  {
+    "id": "quantum-silicon.com",
+    "site": "quantum-silicon.com",
+    "old_name": "Lily Domains",
+    "new_name": "Lily Domains",
+    "source": "claude",
+    "changed": false
+  }
+]
