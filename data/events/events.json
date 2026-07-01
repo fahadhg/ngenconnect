@@ -9,35 +9,21 @@
       "sourceUrl": "https://www.edc.ca/en/events/webinar/2026-find-buyers-in-new-markets.html",
       "eventType": "trade-show",
       "countryIso3": [],
-      "fetchedAt": "2026-06-15T12:14:20.616Z"
+      "fetchedAt": "2026-07-01T09:46:48.838Z"
     },
     {
-      "id": "2026-03-23-b7-2026-mission-to-brussels-and-paris",
-      "title": "B7 2026 Mission to Brussels and Paris",
-      "description": "Join the Canadian Chamber in Brussels and Paris for a mission focused on strengthening Canada–Europe collaboration in critical minerals, energy, and artificial intelligence.",
-      "date": "2026-03-23",
+      "id": "2026-06-17-b20-mission-to-washington-d-c-",
+      "title": "B20 Mission to Washington, D.C.",
+      "description": "Join the Canadian Chamber delegation of business leaders in Washington, D.C. for the B20 USA Summit 2026.",
+      "date": "2026-06-17",
       "source": "Canadian Chamber of Commerce",
-      "sourceUrl": "https://chamber.ca/events/b7-2026-mission-to-brussels-and-paris/",
+      "sourceUrl": "https://chamber.ca/events/b20-mission-to-washington-d-c/",
       "eventType": "mission",
       "countryIso3": [
-        "BEL",
-        "FRA"
+        "USA"
       ],
-      "fetchedAt": "2026-06-15T12:14:20.695Z"
-    },
-    {
-      "id": "2026-03-19-mission-to-japan",
-      "title": "Mission to Japan",
-      "description": "Join the Canadian Chamber in Tokyo and Osaka for a strategic dialogue to advance the Canada–Japan economic partnership and unlock new opportunities for bilateral collaboration in an evolving global landscape.",
-      "date": "2026-03-19",
-      "source": "Canadian Chamber of Commerce",
-      "sourceUrl": "https://chamber.ca/events/mission-to-japan/",
-      "eventType": "mission",
-      "countryIso3": [
-        "JPN"
-      ],
-      "fetchedAt": "2026-06-15T12:14:20.695Z"
+      "fetchedAt": "2026-07-01T09:46:49.080Z"
     }
   ],
-  "lastUpdated": "2026-06-15T12:14:54.670Z"
+  "lastUpdated": "2026-07-01T09:47:23.157Z"
 }
